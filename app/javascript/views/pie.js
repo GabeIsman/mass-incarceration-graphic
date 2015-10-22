@@ -30,6 +30,8 @@ var Pie = function(options) {
 
   this.renderFrame();
   this.loadData();
+
+  _.bindAll(this, 'filterArcText');
 };
 
 
@@ -118,12 +120,12 @@ Pie.prototype.renderData = function() {
       .on("mousemove", mouseMoveArc)
       .on("mouseout", mouseOutArc);
 
-    this.texts = this. svg.selectAll("text")
+    this.texts = this.svg.selectAll("text")
       .data(this.partitioned_data)
       .enter().append("text")
       .filter(this.filterArcText)
         .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
-      .attr("x", function(d) { return this.radius / 3 * d.depth; })
+      .attr("x", function(d) { return self.radius / 3 * d.depth; })
       .attr("dx", "6") // margin
         .attr("dy", ".35em") // vertical-align
       .text(function(d,i) { return d.name; });
@@ -145,7 +147,7 @@ Pie.prototype.fill = function(d) {
  * Filter out the text on arcs that are too small.
  */
 Pie.prototype.filterArcText = function(d, i) {
-  return (d.dx * d.depth * this.radius / 3 ) > 14
+  return (d.dx * d.depth * this.radius / 3 ) > 14;
 };
 
 //Tooltip description
