@@ -1,0 +1,665 @@
+{
+    "name": "flare",
+    "description": "flare",
+    "children": [
+        {
+            "name": "Federal",
+            "description": "Federal Prison Inmates",
+            "children": [
+                {
+                    "name": "Violent",
+                    "description": "Federal Violent Crime Inmates",
+                    "children": [
+                        {
+                            "name": "Homicide",
+                            "description": "Federal Violent Crime Inmates",
+                            "size": 2590
+                        },
+                        {
+                            "name": "Robbery",
+                            "description": "Federal Violent Crime Inmates",
+                            "size": 8203
+                        },
+                        {
+                            "name": "Other",
+                            "description": "Federal Violent Crime Inmates",
+                            "size": 4317
+                        }
+                    ]
+                },
+                {
+                    "name": "Property",
+                    "description": "Federal Property Crime Inmates",
+                    "children": [
+                        {
+                            "name": "Burglary",
+                            "description": "Federal Property Crime Inmates",
+                            "size": 432
+                        },
+                        {
+                            "name": "Fraud",
+                            "description": "Federal Property Crime Inmates",
+                            "size": 9714
+                        },
+                        {
+                            "name": "Other",
+                            "description": "Federal Property Crime Inmates",
+                            "size": 2590
+                        }
+                    ]
+                },
+                {
+                    "name": "Public Order",
+                    "description": "Federal Public Order Inmates",
+                    "children": [
+                        {
+                            "name": "Immigration",
+                            "description": "Federal Public Order",
+                            "size": 3534
+                        },
+                        {
+                            "name": "Weapons",
+                            "description": "Federal Public Order",
+                            "size": 5731
+                        },
+                        {
+                            "name": "Other",
+                            "description": "Federal Public Order",
+                            "size": 22450
+                        }
+                    ]
+                },
+				{
+                    "name": "Other",
+                    "description": "Federal Other Unspecified Inmates",
+                    "size": 1295
+                },
+                {
+                    "name": "Drugs",
+                    "description": "Federal Drugs Crime Inmates",
+                    "size": 109444
+                        
+                    
+                }
+            ]
+        },
+        {
+            "name": "State",
+            "description": "State Prison Inmates",
+            "children": [
+                
+                {
+                    "name": "Violent",
+                    "description": "State Inmates",
+                    "children": [
+                        {
+                            "name": "Murder",
+                            "description": "State Violent Inmates",
+                            "size": 172441
+                        },
+                        {
+                            "name": "Manslaughter",
+                            "description": "State Violent Inmates",
+                            "size": 18345
+                        },
+                        {
+                            "name": "Rape",
+                            "description": "State Violent Inmates",
+                            "size": 166326
+                        },
+                        {
+                            "name": "Robbery",
+                            "description": "State Violent Inmates",
+                            "size": 185486
+                        },
+                        {
+                            "name": "Assault",
+                            "description": "State Violent Inmates",
+                            "size": 144720
+                        },
+                        {
+                            "name": "Other Violent",
+                            "description": "State Violent Inmates",
+                            "size": 43892
+                        }
+                    ]
+                },
+				{
+                    "name": "Property",
+                    "description": "State Property Inmates",
+                   "children": [
+                        {
+                            "name": "Burglary",
+                            "description": "State Property Burglary",
+                            "size": 135072
+                        },
+                        {
+                            "name": "Larceny",
+                            "description": "State Property Larceny-Theft",
+                            "size": 50686
+                        },
+                        {
+                            "name": "Vehicle Theft",
+                            "description": "State Property Motor Vehicle Theft",
+                            "size": 12230
+                        },
+                        {
+                            "name": "Fraud",
+                            "description": "State Property Fraud",
+                            "size": 27178
+                        },
+                        {
+                            "name": "Other",
+                            "description": "State Property Other",
+                            "size": 30167
+                        }
+
+                    ]
+                },
+                {
+                    "name": "Drugs",
+                    "description": "Drugs State Crime",
+                    "children": [
+                        {
+                            "name": "Drugs",
+                            "description": "State Drugs Possession Crime Inmates",
+                            "size": 50686
+                        },
+
+                        {
+                            "name": "Other Drugs",
+                            "description": "State Drugs Crime",
+                            "size": 166462
+                        }
+                    ]
+                },
+				                {
+                    "name": "Public Order",
+                    "description": "State Public Order Crime",
+                    "size": 144856
+                },
+                {
+                    "name": "Other",
+                    "description": "Other State Crime",
+                    "size": 10327
+                }
+				
+            ]
+        },
+        {
+            "name": "Local",
+            "description": "Local Jail Inmates",
+            "children": [
+                {
+                    "name": "Awaiting Trial",
+                    "description": "Local Jail Inmates",
+                    "children": [
+                        {
+                            "name": "Violent",
+                            "description": "Local Awaiting Trial Violent Inmates",
+                            "children": [
+                        {
+                            "name": "Murder",
+                            "description": "Local Awaiting Trial Violent Murder",
+                            "size": 38548
+                        },
+                        {
+                            "name": "Manslaughter",
+                            "description": "Local Awaiting Trial Violent Negligent Manslaughter",
+                            "size": 2909
+                        },
+                        {
+                            "name": "Kidnapping",
+                            "description": "Local Awaiting Trial Violent Kidnapping",
+                            "size": 10183
+                        },
+                        {
+                            "name": "Rape",
+                            "description": "Local Awaiting Trial Violent Rape",
+                            "size": 5819
+                        },
+                        {
+                            "name": "Sexual Assault",
+                            "description": "Local Awaiting Trial Violent Other Sexual Assault",
+                            "size": 26184
+                        },
+						{
+                            "name": "Other",
+                            "description": "Local Awaiting Trial Other Violent",
+                            "size": 11637
+                        }
+                    ]
+                        },
+                        {
+                            "name": "Property",
+                            "description": "Property Awaiting Trial",
+                            
+                            "children": [
+                        {
+                            "name": "Burglary",
+                            "description": "Local Awaiting Trial Property Burglary",
+                            "size": 49458
+                        },
+                        {
+                            "name": "Larceny",
+                            "description": "Local Awaiting Trial Property Larceny/Theft",
+                            "size": 38548
+                        },
+                        {
+                            "name": "Vehicle Theft",
+                            "description": "Local Awaiting Trial Property Motor Vehicle Theft",
+                            "size": 11637
+                        },
+                        {
+                            "name": "Arson",
+                            "description": "Local Awaiting Trial Property Arson",
+                            "size": 3637
+                        },
+                        {
+                            "name": "Stolen Property",
+                            "description": "Local Awaiting Trial Property Stolen Property",
+                            "size": 10183
+                        },
+						{
+                            "name": "Other",
+                            "description": "Local Awaiting Trial Property Other Property",
+                            "size": 12365
+                        }
+                    ]
+                        },
+                        {
+                            "name": "Drugs",
+                            "description": "Local Awaiting Trial Drugs Inmates",
+                            "children": [
+                        {
+                            "name": "Possession",
+                            "description": "Local Awaiting Trial Drugs Possession",
+                            "size": 75642
+                        },
+                        {
+                            "name": "Trafficking",
+                            "description": "Local Awaiting Trial Drugs Trafficking",
+                            "size": 77824
+                        },
+						{
+                            "name": "Other",
+                            "description": "Local Awaiting Trial Drugs Other",
+                            "size": 16729
+                        }
+                    ]
+                        },
+                        {
+                            "name": "Public Order",
+                            "description": "Public Order Awaiting Trial",
+                            "children": [
+                        {
+                            "name": "Weapons",
+                            "description": "Local Awaiting Trial Public Order  Weapons",
+                            "size": 13819
+                        },
+						{
+                            "name": "Obstruction",
+                            "description": "Local Awaiting Trial Public Order Obstruction of Justice",
+                            "size": 39276
+                        },
+						{
+                            "name": "Traffic",
+                            "description": "Local Awaiting Trial Public Order Traffic Violation",
+                            "size": 16729
+                        },
+						{
+                            "name": "DWI",
+                            "description": "Local Awaiting Trial Public Order  Driving While Intoxicated",
+                            "size": 16729
+                        },
+						{
+                            "name": "Drunkenness",
+                            "description": "Local Awaiting Trial Public Order Drunkenness/Morals",
+                            "size": 10910
+                        },
+                        {
+                            "name": "Parole Violation",
+                            "description": "Local Awaiting Trial  Public Order Parole/Probation Violation",
+                            "size": 10910
+                        },
+						                        {
+                            "name": "Other Order",
+                            "description": "Local Awaiting Trial Public Order Other Public Order",
+                            "size": 20365
+                        },
+						{
+                            "name": "Immigration",
+                            "description": "Local Awaiting Trial Immigration Violation",
+                            "size": 18183
+                        }
+                    ]
+                        },
+                        {
+                            "name": "Other",
+                            "description": "Other Awaiting Trial",
+                            "size": 4364
+                        }
+                    ]
+                },
+                {
+                    "name": "Convicted",
+                    "description": "Local Jail Inmates",
+                    "children": [
+                        {
+                            "name": "Violent",
+                            "description": "Local Convicted Violent Inmates",
+                            "children": [
+                        {
+                            "name": "Murder",
+                            "description": "Local Convicted Violent Murder",
+                            "size": 6546
+                        },
+                        {
+                            "name": "Manslaughter",
+                            "description": "Local Convicted Violent Negligent Manslaughter",
+                            "size": 5091
+                        },
+                        {
+                            "name": "Kidnapping",
+                            "description": "Local Convicted Violent Kidnapping",
+                            "size": 2909
+                        },
+                        {
+                            "name": "Rape",
+                            "description": "Local Convicted Violent Rape",
+                            "size": 4364
+                        },
+                        {
+                            "name": "Sexual Assault",
+                            "description": "Local Convicted Violent Other Sexual Assault",
+                            "size": 19638
+                        },
+						                        {
+                            "name": "Robbery",
+                            "description": "Local Convicted Violent Robbery",
+                            "size": 28366
+                        },
+						                        {
+                            "name": "Assault",
+                            "description": "Local Convicted Violent  Assault",
+                            "size": 80006
+                        },
+						{
+                            "name": "Other",
+                            "description": "Local Convicted Other Violent",
+                            "size": 10183
+                        }
+                    ]
+                        },
+                        {
+                            "name": "Property",
+                            "description": "Property Convicted",
+                            
+                            "children": [
+                        {
+                            "name": "Burglary",
+                            "description": "Local Convicted Non-Violent Burglary",
+                            "size": 46549
+                        },
+                        {
+                            "name": "Larceny",
+                            "description": "Local Convicted Non-Violent Larceny/Theft",
+                            "size": 54550
+                        },
+                        {
+                            "name": "Vehicle Theft",
+                            "description": "Local Convicted Non-Violent Motor Vehicle Theft",
+                            "size": 14547
+                        },
+                        {
+                            "name": "Arson",
+                            "description": "Local Convicted Non-Violent Arson",
+                            "size": 2182
+                        },
+						                        {
+                            "name": "Fraud",
+                            "description": "Local Convicted Non-Violent Fraud",
+                            "size": 38548
+                        },
+                        {
+                            "name": "Stolen Property",
+                            "description": "Local Convicted Non-Violent Stolen Property",
+                            "size": 11637
+                        },
+						{
+                            "name": "Other",
+                            "description": "Local Convicted Non-Violent Other Property",
+                            "size": 13092
+                        }
+                    ]
+                        },
+                        {
+                            "name": "Drugs",
+                            "description": "Local Convicted Drugs Inmates",
+                            "children": [
+                        {
+                            "name": "Possession",
+                            "description": "Local Convicted Non-Violent Drugs Possession",
+                            "size": 72733
+                        },
+                        {
+                            "name": "Trafficking",
+                            "description": "Local Convicted Non-Violent Drugs Trafficking",
+                            "size": 90916
+                        },
+						{
+                            "name": "Other",
+                            "description": "Local Convicted Non-Violent Drugs Other",
+                            "size": 10910
+                        }
+                    ]
+                        },
+                        {
+                            "name": "Public Order",
+                            "description": "Public Order Convicted",
+                            "children": [
+                        {
+                            "name": "Weapons",
+                            "description": "Local Convicted Non-Violent Public Order  Weapons",
+                            "size": 15274
+                        },
+						{
+                            "name": "Obstruction",
+                            "description": "Local Convicted Non-Violent Public Order  Obstruction of Justice",
+                            "size": 25457
+                        },
+						{
+                            "name": "Traffic",
+                            "description": "Local Convicted Non-Violent Public Order Traffic Violation",
+                            "size": 34184
+                        },
+						{
+                            "name": "DWI",
+                            "description": "Local Convicted Non-Violent Public Order  Driving While Intoxicated",
+                            "size": 64732
+                        },
+						{
+                            "name": "Drunkenness",
+                            "description": "Local Convicted Non-Violent Public Order Drunkenness/Morals",
+                            "size": 13092
+                        },
+                        {
+                            "name": "Parole Violation",
+                            "description": "Local Convicted Non-Violent Public Order Parole/Probation Violation",
+                            "size": 25457
+                        },
+						{
+                            "name": "Immigration",
+                            "description": "Local Convicted Non-Violent Public Order Other",
+                            "size": 13092
+                        },
+						                        {
+                            "name": "Other",
+                            "description": "Other Public Order Convicted",
+                            "size": 20365
+                        }
+                    ]
+                        },
+                        {
+                            "name": "Other",
+                            "description": "Other Convicted",
+                            "size": 2909
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Juvenile",
+            "description": "Juvenile Prison Inmates",
+            "children": [
+                {
+                    "name": "Delinquent",
+                    "description": "Juvenile Delinquent Inmates",
+                    "children": [
+                        {
+                            "name": "Violent",
+                            "description": "Violent Juvenile Delinquent",
+                            "children": [
+                        {
+                            "name": "Criminal Assault",
+                            "description": "Violent Juvenile Delinquent Criminal Assault",
+                            "size": 798
+                        },
+                        {
+                            "name": "Sexual Assault",
+                            "description": "Violent Juvenile Delinquent Sexual Assault",
+                            "size": 3916
+                        },
+                        {
+                            "name": "Robbery",
+                            "description": "Violent Juvenile Delinquent Robbery",
+                            "size": 5712
+                        },
+                        {
+                            "name": "Aggravated Assault",
+                            "description": "Violent Juvenile Delinquent Aggravated Assault",
+                            "size": 5264
+                        },
+                        {
+                            "name": "Simple Assault",
+                            "description": "Violent Juvenile Delinquent Simple Assault",
+                            "size": 5251
+                        },
+						{
+                            "name": "Other",
+                            "description": "Violent Juvenile Delinquent Other",
+                            "size": 2030
+                        }
+						
+                    ]
+                        },
+                        {
+                            "name": "Property",
+                            "description": "Property Juvenile Delinquent",
+                            "children": [
+                        {
+                            "name": "Burglary",
+                            "description": "Property Juvenile Delinquent Burglary",
+                            "size": 6689
+                        },
+                        {
+                            "name": "Theft",
+                            "description": "Property Juvenile Delinquent Theft",
+                            "size": 3365
+                        },
+                        {
+                            "name": "Arson",
+                            "description": "Property Juvenile Delinquent Arson",
+                            "size": 447
+                        },
+                        {
+                            "name": "Other",
+                            "description": "Property Juvenile Delinquent Other Property",
+                            "size": 2422
+                        }
+						
+						
+                    ]
+                        },
+                        {
+                            "name": "Drugs",
+                            "description": "Drugs Juvenile Delinquent",
+                           "children": [
+                        {
+                            "name": "Drugs Trafficking",
+                            "description": "Drugs Juvenile Delinquent Trafficking",
+                            "size": 736
+                        },
+
+						{
+                            "name": "Other",
+                            "description": "Drugs Juvenile Delinquent Other",
+                            "size": 3578
+                        }
+						
+                    ]
+                        },
+                        {
+                            "name": "Public Order",
+                            "description": "Public Order Juvenile Delinquent",
+                           "children": [
+                        {
+                            "name": "Weapons",
+                            "description": "Public Order Juvenile Delinquent Weapons",
+                            "size": 2649
+                        },
+						{
+                            "name": "Other",
+                            "description": "Public Order Juvenile Delinquent Other",
+                            "size": 4666
+                        }
+						
+                    ]
+                        },
+                        {
+                            "name": "Technical",
+                            "description": "Technical Violation Juvenile Delinquent",
+                            "size": 9882
+                        }
+                    ]
+                },
+                {
+                    "name": "Status Offend",
+                    "description": "Juvenile Status Offence",
+                    "size": 2236
+                },
+                {
+                    "name": "Awaiting Trial",
+                    "description": "Juvenile Other Residents (Awaiting Trial or 21+)",
+                    "size": 7391
+                }
+            ]
+        },
+        {
+            "name": "Military",
+            "description": "Military Prison Inmates",
+            "size": 1434
+        },
+        {
+            "name": "Indian County",
+            "description": "Indian County Prison Inmates",
+            "size": 2146
+        },
+		{
+            "name": "Territorial",
+            "description": "Territorial Prison Inmates",
+            "size": 2146
+        },
+        {
+            "name": "Immigration",
+            "description": "Immigration Prison Inmates",
+            "size": 32805
+        },
+        {
+            "name": "Civil",
+            "description": "Civil Commitment Prison Inmates",
+            "size": 5487
+        }
+    ]
+}
