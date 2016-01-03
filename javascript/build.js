@@ -318,7 +318,9 @@ module.exports = colorbrewer;
 var colorbrewer = require('../lib/colors/colorbrewer');
 var _ = require('underscore');
 
-
+var RADII = d3.scale.linear()
+    .domain([0, 1, 2, 3])
+    .range([0, 0.2, 0.8, 1]);
 
 /**
  * Does something maybe.
@@ -348,7 +350,7 @@ var Pie = function(options) {
   this.renderFrame();
   this.loadData();
 
-  _.bindAll(this, 'filterArcText');
+  _.bindAll(this, 'filterArcText', 'zoomOut', 'zoomIn');
 };
 
 
@@ -360,7 +362,6 @@ Pie.prototype.handleResize = function() {
   this.width = boundingRect.width;
   this.height = boundingRect.height;
   this.radius = Math.min(this.width / 2, this.height / 2);
-  console.log(this.radius);
 
   this.partition.size([2 * Math.PI, this.radius]);
 
@@ -369,8 +370,8 @@ Pie.prototype.handleResize = function() {
   this.arc = d3.svg.arc()
     .startAngle(function(d) { return d.x; })
     .endAngle(function(d) { return d.x + d.dx - .01 / (d.depth + .5); })
-    .innerRadius(function(d) { return self.radius / 3 * d.depth; })
-    .outerRadius(function(d) { return self.radius / 3 * (d.depth + 1) - 1; });
+    .innerRadius(function(d) { return RADII(d.depth) * self.radius })
+    .outerRadius(function(d) { return RADII(d.depth + 1) * self.radius - 1; });
 };
 
 
@@ -381,6 +382,14 @@ Pie.prototype.renderFrame = function() {
     .append("g")
       .attr("transform",
           "translate(" + (this.width / 2) + "," + (this.height / 2) + ")");
+
+  //Tooltip description
+  this.tooltip = this.el
+    .append("div")
+    .attr("id", "tooltip")
+    .style("position", "absolute")
+    .style("z-index", "10")
+    .style("opacity", 0);
 };
 
 
@@ -418,8 +427,8 @@ Pie.prototype.renderData = function() {
     .value(function(d) { return d.sum; });
 
   this.center = this.svg.append("circle")
-    .attr("r", this.radius / 3)
-    .on("click", zoomOut);
+    .attr("r", this.radius / 5)
+    .on("click", this.zoomOut);
 
   this.center.append("title")
       .text("zoom out");
@@ -427,24 +436,24 @@ Pie.prototype.renderData = function() {
   this.partitioned_data = this.partition.nodes(this.data).slice(1);
 
   this.path = this.svg.selectAll("path")
-      .data(this.partitioned_data)
+    .data(this.partitioned_data)
     .enter().append("path")
       .attr("d", this.arc)
       .style("fill", function(d) { return d.fill; })
       .each(function(d) { this._current = updateArc(d); })
-      .on("click", zoomIn)
-    .on("mouseover", mouseOverArc)
-      .on("mousemove", mouseMoveArc)
-      .on("mouseout", mouseOutArc);
+      .on("click", this.zoomIn)
+      .on("mouseover", getHandler(this.mouseOverArc, this))
+      .on("mousemove", getHandler(this.mouseMoveArc, this))
+      .on("mouseout", getHandler(this.mouseOutArc, this));
 
     this.texts = this.svg.selectAll("text")
       .data(this.partitioned_data)
       .enter().append("text")
       .filter(this.filterArcText)
-        .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
-      .attr("x", function(d) { return self.radius / 3 * d.depth; })
+      .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
+      .attr("x", function(d) { return d.depth > 1 ? RADII(d.depth + 1) * self.radius : RADII(d.depth) * self.radius })
       .attr("dx", "6") // margin
-        .attr("dy", ".35em") // vertical-align
+      .attr("dy", ".35em") // vertical-align
       .text(function(d,i) { return d.name; });
 };
 
@@ -467,68 +476,51 @@ Pie.prototype.filterArcText = function(d, i) {
   return (d.dx * d.depth * this.radius / 3 ) > 14;
 };
 
-//Tooltip description
-var tooltip = d3.select("body")
-    .append("div")
-    .attr("id", "tooltip")
-    .style("position", "absolute")
-    .style("z-index", "10")
-    .style("opacity", 0);
 
-function format_number(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+Pie.prototype.mouseOverArc = function(target, d) {
+  d3.select(target).attr("stroke","black");
 
-
-function format_description(d) {
-  var description = d.description;
-      return  '<b>' + d.name + '</b></br>'+ d.description + '<br> (' + format_number(d.value) + ')';
-}
-
-function computeTextRotation(d) {
-  var angle = (d.x + d.dx / 2) * 180 / Math.PI - 90;
-  return angle;
-}
-
-function mouseOverArc(d) {
-  d3.select(this).attr("stroke","black");
-
-  tooltip.html(format_description(d));
-  return tooltip.transition()
+  this.tooltip.html(format_description(d));
+  return this.tooltip.transition()
     .duration(50)
     .style("opacity", 0.9);
 }
 
-function mouseOutArc(){
-  d3.select(this).attr("stroke","")
-  return tooltip.style("opacity", 0);
+
+Pie.prototype.mouseOutArc = function(target, d) {
+  d3.select(target).attr("stroke","")
+  return this.tooltip.style("opacity", 0);
 }
 
-function mouseMoveArc (d) {
-  return tooltip
+
+Pie.prototype.mouseMoveArc = function(target, d) {
+  return this.tooltip
     .style("top", (d3.event.pageY - 10) + "px")
     .style("left", (d3.event.pageX + 10) + "px");
 }
 
-function zoomIn(p) {
+
+Pie.prototype.zoomIn = function(p) {
   if (p.depth > 1) {
     p = p.parent;
   }
   if (!p.children) {
     return;
   }
-  zoom(p, p);
+  this.zoom(p, p);
 }
 
-function zoomOut(p) {
+
+Pie.prototype.zoomOut = function(p) {
   if (!p.parent) {
     return;
   }
-  zoom(p.parent, p);
+  this.zoom(p.parent, p);
 }
 
+
 // Zoom to the specified new root.
-function zoom(root, p) {
+Pie.prototype.zoom = function(root, p) {
   if (document.documentElement.__transition__) return;
 
   // Rescale outside angles to match the new layout.
@@ -564,9 +556,10 @@ function zoom(root, p) {
     outsideAngle.range([p.x, p.x + p.dx]);
   }
 
- var new_data = this.partition.nodes(root).slice(1);
+  var new_data = this.partition.nodes(root).slice(1);
 
-  this.path.data(new_data, function(d) { return d.key; });
+  // TODO: figure this out, why does this need to be assigned?
+  this.path = this.path.data(new_data, function(d) { return d.key; });
 
   // When zooming out, arcs enter from the inside and exit to the outside.
   // Exiting outside arcs transition to the new layout.
@@ -576,55 +569,71 @@ function zoom(root, p) {
     outsideAngle.range([p.x, p.x + p.dx]);
   }
 
+  var self = this;
   d3.transition().duration(d3.event.altKey ? 7500 : 750)
     .each(function() {
-      path.exit().transition()
+      self.path.exit().transition()
         .style("fill-opacity", function(d) {
           return d.depth === 1 + (root === p) ? 1 : 0;
         })
         .attrTween("d", function(d) {
-          return arcTween.call(this, exitArc(d));
+          return arcTween.call(this, exitArc(d), self.arc);
         })
         .remove();
 
-      path.enter().append("path")
+      // TODO: this is redundant with renderData
+      self.path.enter().append("path")
         .style("fill-opacity", function(d) {
           return d.depth === 2 - (root === p) ? 1 : 0;
         })
         .style("fill", function(d) { return d.fill; })
-        .on("click", zoomIn)
-        .on("mouseover", mouseOverArc)
-        .on("mousemove", mouseMoveArc)
-        .on("mouseout", mouseOutArc)
+        .on("click", self.zoomIn)
+        .on("mouseover", getHandler(self.mouseOverArc, self))
+        .on("mousemove", getHandler(self.mouseMoveArc, self))
+        .on("mouseout", getHandler(self.mouseOutArc, self))
         .each(function(d) { this._current = enterArc(d); });
 
-      path.transition()
+      self.path.transition()
         .style("fill-opacity", 1)
         .attrTween("d", function(d) {
-          return arcTween.call(this, updateArc(d));
+          return arcTween.call(this, updateArc(d), self.arc);
         });
     });
 
 
-  this.texts.data(new_data, function(d) { return d.key; });
+  // TODO: this should be abstracted.
+  this.texts = this.texts.data(new_data, function(d) { return d.key; });
 
-  texts.exit()
+  this.texts.exit()
     .remove()
-  texts.enter()
+  this.texts.enter()
     .append("text")
 
-  texts.style("opacity", 0)
+  this.texts.style("opacity", 0)
     .attr("transform", function(d) {
       return "rotate(" + computeTextRotation(d) + ")";
     })
-    .attr("x", function(d) { return radius / 3 * d.depth; })
+    .attr("x", function(d) { return d.depth > 1 ? RADII(d.depth + 1) * self.radius : RADII(d.depth) * self.radius })
     .attr("dx", "6") // margin
     .attr("dy", ".35em") // vertical-align
-    .filter(filterArcText)
+    .filter(this.filterArcText)
     .text(function(d,i) {return d.name})
     .transition().delay(750).style("opacity", 1);
 }
 
+
+function format_number(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
+function format_description(d) {
+  return  '<b>' + d.name + '</b></br>'+ d.description + '<br> (' + format_number(d.value) + ')';
+}
+
+function computeTextRotation(d) {
+  return (d.x + d.dx / 2) * 180 / Math.PI - 90;
+}
 
 function key(d) {
   var k = [];
@@ -635,7 +644,7 @@ function key(d) {
   return k.reverse().join(".");
 }
 
-function arcTween(b) {
+function arcTween(b, arc) {
   var i = d3.interpolate(this._current, b);
   this._current = i(0);
   return function(t) {
