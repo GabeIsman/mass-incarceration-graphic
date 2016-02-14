@@ -5,6 +5,30 @@ var RADII = d3.scale.linear()
     .domain([0, 1, 2, 3])
     .range([0, 0.2, 0.8, 1]);
 
+var COLORS = {
+  BLUEGREENS: ['#18816A', '#21B290', '#23CB8D'],
+  ORANGES: ['#DB6000', '#FF7000', '#F98500', '#F98500'],
+  PURPLES: ['#7070B1', '#8A82E1', '#A9A1FF', '#A9A1FF'],
+  GREY: ['#676564'],
+  GREEN: ['#64A612'],
+  YELLOWS: ['#A67611', '#D09515', '#FEB211'],
+  PERIWINKLE: ['#5964FF'],
+  RED: ['#FF2C5D'],
+  DARKRED: ['#631C1D'],
+};
+
+var COLOR_MAP = {
+  Federal: COLORS.YELLOWS,
+  State: COLORS.BLUEGREENS,
+  Local: COLORS.ORANGES,
+  Juvenile: COLORS.PURPLES,
+  Military: COLORS.DARKRED,
+  'Indian County': COLORS.RED,
+  Territorial: COLORS.GREEN,
+  Immigration: COLORS.GREY,
+  Civil: COLORS.PERIWINKLE,
+};
+
 /**
  * Does something maybe.
  *
@@ -123,7 +147,9 @@ Pie.prototype.renderData = function() {
     .enter().append("path")
       .attr("d", this.arc)
       .style("fill", function(d) { return d.fill; })
+      .style("opacity", 0.9)
       .each(function(d) { this._current = updateArc(d); })
+      .attr("class", function(d) { return d.depth > 1 ? '' : 'clickable'; })
       .on("click", this.zoomIn)
       .on("mouseover", getHandler(this.mouseOverArc, this))
       .on("mousemove", getHandler(this.mouseMoveArc, this))
@@ -142,12 +168,16 @@ Pie.prototype.renderData = function() {
 
 
 Pie.prototype.fill = function(d) {
-  var p = d;
-  while (p.depth > 1) {
-    p = p.parent;
+  var parent = d;
+  while (parent.depth > 1) {
+    parent = parent.parent;
   }
-  var color = d3.lab(this.hue(p.name));
-  color.l = this.luminance(d.sum);
+  var colorString;
+  if (!COLOR_MAP[parent.name] || !(colorString = COLOR_MAP[parent.name][d.depth - 1])) {
+    console.log("Color not found for ", parent, d.depth);
+  }
+
+  var color = d3.rgb(colorString);
   return color;
 }
 
@@ -161,7 +191,7 @@ Pie.prototype.filterArcText = function(d, i) {
 
 
 Pie.prototype.mouseOverArc = function(target, d) {
-  d3.select(target).attr("stroke","black");
+  d3.select(target).style("opacity", 1);
 
   this.tooltip.html(format_description(d));
   return this.tooltip.transition()
@@ -171,7 +201,7 @@ Pie.prototype.mouseOverArc = function(target, d) {
 
 
 Pie.prototype.mouseOutArc = function(target, d) {
-  d3.select(target).attr("stroke","")
+  d3.select(target).style("opacity", 0.9);
   return this.tooltip.style("opacity", 0);
 }
 
@@ -185,7 +215,7 @@ Pie.prototype.mouseMoveArc = function(target, d) {
 
 Pie.prototype.zoomIn = function(p) {
   if (p.depth > 1) {
-    p = p.parent;
+    return;
   }
   if (!p.children) {
     return;
@@ -278,6 +308,7 @@ Pie.prototype.zoom = function(root, p) {
 
       self.path.transition()
         .style("fill-opacity", 1)
+        .attr("class", function(d) { return d.depth > 1 || !d.children ? '' : 'clickable'; })
         .attrTween("d", function(d) {
           return arcTween.call(this, updateArc(d), self.arc);
         });
@@ -315,7 +346,11 @@ function format_description(d) {
 }
 
 function computeTextRotation(d) {
-  return (d.x + d.dx / 2) * 180 / Math.PI - 90;
+  var angle = (d.x + d.dx / 2) * 180 / Math.PI - 90;
+  if (angle > 180) {
+    angle = angle - 360;
+  }
+  return angle;
 }
 
 function key(d) {

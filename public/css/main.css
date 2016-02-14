@@ -26,8 +26,8 @@ svg {
   position: absolute;
 }
 
-circle,
-path {
+.clickable,
+circle {
   cursor: pointer;
 }
 
