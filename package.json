@@ -5,7 +5,8 @@
   "scripts": {},
   "browserify": {
     "transform": [
-      "jadeify"
+      "jadeify",
+			"node-csvify"
     ]
   },
   "dependencies": {},
@@ -22,6 +23,7 @@
     "gulp-util": "^3.0.4",
     "jade": "^1.9.2",
     "jadeify": "^4.1.0",
+    "node-csvify": "0.0.4",
     "underscore": "^1.8.3",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.1.0"

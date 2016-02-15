@@ -1,5 +1,6 @@
 var colorbrewer = require('../lib/colors/colorbrewer');
 var _ = require('underscore');
+var data = require('../data/sample.csv');
 
 var RADII = d3.scale.linear()
     .domain([0, 1, 2, 3])
@@ -14,7 +15,7 @@ var COLORS = {
   YELLOWS: ['#A67611', '#D09515', '#FEB211'],
   PERIWINKLE: ['#5964FF'],
   RED: ['#FF2C5D'],
-  DARKRED: ['#631C1D'],
+  DARKRED: ['#631C1D', '#631C1D', '#631C1D', '#631C1D'],
 };
 
 var COLOR_MAP = {
@@ -23,10 +24,10 @@ var COLOR_MAP = {
   Local: COLORS.ORANGES,
   Juvenile: COLORS.PURPLES,
   Military: COLORS.DARKRED,
-  'Indian County': COLORS.RED,
-  Territorial: COLORS.GREEN,
-  Immigration: COLORS.GREY,
-  Civil: COLORS.PERIWINKLE,
+  'Indian County jails': COLORS.RED,
+  'Territorial prisons': COLORS.GREEN,
+  'Immigration Detention': COLORS.GREY,
+  'Civil Commitment': COLORS.PERIWINKLE,
 };
 
 /**
@@ -55,7 +56,8 @@ var Pie = function(options) {
   this.handleResize();
 
   this.renderFrame();
-  this.loadData();
+	this.data = parseData(data);
+	this.renderData();
 
   _.bindAll(this, 'filterArcText', 'zoomOut', 'zoomIn');
 };
@@ -100,19 +102,8 @@ Pie.prototype.renderFrame = function() {
 };
 
 
-Pie.prototype.loadData = function() {
-  var self = this;
-  return d3.json("flare-labeled.json", function(error, data) {
-    if (error) {
-      return console.warn(error);
-    }
-    self.data = data;
-    self.renderData();
-  });
-};
-
-
 Pie.prototype.renderData = function() {
+	var data = flareData(this.data, ['prison_type', 'convicted_status', 'offense_category', 'specific_offense']);
   var self = this;
   // Compute the initial layout on the entire tree to sum sizes.
   // Also compute the full name and fill color for each node,
@@ -120,27 +111,20 @@ Pie.prototype.renderData = function() {
 
   this.partition
     .value(function(d) { return d.size; })
-    .nodes(this.data)
+    .nodes(data)
     .forEach(function(d) {
-      d._children = d.children;
-      d.sum = d.value;
       d.key = key(d);
       d.fill = self.fill(d);
     });
 
-  // Now redefine the value function to use the previously-computed sum.
-  this.partition
-    .children(function(d, depth) { return depth < 2 ? d._children : null; })
-    .value(function(d) { return d.sum; });
-
   this.center = this.svg.append("circle")
     .attr("r", this.radius / 5)
-    .on("click", this.zoomOut);
+    .on("click", getHandler(this.zoomOut, this));
 
   this.center.append("title")
       .text("zoom out");
 
-  this.partitioned_data = this.partition.nodes(this.data).slice(1);
+  this.partitioned_data = this.partition.nodes(data).slice(1);
 
   this.path = this.svg.selectAll("path")
     .data(this.partitioned_data)
@@ -150,7 +134,7 @@ Pie.prototype.renderData = function() {
       .style("opacity", 0.9)
       .each(function(d) { this._current = updateArc(d); })
       .attr("class", function(d) { return d.depth > 1 ? '' : 'clickable'; })
-      .on("click", this.zoomIn)
+      .on("click", getHandler(this.zoomIn, this))
       .on("mouseover", getHandler(this.mouseOverArc, this))
       .on("mousemove", getHandler(this.mouseMoveArc, this))
       .on("mouseout", getHandler(this.mouseOutArc, this));
@@ -174,7 +158,7 @@ Pie.prototype.fill = function(d) {
   }
   var colorString;
   if (!COLOR_MAP[parent.name] || !(colorString = COLOR_MAP[parent.name][d.depth - 1])) {
-    console.log("Color not found for ", parent, d.depth);
+    console.log("Color not found for ", parent.name, d.depth);
   }
 
   var color = d3.rgb(colorString);
@@ -213,22 +197,22 @@ Pie.prototype.mouseMoveArc = function(target, d) {
 }
 
 
-Pie.prototype.zoomIn = function(p) {
-  if (p.depth > 1) {
+Pie.prototype.zoomIn = function(target, node) {
+  if (node.depth > 1) {
     return;
   }
-  if (!p.children) {
+  if (!node.children) {
     return;
   }
-  this.zoom(p, p);
+  this.zoom(node, node);
 }
 
 
-Pie.prototype.zoomOut = function(p) {
-  if (!p.parent) {
+Pie.prototype.zoomOut = function(target, node) {
+  if (!node.parent) {
     return;
   }
-  this.zoom(p.parent, p);
+  this.zoom(node.parent, node);
 }
 
 
@@ -300,7 +284,7 @@ Pie.prototype.zoom = function(root, p) {
           return d.depth === 2 - (root === p) ? 1 : 0;
         })
         .style("fill", function(d) { return d.fill; })
-        .on("click", self.zoomIn)
+        .on("click", getHandler(self.zoomIn, self))
         .on("mouseover", getHandler(self.mouseOverArc, self))
         .on("mousemove", getHandler(self.mouseMoveArc, self))
         .on("mouseout", getHandler(self.mouseOutArc, self))
@@ -391,8 +375,67 @@ function getHandler(handler, ctx) {
   }
 };
 
+var COMMAS = /,/g;
+
+/**
+ * Parses the numbers into javascript Numbers.
+ * @param   {Array<Object>} data The csvified data.
+ * @returns {Array<Object>} The parsed data.
+ */
+function parseData(data) {
+	return _.map(data, function(line) {
+		line = _.mapObject(line, function(value) {
+			if (typeof value === 'string') {
+				return value.trim();
+			}
+			return value;
+		});
+
+		if (typeof line.number === 'string') {
+			_.extend(line, { number: parseInt(line.number.replace(COMMAS, '')) });
+		}
+
+		return line;
+	});
+}
+
+
+function flareData(data, groupSequence) {
+	return {
+		name: 'Flare',
+		description: '',
+		children: flareDataRecursive(data, groupSequence)
+	};
+	return parent;
+}
+
+function flareDataRecursive(data, groupSequence) {
+	if (groupSequence.length === 0) {
+		return [];
+	}
+	var currentGroup = groupSequence[0];
+	var remainingSequence = groupSequence.slice(1);
+	var groupedData = _.groupBy(data, currentGroup);
+
+	// If this group has no differentiation on this key then skip it
+	if (_.keys(groupedData).length === 1) {
+		return flareDataRecursive(data, remainingSequence);
+	}
+
+	return _.map(groupedData, function(value, key) {
+		var child = {
+			name: key,
+			description: '' // Need to figure this out
+		};
+		child.size = _.reduce(value, function(memo, item) {
+			return memo + item.number;
+		}, 0);
+		if (remainingSequence.length > 0) {
+			child.children = flareDataRecursive(value, remainingSequence);
+		}
+		return child;
+	});
+}
+
 
 module.exports = Pie;
-
-
-
