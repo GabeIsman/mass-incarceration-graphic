@@ -1,4 +1,4 @@
-{
+	{
     "name": "flare",
     "description": "flare",
     "children": [
@@ -78,8 +78,8 @@
                     "name": "Drugs",
                     "description": "Federal Drugs Crime Inmates",
                     "size": 109444
-                        
-                    
+
+
                 }
             ]
         },
@@ -87,7 +87,7 @@
             "name": "State",
             "description": "State Prison Inmates",
             "children": [
-                
+
                 {
                     "name": "Violent",
                     "description": "State Inmates",
@@ -183,7 +183,7 @@
                     "description": "Other State Crime",
                     "size": 10327
                 }
-				
+
             ]
         },
         {
@@ -233,7 +233,7 @@
                         {
                             "name": "Property",
                             "description": "Property Awaiting Trial",
-                            
+
                             "children": [
                         {
                             "name": "Burglary",
@@ -394,7 +394,7 @@
                         {
                             "name": "Property",
                             "description": "Property Convicted",
-                            
+
                             "children": [
                         {
                             "name": "Burglary",
@@ -551,7 +551,7 @@
                             "description": "Violent Juvenile Delinquent Other",
                             "size": 2030
                         }
-						
+
                     ]
                         },
                         {
@@ -578,8 +578,8 @@
                             "description": "Property Juvenile Delinquent Other Property",
                             "size": 2422
                         }
-						
-						
+
+
                     ]
                         },
                         {
@@ -597,7 +597,7 @@
                             "description": "Drugs Juvenile Delinquent Other",
                             "size": 3578
                         }
-						
+
                     ]
                         },
                         {
@@ -614,7 +614,7 @@
                             "description": "Public Order Juvenile Delinquent Other",
                             "size": 4666
                         }
-						
+
                     ]
                         },
                         {

@@ -8,7 +8,394 @@ var Pie = new Pie({
 });
 
 
-},{"./views/pie":3,"d3":4,"underscore":5}],2:[function(require,module,exports){
+},{"./views/pie":4,"d3":5,"underscore":6}],2:[function(require,module,exports){
+module.exports = [
+  {
+    "prison_type": "State",
+    "convicted_status": "",
+    "offense_category": "Violent ",
+    "specific_offense": "Murder",
+    "number": "168,845",
+    "long_name": "People in state prison convicted of murder"
+  },
+  {
+    "prison_type": "State",
+    "convicted_status": "",
+    "offense_category": "Violent ",
+    "specific_offense": "Manslaughter",
+    "number": "18,348",
+    "long_name": "People in state prison convicted of manslaughter"
+  },
+  {
+    "prison_type": "State",
+    "convicted_status": "",
+    "offense_category": "Violent ",
+    "specific_offense": "Rape/sexual assault",
+    "number": "169,443",
+    "long_name": "People in state prison convicted of rape/sexual assault"
+  },
+  {
+    "prison_type": "State",
+    "convicted_status": "",
+    "offense_category": "Violent ",
+    "specific_offense": "Robbery",
+    "number": "184,625",
+    "long_name": "People in state prison convicted of robbery"
+  },
+  {
+    "prison_type": "State",
+    "convicted_status": "",
+    "offense_category": "Violent ",
+    "specific_offense": "Aggravated or simple assault",
+    "number": "134,983",
+    "long_name": "People in state prison convicted of aggravated or simple assault"
+  },
+  {
+    "prison_type": "State",
+    "convicted_status": "",
+    "offense_category": "Violent ",
+    "specific_offense": "Other violent",
+    "number": "42,201",
+    "long_name": "People in state prison convicted of other violent offeneses"
+  },
+  {
+    "prison_type": "State",
+    "convicted_status": "",
+    "offense_category": "Property ",
+    "specific_offense": "Burglary",
+    "number": "142,129",
+    "long_name": "People in state prison convicted of burglary"
+  },
+  {
+    "prison_type": "State",
+    "convicted_status": "",
+    "offense_category": "Property ",
+    "specific_offense": "Larceny-theft",
+    "number": "51,150",
+    "long_name": "People in state prison convicted of larceny-theft"
+  },
+  {
+    "prison_type": "State",
+    "convicted_status": "",
+    "offense_category": "Property ",
+    "specific_offense": "Motor vehicle theft",
+    "number": "10,900",
+    "long_name": "People in state prison convicted of motor vehicle theft"
+  },
+  {
+    "prison_type": "State",
+    "convicted_status": "",
+    "offense_category": "Property ",
+    "specific_offense": "Fraud",
+    "number": "27,828",
+    "long_name": "People in state prison convicted of fraud"
+  },
+  {
+    "prison_type": "State",
+    "convicted_status": "",
+    "offense_category": "Property ",
+    "specific_offense": "Other property",
+    "number": "28,542",
+    "long_name": "People in state prison convicted of other property offenses"
+  },
+  {
+    "prison_type": "State",
+    "convicted_status": "",
+    "offense_category": "Drug ",
+    "specific_offense": "Drug possession",
+    "number": "48,350",
+    "long_name": "People in state prison convicted of drug possession"
+  },
+  {
+    "prison_type": "State",
+    "convicted_status": "",
+    "offense_category": "Drug ",
+    "specific_offense": "Other drug",
+    "number": "163,677",
+    "long_name": "People in state prison convicted of drug offenses other than possession"
+  },
+  {
+    "prison_type": "State",
+    "convicted_status": "",
+    "offense_category": "Public order ",
+    "specific_offense": "Weapons",
+    "number": "51,925",
+    "long_name": "People in state prison convicted of weapons"
+  },
+  {
+    "prison_type": "State",
+    "convicted_status": "",
+    "offense_category": "Public order ",
+    "specific_offense": "Driving under the influence",
+    "number": "25,984",
+    "long_name": "People in state prison convicted of driving under the influence"
+  },
+  {
+    "prison_type": "State",
+    "convicted_status": "",
+    "offense_category": "Public order ",
+    "specific_offense": "Other public order",
+    "number": "71,223",
+    "long_name": "People in state prison convicted of other public order offenses"
+  },
+  {
+    "prison_type": "State",
+    "convicted_status": "",
+    "offense_category": "Other",
+    "specific_offense": "Other/unspecified",
+    "number": "10,805",
+    "long_name": "People in state prison convicted of other/unspecified"
+  },
+  {
+    "prison_type": "Federal",
+    "convicted_status": "",
+    "offense_category": "Violent",
+    "specific_offense": "Homicide ",
+    "number": "3135",
+    "long_name": "People in federal prison convicted of homicide"
+  },
+  {
+    "prison_type": "Federal",
+    "convicted_status": "",
+    "offense_category": "Violent",
+    "specific_offense": "Robbery",
+    "number": "7876",
+    "long_name": "People in federal prison convicted of robbery"
+  },
+  {
+    "prison_type": "Federal",
+    "convicted_status": "",
+    "offense_category": "Violent",
+    "specific_offense": "Other violenet",
+    "number": "4360",
+    "long_name": "People in federal prison convicted of other violent offenses"
+  },
+  {
+    "prison_type": "Federal",
+    "convicted_status": "",
+    "offense_category": "Property",
+    "specific_offense": "Burglary",
+    "number": "421",
+    "long_name": "People in federal prison convicted of burglary"
+  },
+  {
+    "prison_type": "Federal",
+    "convicted_status": "",
+    "offense_category": "Fraud",
+    "specific_offense": "Fraud",
+    "number": "9897",
+    "long_name": "People in federal prison convicted of fraud"
+  },
+  {
+    "prison_type": "Federal",
+    "convicted_status": "",
+    "offense_category": "Other property",
+    "specific_offense": "Other property",
+    "number": "2316",
+    "long_name": "People in federal prison convicted of other property offenses"
+  },
+  {
+    "prison_type": "Federal",
+    "convicted_status": "",
+    "offense_category": "Drug",
+    "specific_offense": "Drug",
+    "number": "105494",
+    "long_name": "People in federal prison convicted of drug"
+  },
+  {
+    "prison_type": "Federal",
+    "convicted_status": "",
+    "offense_category": "Public Order",
+    "specific_offense": "Immigration",
+    "number": "18790",
+    "long_name": "People in federal prison convicted of immigration offenses"
+  },
+  {
+    "prison_type": "Federal",
+    "convicted_status": "",
+    "offense_category": "Public Order",
+    "specific_offense": "Weapons",
+    "number": "33364",
+    "long_name": "People in federal prison convicted of weapons"
+  },
+  {
+    "prison_type": "Federal",
+    "convicted_status": "",
+    "offense_category": "Public Order",
+    "specific_offense": "Other",
+    "number": "23440",
+    "long_name": "People in federal prison convicted of other public order offenses"
+  },
+  {
+    "prison_type": "Federal",
+    "convicted_status": "",
+    "offense_category": "Other",
+    "specific_offense": "Other unspecified",
+    "number": "1474",
+    "long_name": "People in federal prison convicted of other unspecified offenses"
+  },
+  {
+    "prison_type": "Military",
+    "convicted_status": "",
+    "offense_category": "Violent ",
+    "specific_offense": "Sexual",
+    "number": "344",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Military",
+    "convicted_status": "",
+    "offense_category": "Nonviolent",
+    "specific_offense": "Sexual ",
+    "number": "525",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Military",
+    "convicted_status": "",
+    "offense_category": "Murderc",
+    "specific_offense": "Other violent ",
+    "number": "110",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Military",
+    "convicted_status": "",
+    "offense_category": "Manslaughter ",
+    "specific_offense": "Other violent ",
+    "number": "8",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Military",
+    "convicted_status": "",
+    "offense_category": "Robbery ",
+    "specific_offense": "Other violent ",
+    "number": "4",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Military",
+    "convicted_status": "",
+    "offense_category": "Aggravated/simple assault ",
+    "specific_offense": "Other violent ",
+    "number": "114",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Military",
+    "convicted_status": "",
+    "offense_category": "Other violent ",
+    "specific_offense": "Other violent ",
+    "number": "20",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Military",
+    "convicted_status": "",
+    "offense_category": "Burglary ",
+    "specific_offense": "Property",
+    "number": "8",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Military",
+    "convicted_status": "",
+    "offense_category": "Larceny-theft ",
+    "specific_offense": "Property",
+    "number": "43",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Military",
+    "convicted_status": "",
+    "offense_category": "Motor vehicle theft ",
+    "specific_offense": "Property",
+    "number": "0",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Military",
+    "convicted_status": "",
+    "offense_category": "Fraud ",
+    "specific_offense": "Property",
+    "number": "3",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Military",
+    "convicted_status": "",
+    "offense_category": "Other property ",
+    "specific_offense": "Property",
+    "number": "16",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Military",
+    "convicted_status": "",
+    "offense_category": "Drugd`",
+    "specific_offense": "Drugs",
+    "number": "92",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Military",
+    "convicted_status": "",
+    "offense_category": "Public order ",
+    "specific_offense": "Public Order",
+    "number": "3",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Military",
+    "convicted_status": "",
+    "offense_category": "Military offenses ",
+    "specific_offense": "Military offenses ",
+    "number": "39",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Military",
+    "convicted_status": "",
+    "offense_category": "Other/unspecified ",
+    "specific_offense": "Other/unspecified ",
+    "number": "79",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Immigration Detention",
+    "convicted_status": "",
+    "offense_category": "",
+    "specific_offense": "Immigration Detention",
+    "number": "32,805",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Indian County jails",
+    "convicted_status": "",
+    "offense_category": "",
+    "specific_offense": "Indian County jails",
+    "number": "2,400",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Civil Commitment",
+    "convicted_status": "",
+    "offense_category": "",
+    "specific_offense": "Civil Commitment",
+    "number": "5,487",
+    "long_name": ""
+  },
+  {
+    "prison_type": "Territorial prisons",
+    "convicted_status": "",
+    "offense_category": "",
+    "specific_offense": "Territorial prisons",
+    "number": "14,000",
+    "long_name": ""
+  }
+];
+},{}],3:[function(require,module,exports){
 // This product includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).
 var colorbrewer = {YlGn: {
 3: ["#f7fcb9","#addd8e","#31a354"],
@@ -314,9 +701,10 @@ var colorbrewer = {YlGn: {
 
 module.exports = colorbrewer;
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 var colorbrewer = require('../lib/colors/colorbrewer');
 var _ = require('underscore');
+var data = require('../data/sample.csv');
 
 var RADII = d3.scale.linear()
     .domain([0, 1, 2, 3])
@@ -331,7 +719,7 @@ var COLORS = {
   YELLOWS: ['#A67611', '#D09515', '#FEB211'],
   PERIWINKLE: ['#5964FF'],
   RED: ['#FF2C5D'],
-  DARKRED: ['#631C1D'],
+  DARKRED: ['#631C1D', '#631C1D', '#631C1D', '#631C1D'],
 };
 
 var COLOR_MAP = {
@@ -340,10 +728,10 @@ var COLOR_MAP = {
   Local: COLORS.ORANGES,
   Juvenile: COLORS.PURPLES,
   Military: COLORS.DARKRED,
-  'Indian County': COLORS.RED,
-  Territorial: COLORS.GREEN,
-  Immigration: COLORS.GREY,
-  Civil: COLORS.PERIWINKLE,
+  'Indian County jails': COLORS.RED,
+  'Territorial prisons': COLORS.GREEN,
+  'Immigration Detention': COLORS.GREY,
+  'Civil Commitment': COLORS.PERIWINKLE,
 };
 
 /**
@@ -372,7 +760,8 @@ var Pie = function(options) {
   this.handleResize();
 
   this.renderFrame();
-  this.loadData();
+	this.data = parseData(data);
+	this.renderData();
 
   _.bindAll(this, 'filterArcText', 'zoomOut', 'zoomIn');
 };
@@ -417,19 +806,8 @@ Pie.prototype.renderFrame = function() {
 };
 
 
-Pie.prototype.loadData = function() {
-  var self = this;
-  return d3.json("flare-labeled.json", function(error, data) {
-    if (error) {
-      return console.warn(error);
-    }
-    self.data = data;
-    self.renderData();
-  });
-};
-
-
 Pie.prototype.renderData = function() {
+	var data = flareData(this.data, ['prison_type', 'convicted_status', 'offense_category', 'specific_offense']);
   var self = this;
   // Compute the initial layout on the entire tree to sum sizes.
   // Also compute the full name and fill color for each node,
@@ -437,27 +815,20 @@ Pie.prototype.renderData = function() {
 
   this.partition
     .value(function(d) { return d.size; })
-    .nodes(this.data)
+    .nodes(data)
     .forEach(function(d) {
-      d._children = d.children;
-      d.sum = d.value;
       d.key = key(d);
       d.fill = self.fill(d);
     });
 
-  // Now redefine the value function to use the previously-computed sum.
-  this.partition
-    .children(function(d, depth) { return depth < 2 ? d._children : null; })
-    .value(function(d) { return d.sum; });
-
   this.center = this.svg.append("circle")
     .attr("r", this.radius / 5)
-    .on("click", this.zoomOut);
+    .on("click", getHandler(this.zoomOut, this));
 
   this.center.append("title")
       .text("zoom out");
 
-  this.partitioned_data = this.partition.nodes(this.data).slice(1);
+  this.partitioned_data = this.partition.nodes(data).slice(1);
 
   this.path = this.svg.selectAll("path")
     .data(this.partitioned_data)
@@ -467,7 +838,7 @@ Pie.prototype.renderData = function() {
       .style("opacity", 0.9)
       .each(function(d) { this._current = updateArc(d); })
       .attr("class", function(d) { return d.depth > 1 ? '' : 'clickable'; })
-      .on("click", this.zoomIn)
+      .on("click", getHandler(this.zoomIn, this))
       .on("mouseover", getHandler(this.mouseOverArc, this))
       .on("mousemove", getHandler(this.mouseMoveArc, this))
       .on("mouseout", getHandler(this.mouseOutArc, this));
@@ -491,7 +862,7 @@ Pie.prototype.fill = function(d) {
   }
   var colorString;
   if (!COLOR_MAP[parent.name] || !(colorString = COLOR_MAP[parent.name][d.depth - 1])) {
-    console.log("Color not found for ", parent, d.depth);
+    console.log("Color not found for ", parent.name, d.depth);
   }
 
   var color = d3.rgb(colorString);
@@ -530,22 +901,22 @@ Pie.prototype.mouseMoveArc = function(target, d) {
 }
 
 
-Pie.prototype.zoomIn = function(p) {
-  if (p.depth > 1) {
+Pie.prototype.zoomIn = function(target, node) {
+  if (node.depth > 1) {
     return;
   }
-  if (!p.children) {
+  if (!node.children) {
     return;
   }
-  this.zoom(p, p);
+  this.zoom(node, node);
 }
 
 
-Pie.prototype.zoomOut = function(p) {
-  if (!p.parent) {
+Pie.prototype.zoomOut = function(target, node) {
+  if (!node.parent) {
     return;
   }
-  this.zoom(p.parent, p);
+  this.zoom(node.parent, node);
 }
 
 
@@ -617,7 +988,7 @@ Pie.prototype.zoom = function(root, p) {
           return d.depth === 2 - (root === p) ? 1 : 0;
         })
         .style("fill", function(d) { return d.fill; })
-        .on("click", self.zoomIn)
+        .on("click", getHandler(self.zoomIn, self))
         .on("mouseover", getHandler(self.mouseOverArc, self))
         .on("mousemove", getHandler(self.mouseMoveArc, self))
         .on("mouseout", getHandler(self.mouseOutArc, self))
@@ -708,13 +1079,72 @@ function getHandler(handler, ctx) {
   }
 };
 
+var COMMAS = /,/g;
+
+/**
+ * Parses the numbers into javascript Numbers.
+ * @param   {Array<Object>} data The csvified data.
+ * @returns {Array<Object>} The parsed data.
+ */
+function parseData(data) {
+	return _.map(data, function(line) {
+		line = _.mapObject(line, function(value) {
+			if (typeof value === 'string') {
+				return value.trim();
+			}
+			return value;
+		});
+
+		if (typeof line.number === 'string') {
+			_.extend(line, { number: parseInt(line.number.replace(COMMAS, '')) });
+		}
+
+		return line;
+	});
+}
+
+
+function flareData(data, groupSequence) {
+	return {
+		name: 'Flare',
+		description: '',
+		children: flareDataRecursive(data, groupSequence)
+	};
+	return parent;
+}
+
+function flareDataRecursive(data, groupSequence) {
+	if (groupSequence.length === 0) {
+		return [];
+	}
+	var currentGroup = groupSequence[0];
+	var remainingSequence = groupSequence.slice(1);
+	var groupedData = _.groupBy(data, currentGroup);
+
+	// If this group has no differentiation on this key then skip it
+	if (_.keys(groupedData).length === 1) {
+		return flareDataRecursive(data, remainingSequence);
+	}
+
+	return _.map(groupedData, function(value, key) {
+		var child = {
+			name: key,
+			description: '' // Need to figure this out
+		};
+		child.size = _.reduce(value, function(memo, item) {
+			return memo + item.number;
+		}, 0);
+		if (remainingSequence.length > 0) {
+			child.children = flareDataRecursive(value, remainingSequence);
+		}
+		return child;
+	});
+}
+
 
 module.exports = Pie;
 
-
-
-
-},{"../lib/colors/colorbrewer":2,"underscore":5}],4:[function(require,module,exports){
+},{"../data/sample.csv":2,"../lib/colors/colorbrewer":3,"underscore":6}],5:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.6"
@@ -10219,7 +10649,7 @@ module.exports = Pie;
   if (typeof define === "function" && define.amd) define(d3); else if (typeof module === "object" && module.exports) module.exports = d3;
   this.d3 = d3;
 }();
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
