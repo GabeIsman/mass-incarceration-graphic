@@ -1,6 +1,7 @@
 var colorbrewer = require('../lib/colors/colorbrewer');
 var _ = require('underscore');
 var data = require('../data/sample.csv');
+var tau = 2 * Math.PI;
 
 var RADII = d3.scale.linear()
     .domain([0, 1, 2, 3])
@@ -56,10 +57,10 @@ var Pie = function(options) {
   this.handleResize();
 
   this.renderFrame();
-	this.data = parseData(data);
-	this.renderData();
+  this.data = parseData(data);
+  this.renderData();
 
-  _.bindAll(this, 'filterArcText', 'zoomOut', 'zoomIn');
+  _.bindAll(this, 'filterArcText', 'arcTween');
 };
 
 
@@ -72,13 +73,14 @@ Pie.prototype.handleResize = function() {
   this.height = boundingRect.height;
   this.radius = Math.min(this.width / 2, this.height / 2);
 
-  this.partition.size([2 * Math.PI, this.radius]);
+  this.partition.size([tau, this.radius]);
 
   // NOTE: this accounts for the inner circle used to zoom out
   var self = this;
   this.arc = d3.svg.arc()
     .startAngle(function(d) { return d.x; })
-    .endAngle(function(d) { return d.x + d.dx - .01 / (d.depth + .5); })
+    // Leave a small gap between segments.
+    .endAngle(function(d) { return d.x + d.dx - 0.01 / (d.depth + .5); })
     .innerRadius(function(d) { return RADII(d.depth) * self.radius })
     .outerRadius(function(d) { return RADII(d.depth + 1) * self.radius - 1; });
 };
@@ -103,7 +105,7 @@ Pie.prototype.renderFrame = function() {
 
 
 Pie.prototype.renderData = function() {
-	var data = flareData(this.data, ['prison_type', 'convicted_status', 'offense_category', 'specific_offense']);
+  var data = flareData(this.data, ['prison_type', 'convicted_status', 'offense_category', 'specific_offense']);
   var self = this;
   // Compute the initial layout on the entire tree to sum sizes.
   // Also compute the full name and fill color for each node,
@@ -132,7 +134,7 @@ Pie.prototype.renderData = function() {
       .attr("d", this.arc)
       .style("fill", function(d) { return d.fill; })
       .style("opacity", 0.9)
-      .each(function(d) { this._current = updateArc(d); })
+      .each(function(d) { d.currentPosition = selectTweenableAttrs(d); })
       .attr("class", function(d) { return d.depth > 1 ? '' : 'clickable'; })
       .on("click", getHandler(this.zoomIn, this))
       .on("mouseover", getHandler(this.mouseOverArc, this))
@@ -177,7 +179,7 @@ Pie.prototype.filterArcText = function(d, i) {
 Pie.prototype.mouseOverArc = function(target, d) {
   d3.select(target).style("opacity", 1);
 
-  this.tooltip.html(format_description(d));
+  this.tooltip.html(formatDescription(d));
   return this.tooltip.transition()
     .duration(50)
     .style("opacity", 0.9);
@@ -221,21 +223,21 @@ Pie.prototype.zoom = function(root, p) {
   if (document.documentElement.__transition__) return;
 
   // Rescale outside angles to match the new layout.
-  var enterArc,
-      exitArc,
-      outsideAngle = d3.scale.linear().domain([0, 2 * Math.PI]);
+  var outsideAngle = d3.scale.linear()
+      .domain([0, tau]);
 
-  function insideArc(d) {
+  function insideTarget(d) {
+		console.log(p.key, d.key);
     if (p.key > d.key) {
-      return {depth: d.depth - 1, x: 0, dx: 0};
+      return { depth: d.depth - 1, x: 0, dx: 0 };
     } else if (p.key < d.key) {
-      return {depth: d.depth - 1, x: 2 * Math.PI, dx: 0};
+      return { depth: d.depth - 1, x: tau, dx: 0 };
     } else {
-      return {depth: 0, x: 0, dx: 2 * Math.PI};
+      return { depth: 0, x: 0, dx: tau };
     }
   }
 
-  function outsideArc(d) {
+  function outsideTarget(d) {
     return {
       depth: d.depth + 1,
       x: outsideAngle(d.x),
@@ -245,56 +247,56 @@ Pie.prototype.zoom = function(root, p) {
 
   this.center.datum(root);
 
+  var zoomingIn = root === p;
+  var enterTarget;
+  var exitTarget;
+
   // When zooming in, arcs enter from the outside and exit to the inside.
   // Entering outside arcs start from the old layout.
-  if (root === p) {
-    enterArc = outsideArc;
-    exitArc = insideArc;
+  if (zoomingIn) {
+    enterTarget = outsideTarget;
+    exitTarget = insideTarget;
+    outsideAngle.range([p.x, p.x + p.dx]);
+  } else {
+    // When zooming out, arcs enter from the inside and exit to the outside.
+    // Exiting outside arcs transition to the new layout.
+    enterTarget = insideTarget;
+    exitTarget = outsideTarget;
     outsideAngle.range([p.x, p.x + p.dx]);
   }
-
-  var new_data = this.partition.nodes(root).slice(1);
 
   // TODO: figure this out, why does this need to be assigned?
+  var new_data = this.partition.nodes(root).slice(1);
   this.path = this.path.data(new_data, function(d) { return d.key; });
-
-  // When zooming out, arcs enter from the inside and exit to the outside.
-  // Exiting outside arcs transition to the new layout.
-  if (root !== p) {
-    enterArc = insideArc;
-    exitArc = outsideArc;
-    outsideAngle.range([p.x, p.x + p.dx]);
-  }
 
   var self = this;
   d3.transition().duration(d3.event.altKey ? 7500 : 750)
     .each(function() {
       self.path.exit().transition()
         .style("fill-opacity", function(d) {
-          return d.depth === 1 + (root === p) ? 1 : 0;
+          return d.depth === 1 + (zoomingIn ? 1 : 0);
         })
-        .attrTween("d", function(d) {
-          return arcTween.call(this, exitArc(d), self.arc);
-        })
+        .attrTween("d", function(d) { return self.arcTween(d, exitTarget(d)); })
         .remove();
 
       // TODO: this is redundant with renderData
       self.path.enter().append("path")
         .style("fill-opacity", function(d) {
-          return d.depth === 2 - (root === p) ? 1 : 0;
+          return d.depth === 2 - (zoomingIn ? 1 : 0);
         })
         .style("fill", function(d) { return d.fill; })
         .on("click", getHandler(self.zoomIn, self))
         .on("mouseover", getHandler(self.mouseOverArc, self))
         .on("mousemove", getHandler(self.mouseMoveArc, self))
         .on("mouseout", getHandler(self.mouseOutArc, self))
-        .each(function(d) { this._current = enterArc(d); });
+        .each(function(d) { d.currentPosition = enterTarget(d); });
+
 
       self.path.transition()
         .style("fill-opacity", 1)
         .attr("class", function(d) { return d.depth > 1 || !d.children ? '' : 'clickable'; })
         .attrTween("d", function(d) {
-          return arcTween.call(this, updateArc(d), self.arc);
+          return self.arcTween(d, selectTweenableAttrs(d));
         });
     });
 
@@ -320,13 +322,33 @@ Pie.prototype.zoom = function(root, p) {
 }
 
 
-function format_number(x) {
+/**
+ * Returns a function that smoothly tweens an arc between the nodes current position and the given
+ * target.
+ * @param   {Object} node The data node being animated. Must have 'currentPosition' set to an object
+ *   with d, dx, and depth attributes.
+ * @param   {Object} targetPosition The final position. This is an object with d, dx, and depth
+*    attributes.
+ * @returns {Function} A function that takes a float between 0 and 1 and returns the interpolated
+ *   arc.
+ */
+Pie.prototype.arcTween = function(node, targetPosition) {
+  var interpolator = d3.interpolate(node.currentPosition, targetPosition);
+	var self = this;
+  return function(t) {
+		node.currentPosition = interpolator(t);
+    return self.arc(node.currentPosition);
+  };
+}
+
+
+function formatNumber(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 
-function format_description(d) {
-  return  '<b>' + d.name + '</b></br>'+ d.description + '<br> (' + format_number(d.value) + ')';
+function formatDescription(d) {
+  return  '<b>' + d.name + '</b></br>'+ d.description + '<br> (' + formatNumber(d.value) + ')';
 }
 
 function computeTextRotation(d) {
@@ -346,16 +368,8 @@ function key(d) {
   return k.reverse().join(".");
 }
 
-function arcTween(b, arc) {
-  var i = d3.interpolate(this._current, b);
-  this._current = i(0);
-  return function(t) {
-    return arc(i(t));
-  };
-}
-
-function updateArc(d) {
-  return {depth: d.depth, x: d.x, dx: d.dx};
+function selectTweenableAttrs(d) {
+  return { depth: d.depth, x: d.x, dx: d.dx };
 }
 
 
@@ -383,58 +397,58 @@ var COMMAS = /,/g;
  * @returns {Array<Object>} The parsed data.
  */
 function parseData(data) {
-	return _.map(data, function(line) {
-		line = _.mapObject(line, function(value) {
-			if (typeof value === 'string') {
-				return value.trim();
-			}
-			return value;
-		});
+  return _.map(data, function(line) {
+    line = _.mapObject(line, function(value) {
+      if (typeof value === 'string') {
+        return value.trim();
+      }
+      return value;
+    });
 
-		if (typeof line.number === 'string') {
-			_.extend(line, { number: parseInt(line.number.replace(COMMAS, '')) });
-		}
+    if (typeof line.number === 'string') {
+      _.extend(line, { number: parseInt(line.number.replace(COMMAS, '')) });
+    }
 
-		return line;
-	});
+    return line;
+  });
 }
 
 
 function flareData(data, groupSequence) {
-	return {
-		name: 'Flare',
-		description: '',
-		children: flareDataRecursive(data, groupSequence)
-	};
-	return parent;
+  return {
+    name: 'Flare',
+    description: '',
+    children: flareDataRecursive(data, groupSequence)
+  };
+  return parent;
 }
 
 function flareDataRecursive(data, groupSequence) {
-	if (groupSequence.length === 0) {
-		return [];
-	}
-	var currentGroup = groupSequence[0];
-	var remainingSequence = groupSequence.slice(1);
-	var groupedData = _.groupBy(data, currentGroup);
+  if (groupSequence.length === 0) {
+    return [];
+  }
+  var currentGroup = groupSequence[0];
+  var remainingSequence = groupSequence.slice(1);
+  var groupedData = _.groupBy(data, currentGroup);
 
-	// If this group has no differentiation on this key then skip it
-	if (_.keys(groupedData).length === 1) {
-		return flareDataRecursive(data, remainingSequence);
-	}
+  // If this group has no differentiation on this key then skip it
+  if (_.keys(groupedData).length === 1) {
+    return flareDataRecursive(data, remainingSequence);
+  }
 
-	return _.map(groupedData, function(value, key) {
-		var child = {
-			name: key,
-			description: '' // Need to figure this out
-		};
-		child.size = _.reduce(value, function(memo, item) {
-			return memo + item.number;
-		}, 0);
-		if (remainingSequence.length > 0) {
-			child.children = flareDataRecursive(value, remainingSequence);
-		}
-		return child;
-	});
+  return _.map(groupedData, function(value, key) {
+    var child = {
+      name: key,
+      description: '' // Need to figure this out
+    };
+    child.size = _.reduce(value, function(memo, item) {
+      return memo + item.number;
+    }, 0);
+    if (remainingSequence.length > 0) {
+      child.children = flareDataRecursive(value, remainingSequence);
+    }
+    return child;
+  });
 }
 
 
