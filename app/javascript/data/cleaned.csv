@@ -1,0 +1,123 @@
+key,convicted_status,long_name,number,offense_category,prison_type,specific_offense
+0,,People in state prison convicted of murder.,"168,845",violent,State,Murder
+1,,People in state prison convicted of manslaughter.,"18,348",violent,State,Manslaughter
+2,,People in state prison convicted of rape/sexual assault.,"169,443",violent,State,Rape/sexual assault
+3,,People in state prison convicted of robbery.,"184,625",violent,State,Robbery
+4,,People in state prison convicted of aggravated or simple assault.,"134,983",violent,State,Aggravated or simple assault
+5,,People in state prison convicted of other violent offenses.,"42,201",violent,State,Other violent
+6,,People in state prison convicted of burglary.,"142,129",property,State,Burglary
+7,,People in state prison convicted of larceny-theft.,"51,150",property,State,Larceny-theft
+8,,People in state prison convicted of motor vehicle theft.,"10,900",property,State,Motor vehicle theft
+9,,People in state prison convicted of fraud.,"27,828",property,State,Fraud
+10,,People in state prison convicted of other property offenses.,"28,542",property,State,Other property
+11,,People in state prison convicted of drug possession.,"48,350",drugs,State,Drug possession
+12,,People in state prison convicted of drug offenses other than possession.,"163,677",drugs,State,Other drug
+13,,People in state prison convicted of weapons offenses.,"51,925",public order,State,Weapons
+14,,People in state prison convicted of driving under the influence.,"25,984",public order,State,Driving under the influence
+15,,People in state prison convicted of other public order offenses.,"71,223",public order,State,Other public order
+16,,People in state prison convicted of other/unspecified.,"10,805",other,State,Other/unspecified
+17,,People in federal prison convicted of homicide.,3135,violent,Federal,Homicide 
+18,,People in federal prison convicted of robbery.,7876,violent,Federal,Robbery
+19,,People in federal prison convicted of other violent offenses.,4360,violent,Federal,Other violent
+20,,People in federal prison convicted of burglary.,421,property,Federal,Burglary
+21,,People in federal prison convicted of fraud.,9897,property,Federal,Fraud
+22,,People in federal prison convicted of other property offenses.,2316,property,Federal,Other property
+23,,People in federal prison convicted of drug offenses.,105494,drugs,Federal,
+24,,People in federal prison convicted of immigration offenses.,18790,public order,Federal,Immigration
+25,,People in federal prison convicted of weapons offenses.,33364,public order,Federal,Weapons
+26,,People in federal prison convicted of other public order offenses.,23440,public order,Federal,Other
+27,,People in federal prison convicted of other unspecified offenses.,1474,other,Federal,Other unspecified
+28,,People held in military prisons for a nonviolent sexual offenses.,525,sexual,Military,Nonviolent
+29,,People held in military prisons for a violent sexual offense.,344,violent,Military,Sexual
+30,,People held in military prisons for the offense of murder.,110,violent,Military,Murder
+31,,People held in military prisons for the offense of manslaughter.,8,violent,Military,Manslaughter 
+32,,People held in military prisons for the offense of robbery.,4,violent,Military,Robbery 
+33,,People held in military prisons for the offense of aggravated/simple assault.,114,violent,Military,Aggravated/simple assault 
+34,,People held in military prisons for other violent offenses.,20,violent,Military,Other violent 
+35,,People held in military prisons for the offense of burglary.,8,property,Military,Burglary 
+36,,People held in military prisons for the offense of larceny-theft.,43,property,Military,Larceny-theft 
+37,,People held in military prisons for the offense of motor vehicle theft.,0,property,Military,Motor vehicle theft 
+38,,People held in military prisons for the offense of fraud.,3,property,Military,Fraud 
+39,,People held in military prisons for other property offenses.,16,property,Military,Other property 
+40,,People held in military prisons for drug offenses..,92,drugs,Military,
+41,,People held in military prisons for public order offenses.,3,public order,Military,
+42,,People held in military prisons for military offenses.,39,military offenses,Military,
+43,,People held in military prisons for other/unspecified offenses.,79,other,Military,
+44,,People held by immigration authorities in their own facilities or elsewhere under contract.,"32,805",other,Immigration Detention,Immigration
+45,,People held in jails run by tribal authorities.,"2,400",other,Indian County jails,Indian County jails
+46,,People who have been civilly committed after completion of their sentence.,"5,487",other,Civil Commitment,Civil Commitment
+47,,People held in prisons and jails in the U.S. territories.,"14,000",other,Territorial prisons,Territorial prisons
+48,Convicted,People held in local jails who have been convicted of murder.,1242,violent,Local,Murder
+49,Convicted,People held in local jails who have been convicted of negligent manslaughter.,896,violent,Local,Negligent manslaughter
+50,Convicted,People held in local jails who have been convicted of kidnapping.,667,violent,Local,Kidnapping
+51,Convicted,People held in local jails who have been convicted of rape.,1435,violent,Local,Rape
+52,Convicted,People held in local jails who have been convicted of other sexual assault.,5079,violent,Local,Other sexual assault
+53,Convicted,People held in local jails who have been convicted of robbery.,6487,violent,Local,Robbery
+54,Convicted,People held in local jails who have been convicted of assault.,22582,violent,Local,Assault
+55,Convicted,People held in local jails who have been convicted of other violent offenses.,3242,violent,Local,Other violent
+56,Convicted,People held in local jails who have been convicted of burglary.,11390,property,Local,Burglary
+57,Convicted,People held in local jails who have been convicted of arson.,626,property,Local,Arson
+58,Convicted,People held in local jails who have been convicted of car theft.,4380,property,Local,Car theft
+59,Convicted,People held in local jails who have been convicted of fraud.,8774,property,Local,Fraud
+60,Convicted,People held in local jails who have been convicted of larceny-theft.,15231,property,Local,Larceny-theft
+61,Convicted,People held in local jails who have been convicted of stolen property.,3559,property,Local,Stolen property
+62,Convicted,People held in local jails who have been convicted of other property offenses.,4208,property,Local,Other property
+63,Convicted,People held in local jails who have been convicted of drug trafficking.,16435,drugs,Local,Drug trafficking
+64,Convicted,People held in local jails who have been convicted of drug possession.,19599,drugs,Local,Drug possession
+65,Convicted,People held in local jails who have been convicted of other drug offenses.,3523,drugs,Local,Drug other
+66,Convicted,People held in local jails who have been convicted of possession with intent.,5793,drugs,Local,Possession with intent
+67,Convicted,People held in local jails who have been convicted of violation of parole/probation.,6395,public order,Local,Violation of parole/probation
+68,Convicted,People held in local jails who have been convicted of weapons offenses.,3533,public order,Local,Weapons
+69,Convicted,People held in local jails who have been convicted of other public order offenses.,6095,public order,Local,Other public order
+70,Convicted,People held in local jails who have been convicted of obstruction of justice.,7343,public order,Local,Obstruction of Justice
+71,Convicted,People held in local jails who have been convicted of traffic offenses.,11169,public order,Local,Traffic
+72,Convicted,People held in local jails who have been convicted of driving while intoxicated.,19600,public order,Local,Driving While Intoxicated
+73,Convicted,People held in local jails who have been convicted of drunkenness/morals offenses.,4294,public order,Local,Drunkenness/morals
+74,Convicted,People held in local jails who have been convicted of immigration violations.,750,public order,Local,Immigration violations
+75,Convicted,People held in local jails who have been convicted of other offenses.,1035,other,Local,
+76,Not convicted,People held in local jails but not convicted of the offense of murder.,16581,violent,Local,Murder
+77,Not convicted,People held in local jails but not convicted of the offense of negligent manslaughter.,1194,violent,Local,Negligent manslaughter
+78,Not convicted,People held in local jails but not convicted of the offense of kidnapping.,5387,violent,Local,Kidnapping
+79,Not convicted,People held in local jails but not convicted of the offense of rape.,2578,violent,Local,Rape
+80,Not convicted,People held in local jails but not convicted of the offense of other sexual assault.,13773,violent,Local,Other sexual assault
+81,Not convicted,People held in local jails but not convicted of the offense of robbery.,35463,violent,Local,Robbery
+82,Not convicted,People held in local jails but not convicted of the offense of assault.,60577,violent,Local,Assault
+83,Not convicted,People held in local jails but not convicted of the offense of other violent.,7095,violent,Local,Other violent
+84,Not convicted,People held in local jails but not convicted of the offense of burglary.,34836,property,Local,Burglary
+85,Not convicted,People held in local jails but not convicted of the offense of arson.,1404,property,Local,Arson
+86,Not convicted,People held in local jails but not convicted of the offense of car theft.,8134,property,Local,Car theft
+87,Not convicted,People held in local jails but not convicted of the offense of fraud.,23657,property,Local,Fraud
+88,Not convicted,People held in local jails but not convicted of the offense of larceny-theft.,28717,property,Local,Larceny-theft
+89,Not convicted,People held in local jails but not convicted of the offense of stolen property.,7354,property,Local,Stolen property
+90,Not convicted,People held in local jails but not convicted of the offense of other property.,8150,property,Local,Other property
+91,Not convicted,People held in local jails but not convicted of the offense of drug trafficking.,42269,drugs,Local,Drug trafficking
+92,Not convicted,People held in local jails but not convicted of the offense of drug possession.,55442,drugs,Local,Drug possession
+93,Not convicted,People held in local jails but not convicted of the offense of drug other.,8052,drugs,Local,Drug other
+94,Not convicted,People held in local jails but not convicted of the offense of possession with intent.,9047,drugs,Local,Possession with intent
+95,Not convicted,People held in local jails but not convicted of the offense of violation of parole/probation.,10947,public order,Local,Violation of parole/probation
+96,Not convicted,People held in local jails but not convicted of the offense of weapons.,10060,public order,Local,Weapons
+97,Not convicted,People held in local jails but not convicted of the offense of other public order.,7475,public order,Local,Other public order
+98,Not convicted,People held in local jails but not convicted of the offense of obstruction of justice.,16125,public order,Local,Obstruction of Justice
+99,Not convicted,People held in local jails but not convicted of the offense of traffic.,9409,public order,Local,Traffic
+100,Not convicted,People held in local jails but not convicted of the offense of driving while intoxicated.,15353,public order,Local,Driving While Intoxicated
+101,Not convicted,People held in local jails but not convicted of the offense of drunkenness/morals.,6779,public order,Local,Drunkenness/morals
+102,Not convicted,People held in local jails but not convicted of the offense of immigration violations.,2811,public order,Local,Immigration violations
+103,Not convicted,People held in local jails but not convicted of other offenses.,2447,other,Local,Other
+104,,Children held as delinquents for the offense of criminal homicide.,801,person,Kids,criminal homicide
+105,,Children held as delinquents for the offense of sexual assault.,3914,person,Kids,sexual assault
+106,,Children held as delinquents for the offense of robbery.,5708,person,Kids,robbery
+107,,Children held as delinquents for the offense of aggravated assault.,5260,person,Kids,aggravated assault
+108,,Children held as delinquents for the offense of simple assault.,5250,person,Kids,simple assault
+109,,Children held as delinquents for the offense of other person.,2031,person,Kids,other person
+110,,Children held as delinquents for the offense of burglary.,6687,property,Kids,burglary
+111,,Children held as delinquents for the offense of theft.,3364,property,Kids,theft
+112,,Children held as delinquents for the offense of auto theft.,1781,property,Kids,auto theft
+113,,Children held as delinquents for the offense of arson.,448,property,Kids,arson
+114,,Children held as delinquents for other property offenses.,2425,property,Kids,other property
+115,,Children held as delinquents for the offense of drug trafficking.,737,drugs,Kids,drug trafficking 
+116,,Children held as delinquents for other drug offenses.,3578,drugs,Kids,other drug 
+117,,Children held as delinquents for the offense of weapons.,2647,public order,Kids,weapons
+118,,Children held as delinquents for other public order offenses.,4670,public order,Kids,other public order
+119,,Children held as delinquents for technical violations.,9883,technical,Kids,technical violation
+120,,Children held for status offenses.,2239,status offense,Kids,
+121,,Other people held in juvenile institutions.,7392,other,Kids,other residents (21+ or people awaiting trial)

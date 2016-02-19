@@ -42,3 +42,12 @@ circle {
   border: 1px solid black;
   text-align: center;
 }
+
+.tab {
+  padding: 10px;
+}
+
+.current {
+  stroke: #df8611;
+  fill: #657a10;
+}

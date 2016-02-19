@@ -38,3 +38,12 @@ circle {
   border: 1px solid black;
   text-align: center;
 }
+
+.tab {
+	padding: 10px;
+}
+
+.current {
+	stroke: rgb(223, 134, 17);
+	fill: rgb(101, 122, 16)
+}
