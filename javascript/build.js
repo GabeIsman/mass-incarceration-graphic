@@ -1497,7 +1497,8 @@ var Pie = function(options) {
 		.clamp(true)
 		.range([90, 20]);
 
-	d3.select(window).on('resize', _.bind(this.handleResize, this));
+	_.bindAll(this, 'filterArcText', 'arcTween', 'handleResize');
+	d3.select(window).on('resize', this.handleResize);
 	this.handleResize();
 
 	this.currentOrientation = ORIENTATIONS[0];
@@ -1505,8 +1506,6 @@ var Pie = function(options) {
 	this.renderFrame();
 	this.data = parseData(data);
 	this.renderData();
-
-	_.bindAll(this, 'filterArcText', 'arcTween');
 };
 
 
@@ -1566,9 +1565,7 @@ Pie.prototype.renderFrame = function() {
 Pie.prototype.handleTabClicked = function(target, data) {
 	this.currentOrientation = data;
 	this.updateTabHighlight();
-	// TODO: cool transition of data out and back in
-	// TODO: for now just blow it away and get working like that
-
+	this.transitionOut();
 	this.renderData();
 }
 
@@ -1583,7 +1580,6 @@ Pie.prototype.updateTabHighlight = function() {
 
 Pie.prototype.renderData = function() {
 	var data = flareData(this.data, this.currentOrientation.order);
-	debugger;
 	var self = this;
 	// Compute the initial layout on the entire tree to sum sizes.
 	// Also compute the full name and fill color for each node,
@@ -1607,8 +1603,8 @@ Pie.prototype.renderData = function() {
 	this.partitioned_data = this.partition.nodes(data).slice(1);
 
 	this.path = this.svg.selectAll("path")
-		.data(this.partitioned_data)
-		.enter().append("path")
+		.data(this.partitioned_data);
+	this.path.enter().append("path")
 			.attr("d", this.arc)
 			.style("fill", function(d) { return d.fill; })
 			.style("opacity", 0.9)
@@ -1620,7 +1616,7 @@ Pie.prototype.renderData = function() {
 			.on("mouseout", getHandler(this.mouseOutArc, this));
 
 		this.texts = this.svg.selectAll("text")
-			.data(this.partitioned_data)
+			.data(this.partitioned_data, function(d) { return d.key; })
 			.enter().append("text")
 			.filter(this.filterArcText)
 			.attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
@@ -1817,6 +1813,14 @@ Pie.prototype.arcTween = function(node, targetPosition) {
 		node.currentPosition = interpolator(t);
 		return self.arc(node.currentPosition);
 	};
+}
+
+
+Pie.prototype.transitionOut = function() {
+	// TODO: cool transition of data out
+	this.path.remove();
+
+	this.texts.data([]).exit().remove();
 }
 
 
