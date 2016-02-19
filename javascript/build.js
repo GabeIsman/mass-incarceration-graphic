@@ -11,388 +11,1102 @@ var Pie = new Pie({
 },{"./views/pie":4,"d3":5,"underscore":6}],2:[function(require,module,exports){
 module.exports = [
   {
-    "prison_type": "State",
+    "key": "0",
     "convicted_status": "",
-    "offense_category": "Violent ",
-    "specific_offense": "Murder",
+    "long_name": "People in state prison convicted of murder.",
     "number": "168,845",
-    "long_name": "People in state prison convicted of murder"
+    "offense_category": "violent",
+    "prison_type": "State",
+    "specific_offense": "Murder"
   },
   {
-    "prison_type": "State",
+    "key": "1",
     "convicted_status": "",
-    "offense_category": "Violent ",
-    "specific_offense": "Manslaughter",
+    "long_name": "People in state prison convicted of manslaughter.",
     "number": "18,348",
-    "long_name": "People in state prison convicted of manslaughter"
+    "offense_category": "violent",
+    "prison_type": "State",
+    "specific_offense": "Manslaughter"
   },
   {
-    "prison_type": "State",
+    "key": "2",
     "convicted_status": "",
-    "offense_category": "Violent ",
-    "specific_offense": "Rape/sexual assault",
+    "long_name": "People in state prison convicted of rape/sexual assault.",
     "number": "169,443",
-    "long_name": "People in state prison convicted of rape/sexual assault"
+    "offense_category": "violent",
+    "prison_type": "State",
+    "specific_offense": "Rape/sexual assault"
   },
   {
-    "prison_type": "State",
+    "key": "3",
     "convicted_status": "",
-    "offense_category": "Violent ",
-    "specific_offense": "Robbery",
+    "long_name": "People in state prison convicted of robbery.",
     "number": "184,625",
-    "long_name": "People in state prison convicted of robbery"
+    "offense_category": "violent",
+    "prison_type": "State",
+    "specific_offense": "Robbery"
   },
   {
-    "prison_type": "State",
+    "key": "4",
     "convicted_status": "",
-    "offense_category": "Violent ",
-    "specific_offense": "Aggravated or simple assault",
+    "long_name": "People in state prison convicted of aggravated or simple assault.",
     "number": "134,983",
-    "long_name": "People in state prison convicted of aggravated or simple assault"
+    "offense_category": "violent",
+    "prison_type": "State",
+    "specific_offense": "Aggravated or simple assault"
   },
   {
-    "prison_type": "State",
+    "key": "5",
     "convicted_status": "",
-    "offense_category": "Violent ",
-    "specific_offense": "Other violent",
+    "long_name": "People in state prison convicted of other violent offenses.",
     "number": "42,201",
-    "long_name": "People in state prison convicted of other violent offeneses"
+    "offense_category": "violent",
+    "prison_type": "State",
+    "specific_offense": "Other violent"
   },
   {
-    "prison_type": "State",
+    "key": "6",
     "convicted_status": "",
-    "offense_category": "Property ",
-    "specific_offense": "Burglary",
+    "long_name": "People in state prison convicted of burglary.",
     "number": "142,129",
-    "long_name": "People in state prison convicted of burglary"
+    "offense_category": "property",
+    "prison_type": "State",
+    "specific_offense": "Burglary"
   },
   {
-    "prison_type": "State",
+    "key": "7",
     "convicted_status": "",
-    "offense_category": "Property ",
-    "specific_offense": "Larceny-theft",
+    "long_name": "People in state prison convicted of larceny-theft.",
     "number": "51,150",
-    "long_name": "People in state prison convicted of larceny-theft"
+    "offense_category": "property",
+    "prison_type": "State",
+    "specific_offense": "Larceny-theft"
   },
   {
-    "prison_type": "State",
+    "key": "8",
     "convicted_status": "",
-    "offense_category": "Property ",
-    "specific_offense": "Motor vehicle theft",
+    "long_name": "People in state prison convicted of motor vehicle theft.",
     "number": "10,900",
-    "long_name": "People in state prison convicted of motor vehicle theft"
+    "offense_category": "property",
+    "prison_type": "State",
+    "specific_offense": "Motor vehicle theft"
   },
   {
-    "prison_type": "State",
+    "key": "9",
     "convicted_status": "",
-    "offense_category": "Property ",
-    "specific_offense": "Fraud",
+    "long_name": "People in state prison convicted of fraud.",
     "number": "27,828",
-    "long_name": "People in state prison convicted of fraud"
+    "offense_category": "property",
+    "prison_type": "State",
+    "specific_offense": "Fraud"
   },
   {
-    "prison_type": "State",
+    "key": "10",
     "convicted_status": "",
-    "offense_category": "Property ",
-    "specific_offense": "Other property",
+    "long_name": "People in state prison convicted of other property offenses.",
     "number": "28,542",
-    "long_name": "People in state prison convicted of other property offenses"
+    "offense_category": "property",
+    "prison_type": "State",
+    "specific_offense": "Other property"
   },
   {
-    "prison_type": "State",
+    "key": "11",
     "convicted_status": "",
-    "offense_category": "Drug ",
-    "specific_offense": "Drug possession",
+    "long_name": "People in state prison convicted of drug possession.",
     "number": "48,350",
-    "long_name": "People in state prison convicted of drug possession"
+    "offense_category": "drugs",
+    "prison_type": "State",
+    "specific_offense": "Drug possession"
   },
   {
-    "prison_type": "State",
+    "key": "12",
     "convicted_status": "",
-    "offense_category": "Drug ",
-    "specific_offense": "Other drug",
+    "long_name": "People in state prison convicted of drug offenses other than possession.",
     "number": "163,677",
-    "long_name": "People in state prison convicted of drug offenses other than possession"
+    "offense_category": "drugs",
+    "prison_type": "State",
+    "specific_offense": "Other drug"
   },
   {
-    "prison_type": "State",
+    "key": "13",
     "convicted_status": "",
-    "offense_category": "Public order ",
-    "specific_offense": "Weapons",
+    "long_name": "People in state prison convicted of weapons offenses.",
     "number": "51,925",
-    "long_name": "People in state prison convicted of weapons"
+    "offense_category": "public order",
+    "prison_type": "State",
+    "specific_offense": "Weapons"
   },
   {
-    "prison_type": "State",
+    "key": "14",
     "convicted_status": "",
-    "offense_category": "Public order ",
-    "specific_offense": "Driving under the influence",
+    "long_name": "People in state prison convicted of driving under the influence.",
     "number": "25,984",
-    "long_name": "People in state prison convicted of driving under the influence"
+    "offense_category": "public order",
+    "prison_type": "State",
+    "specific_offense": "Driving under the influence"
   },
   {
-    "prison_type": "State",
+    "key": "15",
     "convicted_status": "",
-    "offense_category": "Public order ",
-    "specific_offense": "Other public order",
+    "long_name": "People in state prison convicted of other public order offenses.",
     "number": "71,223",
-    "long_name": "People in state prison convicted of other public order offenses"
-  },
-  {
+    "offense_category": "public order",
     "prison_type": "State",
+    "specific_offense": "Other public order"
+  },
+  {
+    "key": "16",
     "convicted_status": "",
-    "offense_category": "Other",
-    "specific_offense": "Other/unspecified",
+    "long_name": "People in state prison convicted of other/unspecified.",
     "number": "10,805",
-    "long_name": "People in state prison convicted of other/unspecified"
+    "offense_category": "other",
+    "prison_type": "State",
+    "specific_offense": "Other/unspecified"
   },
   {
-    "prison_type": "Federal",
+    "key": "17",
     "convicted_status": "",
-    "offense_category": "Violent",
-    "specific_offense": "Homicide ",
+    "long_name": "People in federal prison convicted of homicide.",
     "number": "3135",
-    "long_name": "People in federal prison convicted of homicide"
+    "offense_category": "violent",
+    "prison_type": "Federal",
+    "specific_offense": "Homicide "
   },
   {
-    "prison_type": "Federal",
+    "key": "18",
     "convicted_status": "",
-    "offense_category": "Violent",
-    "specific_offense": "Robbery",
+    "long_name": "People in federal prison convicted of robbery.",
     "number": "7876",
-    "long_name": "People in federal prison convicted of robbery"
+    "offense_category": "violent",
+    "prison_type": "Federal",
+    "specific_offense": "Robbery"
   },
   {
-    "prison_type": "Federal",
+    "key": "19",
     "convicted_status": "",
-    "offense_category": "Violent",
-    "specific_offense": "Other violenet",
+    "long_name": "People in federal prison convicted of other violent offenses.",
     "number": "4360",
-    "long_name": "People in federal prison convicted of other violent offenses"
+    "offense_category": "violent",
+    "prison_type": "Federal",
+    "specific_offense": "Other violent"
   },
   {
-    "prison_type": "Federal",
+    "key": "20",
     "convicted_status": "",
-    "offense_category": "Property",
-    "specific_offense": "Burglary",
+    "long_name": "People in federal prison convicted of burglary.",
     "number": "421",
-    "long_name": "People in federal prison convicted of burglary"
+    "offense_category": "property",
+    "prison_type": "Federal",
+    "specific_offense": "Burglary"
   },
   {
-    "prison_type": "Federal",
+    "key": "21",
     "convicted_status": "",
-    "offense_category": "Fraud",
-    "specific_offense": "Fraud",
+    "long_name": "People in federal prison convicted of fraud.",
     "number": "9897",
-    "long_name": "People in federal prison convicted of fraud"
+    "offense_category": "property",
+    "prison_type": "Federal",
+    "specific_offense": "Fraud"
   },
   {
-    "prison_type": "Federal",
+    "key": "22",
     "convicted_status": "",
-    "offense_category": "Other property",
-    "specific_offense": "Other property",
+    "long_name": "People in federal prison convicted of other property offenses.",
     "number": "2316",
-    "long_name": "People in federal prison convicted of other property offenses"
+    "offense_category": "property",
+    "prison_type": "Federal",
+    "specific_offense": "Other property"
   },
   {
-    "prison_type": "Federal",
+    "key": "23",
     "convicted_status": "",
-    "offense_category": "Drug",
-    "specific_offense": "Drug",
+    "long_name": "People in federal prison convicted of drug offenses.",
     "number": "105494",
-    "long_name": "People in federal prison convicted of drug"
+    "offense_category": "drugs",
+    "prison_type": "Federal",
+    "specific_offense": ""
   },
   {
-    "prison_type": "Federal",
+    "key": "24",
     "convicted_status": "",
-    "offense_category": "Public Order",
-    "specific_offense": "Immigration",
+    "long_name": "People in federal prison convicted of immigration offenses.",
     "number": "18790",
-    "long_name": "People in federal prison convicted of immigration offenses"
+    "offense_category": "public order",
+    "prison_type": "Federal",
+    "specific_offense": "Immigration"
   },
   {
-    "prison_type": "Federal",
+    "key": "25",
     "convicted_status": "",
-    "offense_category": "Public Order",
-    "specific_offense": "Weapons",
+    "long_name": "People in federal prison convicted of weapons offenses.",
     "number": "33364",
-    "long_name": "People in federal prison convicted of weapons"
+    "offense_category": "public order",
+    "prison_type": "Federal",
+    "specific_offense": "Weapons"
   },
   {
-    "prison_type": "Federal",
+    "key": "26",
     "convicted_status": "",
-    "offense_category": "Public Order",
-    "specific_offense": "Other",
+    "long_name": "People in federal prison convicted of other public order offenses.",
     "number": "23440",
-    "long_name": "People in federal prison convicted of other public order offenses"
-  },
-  {
+    "offense_category": "public order",
     "prison_type": "Federal",
+    "specific_offense": "Other"
+  },
+  {
+    "key": "27",
     "convicted_status": "",
-    "offense_category": "Other",
-    "specific_offense": "Other unspecified",
+    "long_name": "People in federal prison convicted of other unspecified offenses.",
     "number": "1474",
-    "long_name": "People in federal prison convicted of other unspecified offenses"
+    "offense_category": "other",
+    "prison_type": "Federal",
+    "specific_offense": "Other unspecified"
   },
   {
-    "prison_type": "Military",
+    "key": "28",
     "convicted_status": "",
-    "offense_category": "Violent ",
-    "specific_offense": "Sexual",
-    "number": "344",
-    "long_name": ""
-  },
-  {
-    "prison_type": "Military",
-    "convicted_status": "",
-    "offense_category": "Nonviolent",
-    "specific_offense": "Sexual ",
+    "long_name": "People held in military prisons for a nonviolent sexual offenses.",
     "number": "525",
-    "long_name": ""
+    "offense_category": "sexual",
+    "prison_type": "Military",
+    "specific_offense": "Nonviolent"
   },
   {
-    "prison_type": "Military",
+    "key": "29",
     "convicted_status": "",
-    "offense_category": "Murderc",
-    "specific_offense": "Other violent ",
+    "long_name": "People held in military prisons for a violent sexual offense.",
+    "number": "344",
+    "offense_category": "violent",
+    "prison_type": "Military",
+    "specific_offense": "Sexual"
+  },
+  {
+    "key": "30",
+    "convicted_status": "",
+    "long_name": "People held in military prisons for the offense of murder.",
     "number": "110",
-    "long_name": ""
+    "offense_category": "violent",
+    "prison_type": "Military",
+    "specific_offense": "Murder"
   },
   {
-    "prison_type": "Military",
+    "key": "31",
     "convicted_status": "",
-    "offense_category": "Manslaughter ",
-    "specific_offense": "Other violent ",
+    "long_name": "People held in military prisons for the offense of manslaughter.",
     "number": "8",
-    "long_name": ""
+    "offense_category": "violent",
+    "prison_type": "Military",
+    "specific_offense": "Manslaughter "
   },
   {
-    "prison_type": "Military",
+    "key": "32",
     "convicted_status": "",
-    "offense_category": "Robbery ",
-    "specific_offense": "Other violent ",
+    "long_name": "People held in military prisons for the offense of robbery.",
     "number": "4",
-    "long_name": ""
+    "offense_category": "violent",
+    "prison_type": "Military",
+    "specific_offense": "Robbery "
   },
   {
-    "prison_type": "Military",
+    "key": "33",
     "convicted_status": "",
-    "offense_category": "Aggravated/simple assault ",
-    "specific_offense": "Other violent ",
+    "long_name": "People held in military prisons for the offense of aggravated/simple assault.",
     "number": "114",
-    "long_name": ""
+    "offense_category": "violent",
+    "prison_type": "Military",
+    "specific_offense": "Aggravated/simple assault "
   },
   {
-    "prison_type": "Military",
+    "key": "34",
     "convicted_status": "",
-    "offense_category": "Other violent ",
-    "specific_offense": "Other violent ",
+    "long_name": "People held in military prisons for other violent offenses.",
     "number": "20",
-    "long_name": ""
+    "offense_category": "violent",
+    "prison_type": "Military",
+    "specific_offense": "Other violent "
   },
   {
-    "prison_type": "Military",
+    "key": "35",
     "convicted_status": "",
-    "offense_category": "Burglary ",
-    "specific_offense": "Property",
+    "long_name": "People held in military prisons for the offense of burglary.",
     "number": "8",
-    "long_name": ""
+    "offense_category": "property",
+    "prison_type": "Military",
+    "specific_offense": "Burglary "
   },
   {
-    "prison_type": "Military",
+    "key": "36",
     "convicted_status": "",
-    "offense_category": "Larceny-theft ",
-    "specific_offense": "Property",
+    "long_name": "People held in military prisons for the offense of larceny-theft.",
     "number": "43",
-    "long_name": ""
+    "offense_category": "property",
+    "prison_type": "Military",
+    "specific_offense": "Larceny-theft "
   },
   {
-    "prison_type": "Military",
+    "key": "37",
     "convicted_status": "",
-    "offense_category": "Motor vehicle theft ",
-    "specific_offense": "Property",
+    "long_name": "People held in military prisons for the offense of motor vehicle theft.",
     "number": "0",
-    "long_name": ""
+    "offense_category": "property",
+    "prison_type": "Military",
+    "specific_offense": "Motor vehicle theft "
   },
   {
-    "prison_type": "Military",
+    "key": "38",
     "convicted_status": "",
-    "offense_category": "Fraud ",
-    "specific_offense": "Property",
+    "long_name": "People held in military prisons for the offense of fraud.",
     "number": "3",
-    "long_name": ""
+    "offense_category": "property",
+    "prison_type": "Military",
+    "specific_offense": "Fraud "
   },
   {
-    "prison_type": "Military",
+    "key": "39",
     "convicted_status": "",
-    "offense_category": "Other property ",
-    "specific_offense": "Property",
+    "long_name": "People held in military prisons for other property offenses.",
     "number": "16",
-    "long_name": ""
+    "offense_category": "property",
+    "prison_type": "Military",
+    "specific_offense": "Other property "
   },
   {
-    "prison_type": "Military",
+    "key": "40",
     "convicted_status": "",
-    "offense_category": "Drugd`",
-    "specific_offense": "Drugs",
+    "long_name": "People held in military prisons for drug offenses..",
     "number": "92",
-    "long_name": ""
+    "offense_category": "drugs",
+    "prison_type": "Military",
+    "specific_offense": ""
   },
   {
-    "prison_type": "Military",
+    "key": "41",
     "convicted_status": "",
-    "offense_category": "Public order ",
-    "specific_offense": "Public Order",
+    "long_name": "People held in military prisons for public order offenses.",
     "number": "3",
-    "long_name": ""
+    "offense_category": "public order",
+    "prison_type": "Military",
+    "specific_offense": ""
   },
   {
-    "prison_type": "Military",
+    "key": "42",
     "convicted_status": "",
-    "offense_category": "Military offenses ",
-    "specific_offense": "Military offenses ",
+    "long_name": "People held in military prisons for military offenses.",
     "number": "39",
-    "long_name": ""
-  },
-  {
+    "offense_category": "military offenses",
     "prison_type": "Military",
+    "specific_offense": ""
+  },
+  {
+    "key": "43",
     "convicted_status": "",
-    "offense_category": "Other/unspecified ",
-    "specific_offense": "Other/unspecified ",
+    "long_name": "People held in military prisons for other/unspecified offenses.",
     "number": "79",
-    "long_name": ""
+    "offense_category": "other",
+    "prison_type": "Military",
+    "specific_offense": ""
   },
   {
-    "prison_type": "Immigration Detention",
+    "key": "44",
     "convicted_status": "",
-    "offense_category": "",
-    "specific_offense": "Immigration Detention",
+    "long_name": "People held by immigration authorities in their own facilities or elsewhere under contract.",
     "number": "32,805",
-    "long_name": ""
+    "offense_category": "other",
+    "prison_type": "Immigration Detention",
+    "specific_offense": "Immigration"
   },
   {
-    "prison_type": "Indian County jails",
+    "key": "45",
     "convicted_status": "",
-    "offense_category": "",
-    "specific_offense": "Indian County jails",
+    "long_name": "People held in jails run by tribal authorities.",
     "number": "2,400",
-    "long_name": ""
+    "offense_category": "other",
+    "prison_type": "Indian County jails",
+    "specific_offense": "Indian County jails"
   },
   {
-    "prison_type": "Civil Commitment",
+    "key": "46",
     "convicted_status": "",
-    "offense_category": "",
-    "specific_offense": "Civil Commitment",
+    "long_name": "People who have been civilly committed after completion of their sentence.",
     "number": "5,487",
-    "long_name": ""
+    "offense_category": "other",
+    "prison_type": "Civil Commitment",
+    "specific_offense": "Civil Commitment"
   },
   {
-    "prison_type": "Territorial prisons",
+    "key": "47",
     "convicted_status": "",
-    "offense_category": "",
-    "specific_offense": "Territorial prisons",
+    "long_name": "People held in prisons and jails in the U.S. territories.",
     "number": "14,000",
-    "long_name": ""
+    "offense_category": "other",
+    "prison_type": "Territorial prisons",
+    "specific_offense": "Territorial prisons"
+  },
+  {
+    "key": "48",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of murder.",
+    "number": "1242",
+    "offense_category": "violent",
+    "prison_type": "Local",
+    "specific_offense": "Murder"
+  },
+  {
+    "key": "49",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of negligent manslaughter.",
+    "number": "896",
+    "offense_category": "violent",
+    "prison_type": "Local",
+    "specific_offense": "Negligent manslaughter"
+  },
+  {
+    "key": "50",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of kidnapping.",
+    "number": "667",
+    "offense_category": "violent",
+    "prison_type": "Local",
+    "specific_offense": "Kidnapping"
+  },
+  {
+    "key": "51",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of rape.",
+    "number": "1435",
+    "offense_category": "violent",
+    "prison_type": "Local",
+    "specific_offense": "Rape"
+  },
+  {
+    "key": "52",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of other sexual assault.",
+    "number": "5079",
+    "offense_category": "violent",
+    "prison_type": "Local",
+    "specific_offense": "Other sexual assault"
+  },
+  {
+    "key": "53",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of robbery.",
+    "number": "6487",
+    "offense_category": "violent",
+    "prison_type": "Local",
+    "specific_offense": "Robbery"
+  },
+  {
+    "key": "54",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of assault.",
+    "number": "22582",
+    "offense_category": "violent",
+    "prison_type": "Local",
+    "specific_offense": "Assault"
+  },
+  {
+    "key": "55",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of other violent offenses.",
+    "number": "3242",
+    "offense_category": "violent",
+    "prison_type": "Local",
+    "specific_offense": "Other violent"
+  },
+  {
+    "key": "56",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of burglary.",
+    "number": "11390",
+    "offense_category": "property",
+    "prison_type": "Local",
+    "specific_offense": "Burglary"
+  },
+  {
+    "key": "57",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of arson.",
+    "number": "626",
+    "offense_category": "property",
+    "prison_type": "Local",
+    "specific_offense": "Arson"
+  },
+  {
+    "key": "58",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of car theft.",
+    "number": "4380",
+    "offense_category": "property",
+    "prison_type": "Local",
+    "specific_offense": "Car theft"
+  },
+  {
+    "key": "59",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of fraud.",
+    "number": "8774",
+    "offense_category": "property",
+    "prison_type": "Local",
+    "specific_offense": "Fraud"
+  },
+  {
+    "key": "60",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of larceny-theft.",
+    "number": "15231",
+    "offense_category": "property",
+    "prison_type": "Local",
+    "specific_offense": "Larceny-theft"
+  },
+  {
+    "key": "61",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of stolen property.",
+    "number": "3559",
+    "offense_category": "property",
+    "prison_type": "Local",
+    "specific_offense": "Stolen property"
+  },
+  {
+    "key": "62",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of other property offenses.",
+    "number": "4208",
+    "offense_category": "property",
+    "prison_type": "Local",
+    "specific_offense": "Other property"
+  },
+  {
+    "key": "63",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of drug trafficking.",
+    "number": "16435",
+    "offense_category": "drugs",
+    "prison_type": "Local",
+    "specific_offense": "Drug trafficking"
+  },
+  {
+    "key": "64",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of drug possession.",
+    "number": "19599",
+    "offense_category": "drugs",
+    "prison_type": "Local",
+    "specific_offense": "Drug possession"
+  },
+  {
+    "key": "65",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of other drug offenses.",
+    "number": "3523",
+    "offense_category": "drugs",
+    "prison_type": "Local",
+    "specific_offense": "Drug other"
+  },
+  {
+    "key": "66",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of possession with intent.",
+    "number": "5793",
+    "offense_category": "drugs",
+    "prison_type": "Local",
+    "specific_offense": "Possession with intent"
+  },
+  {
+    "key": "67",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of violation of parole/probation.",
+    "number": "6395",
+    "offense_category": "public order",
+    "prison_type": "Local",
+    "specific_offense": "Violation of parole/probation"
+  },
+  {
+    "key": "68",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of weapons offenses.",
+    "number": "3533",
+    "offense_category": "public order",
+    "prison_type": "Local",
+    "specific_offense": "Weapons"
+  },
+  {
+    "key": "69",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of other public order offenses.",
+    "number": "6095",
+    "offense_category": "public order",
+    "prison_type": "Local",
+    "specific_offense": "Other public order"
+  },
+  {
+    "key": "70",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of obstruction of justice.",
+    "number": "7343",
+    "offense_category": "public order",
+    "prison_type": "Local",
+    "specific_offense": "Obstruction of Justice"
+  },
+  {
+    "key": "71",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of traffic offenses.",
+    "number": "11169",
+    "offense_category": "public order",
+    "prison_type": "Local",
+    "specific_offense": "Traffic"
+  },
+  {
+    "key": "72",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of driving while intoxicated.",
+    "number": "19600",
+    "offense_category": "public order",
+    "prison_type": "Local",
+    "specific_offense": "Driving While Intoxicated"
+  },
+  {
+    "key": "73",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of drunkenness/morals offenses.",
+    "number": "4294",
+    "offense_category": "public order",
+    "prison_type": "Local",
+    "specific_offense": "Drunkenness/morals"
+  },
+  {
+    "key": "74",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of immigration violations.",
+    "number": "750",
+    "offense_category": "public order",
+    "prison_type": "Local",
+    "specific_offense": "Immigration violations"
+  },
+  {
+    "key": "75",
+    "convicted_status": "Convicted",
+    "long_name": "People held in local jails who have been convicted of other offenses.",
+    "number": "1035",
+    "offense_category": "other",
+    "prison_type": "Local",
+    "specific_offense": ""
+  },
+  {
+    "key": "76",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of murder.",
+    "number": "16581",
+    "offense_category": "violent",
+    "prison_type": "Local",
+    "specific_offense": "Murder"
+  },
+  {
+    "key": "77",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of negligent manslaughter.",
+    "number": "1194",
+    "offense_category": "violent",
+    "prison_type": "Local",
+    "specific_offense": "Negligent manslaughter"
+  },
+  {
+    "key": "78",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of kidnapping.",
+    "number": "5387",
+    "offense_category": "violent",
+    "prison_type": "Local",
+    "specific_offense": "Kidnapping"
+  },
+  {
+    "key": "79",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of rape.",
+    "number": "2578",
+    "offense_category": "violent",
+    "prison_type": "Local",
+    "specific_offense": "Rape"
+  },
+  {
+    "key": "80",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of other sexual assault.",
+    "number": "13773",
+    "offense_category": "violent",
+    "prison_type": "Local",
+    "specific_offense": "Other sexual assault"
+  },
+  {
+    "key": "81",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of robbery.",
+    "number": "35463",
+    "offense_category": "violent",
+    "prison_type": "Local",
+    "specific_offense": "Robbery"
+  },
+  {
+    "key": "82",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of assault.",
+    "number": "60577",
+    "offense_category": "violent",
+    "prison_type": "Local",
+    "specific_offense": "Assault"
+  },
+  {
+    "key": "83",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of other violent.",
+    "number": "7095",
+    "offense_category": "violent",
+    "prison_type": "Local",
+    "specific_offense": "Other violent"
+  },
+  {
+    "key": "84",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of burglary.",
+    "number": "34836",
+    "offense_category": "property",
+    "prison_type": "Local",
+    "specific_offense": "Burglary"
+  },
+  {
+    "key": "85",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of arson.",
+    "number": "1404",
+    "offense_category": "property",
+    "prison_type": "Local",
+    "specific_offense": "Arson"
+  },
+  {
+    "key": "86",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of car theft.",
+    "number": "8134",
+    "offense_category": "property",
+    "prison_type": "Local",
+    "specific_offense": "Car theft"
+  },
+  {
+    "key": "87",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of fraud.",
+    "number": "23657",
+    "offense_category": "property",
+    "prison_type": "Local",
+    "specific_offense": "Fraud"
+  },
+  {
+    "key": "88",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of larceny-theft.",
+    "number": "28717",
+    "offense_category": "property",
+    "prison_type": "Local",
+    "specific_offense": "Larceny-theft"
+  },
+  {
+    "key": "89",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of stolen property.",
+    "number": "7354",
+    "offense_category": "property",
+    "prison_type": "Local",
+    "specific_offense": "Stolen property"
+  },
+  {
+    "key": "90",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of other property.",
+    "number": "8150",
+    "offense_category": "property",
+    "prison_type": "Local",
+    "specific_offense": "Other property"
+  },
+  {
+    "key": "91",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of drug trafficking.",
+    "number": "42269",
+    "offense_category": "drugs",
+    "prison_type": "Local",
+    "specific_offense": "Drug trafficking"
+  },
+  {
+    "key": "92",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of drug possession.",
+    "number": "55442",
+    "offense_category": "drugs",
+    "prison_type": "Local",
+    "specific_offense": "Drug possession"
+  },
+  {
+    "key": "93",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of drug other.",
+    "number": "8052",
+    "offense_category": "drugs",
+    "prison_type": "Local",
+    "specific_offense": "Drug other"
+  },
+  {
+    "key": "94",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of possession with intent.",
+    "number": "9047",
+    "offense_category": "drugs",
+    "prison_type": "Local",
+    "specific_offense": "Possession with intent"
+  },
+  {
+    "key": "95",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of violation of parole/probation.",
+    "number": "10947",
+    "offense_category": "public order",
+    "prison_type": "Local",
+    "specific_offense": "Violation of parole/probation"
+  },
+  {
+    "key": "96",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of weapons.",
+    "number": "10060",
+    "offense_category": "public order",
+    "prison_type": "Local",
+    "specific_offense": "Weapons"
+  },
+  {
+    "key": "97",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of other public order.",
+    "number": "7475",
+    "offense_category": "public order",
+    "prison_type": "Local",
+    "specific_offense": "Other public order"
+  },
+  {
+    "key": "98",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of obstruction of justice.",
+    "number": "16125",
+    "offense_category": "public order",
+    "prison_type": "Local",
+    "specific_offense": "Obstruction of Justice"
+  },
+  {
+    "key": "99",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of traffic.",
+    "number": "9409",
+    "offense_category": "public order",
+    "prison_type": "Local",
+    "specific_offense": "Traffic"
+  },
+  {
+    "key": "100",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of driving while intoxicated.",
+    "number": "15353",
+    "offense_category": "public order",
+    "prison_type": "Local",
+    "specific_offense": "Driving While Intoxicated"
+  },
+  {
+    "key": "101",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of drunkenness/morals.",
+    "number": "6779",
+    "offense_category": "public order",
+    "prison_type": "Local",
+    "specific_offense": "Drunkenness/morals"
+  },
+  {
+    "key": "102",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of the offense of immigration violations.",
+    "number": "2811",
+    "offense_category": "public order",
+    "prison_type": "Local",
+    "specific_offense": "Immigration violations"
+  },
+  {
+    "key": "103",
+    "convicted_status": "Not convicted",
+    "long_name": "People held in local jails but not convicted of other offenses.",
+    "number": "2447",
+    "offense_category": "other",
+    "prison_type": "Local",
+    "specific_offense": "Other"
+  },
+  {
+    "key": "104",
+    "convicted_status": "",
+    "long_name": "Children held as delinquents for the offense of criminal homicide.",
+    "number": "801",
+    "offense_category": "person",
+    "prison_type": "Kids",
+    "specific_offense": "criminal homicide"
+  },
+  {
+    "key": "105",
+    "convicted_status": "",
+    "long_name": "Children held as delinquents for the offense of sexual assault.",
+    "number": "3914",
+    "offense_category": "person",
+    "prison_type": "Kids",
+    "specific_offense": "sexual assault"
+  },
+  {
+    "key": "106",
+    "convicted_status": "",
+    "long_name": "Children held as delinquents for the offense of robbery.",
+    "number": "5708",
+    "offense_category": "person",
+    "prison_type": "Kids",
+    "specific_offense": "robbery"
+  },
+  {
+    "key": "107",
+    "convicted_status": "",
+    "long_name": "Children held as delinquents for the offense of aggravated assault.",
+    "number": "5260",
+    "offense_category": "person",
+    "prison_type": "Kids",
+    "specific_offense": "aggravated assault"
+  },
+  {
+    "key": "108",
+    "convicted_status": "",
+    "long_name": "Children held as delinquents for the offense of simple assault.",
+    "number": "5250",
+    "offense_category": "person",
+    "prison_type": "Kids",
+    "specific_offense": "simple assault"
+  },
+  {
+    "key": "109",
+    "convicted_status": "",
+    "long_name": "Children held as delinquents for the offense of other person.",
+    "number": "2031",
+    "offense_category": "person",
+    "prison_type": "Kids",
+    "specific_offense": "other person"
+  },
+  {
+    "key": "110",
+    "convicted_status": "",
+    "long_name": "Children held as delinquents for the offense of burglary.",
+    "number": "6687",
+    "offense_category": "property",
+    "prison_type": "Kids",
+    "specific_offense": "burglary"
+  },
+  {
+    "key": "111",
+    "convicted_status": "",
+    "long_name": "Children held as delinquents for the offense of theft.",
+    "number": "3364",
+    "offense_category": "property",
+    "prison_type": "Kids",
+    "specific_offense": "theft"
+  },
+  {
+    "key": "112",
+    "convicted_status": "",
+    "long_name": "Children held as delinquents for the offense of auto theft.",
+    "number": "1781",
+    "offense_category": "property",
+    "prison_type": "Kids",
+    "specific_offense": "auto theft"
+  },
+  {
+    "key": "113",
+    "convicted_status": "",
+    "long_name": "Children held as delinquents for the offense of arson.",
+    "number": "448",
+    "offense_category": "property",
+    "prison_type": "Kids",
+    "specific_offense": "arson"
+  },
+  {
+    "key": "114",
+    "convicted_status": "",
+    "long_name": "Children held as delinquents for other property offenses.",
+    "number": "2425",
+    "offense_category": "property",
+    "prison_type": "Kids",
+    "specific_offense": "other property"
+  },
+  {
+    "key": "115",
+    "convicted_status": "",
+    "long_name": "Children held as delinquents for the offense of drug trafficking.",
+    "number": "737",
+    "offense_category": "drugs",
+    "prison_type": "Kids",
+    "specific_offense": "drug trafficking "
+  },
+  {
+    "key": "116",
+    "convicted_status": "",
+    "long_name": "Children held as delinquents for other drug offenses.",
+    "number": "3578",
+    "offense_category": "drugs",
+    "prison_type": "Kids",
+    "specific_offense": "other drug "
+  },
+  {
+    "key": "117",
+    "convicted_status": "",
+    "long_name": "Children held as delinquents for the offense of weapons.",
+    "number": "2647",
+    "offense_category": "public order",
+    "prison_type": "Kids",
+    "specific_offense": "weapons"
+  },
+  {
+    "key": "118",
+    "convicted_status": "",
+    "long_name": "Children held as delinquents for other public order offenses.",
+    "number": "4670",
+    "offense_category": "public order",
+    "prison_type": "Kids",
+    "specific_offense": "other public order"
+  },
+  {
+    "key": "119",
+    "convicted_status": "",
+    "long_name": "Children held as delinquents for technical violations.",
+    "number": "9883",
+    "offense_category": "technical",
+    "prison_type": "Kids",
+    "specific_offense": "technical violation"
+  },
+  {
+    "key": "120",
+    "convicted_status": "",
+    "long_name": "Children held for status offenses.",
+    "number": "2239",
+    "offense_category": "status offense",
+    "prison_type": "Kids",
+    "specific_offense": ""
+  },
+  {
+    "key": "121",
+    "convicted_status": "",
+    "long_name": "Other people held in juvenile institutions.",
+    "number": "7392",
+    "offense_category": "other",
+    "prison_type": "Kids",
+    "specific_offense": "other residents (21+ or people awaiting trial)"
   }
 ];
 },{}],3:[function(require,module,exports){
@@ -704,67 +1418,95 @@ module.exports = colorbrewer;
 },{}],4:[function(require,module,exports){
 var colorbrewer = require('../lib/colors/colorbrewer');
 var _ = require('underscore');
-var data = require('../data/sample.csv');
+var data = require('../data/cleaned.csv');
 var tau = 2 * Math.PI;
 
 var RADII = d3.scale.linear()
-    .domain([0, 1, 2, 3])
-    .range([0, 0.2, 0.8, 1]);
+		.domain([0, 1, 2, 3])
+		.range([0, 0.2, 0.8, 1]);
 
 var COLORS = {
-  BLUEGREENS: ['#18816A', '#21B290', '#23CB8D'],
-  ORANGES: ['#DB6000', '#FF7000', '#F98500', '#F98500'],
-  PURPLES: ['#7070B1', '#8A82E1', '#A9A1FF', '#A9A1FF'],
-  GREY: ['#676564'],
-  GREEN: ['#64A612'],
-  YELLOWS: ['#A67611', '#D09515', '#FEB211'],
-  PERIWINKLE: ['#5964FF'],
-  RED: ['#FF2C5D'],
-  DARKRED: ['#631C1D', '#631C1D', '#631C1D', '#631C1D'],
+	BLUEGREENS: ['#18816A', '#21B290', '#23CB8D'],
+	ORANGES: ['#DB6000', '#FF7000', '#F98500', '#F98500'],
+	PURPLES: ['#7070B1', '#8A82E1', '#A9A1FF', '#A9A1FF'],
+	GREY: ['#676564'],
+	GREEN: ['#64A612'],
+	YELLOWS: ['#A67611', '#D09515', '#FEB211'],
+	PERIWINKLE: ['#5964FF'],
+	RED: ['#FF2C5D'],
+	DARKRED: ['#631C1D', '#631C1D', '#631C1D', '#631C1D'],
 };
 
-var COLOR_MAP = {
-  Federal: COLORS.YELLOWS,
-  State: COLORS.BLUEGREENS,
-  Local: COLORS.ORANGES,
-  Juvenile: COLORS.PURPLES,
-  Military: COLORS.DARKRED,
-  'Indian County jails': COLORS.RED,
-  'Territorial prisons': COLORS.GREEN,
-  'Immigration Detention': COLORS.GREY,
-  'Civil Commitment': COLORS.PERIWINKLE,
-};
+var COLOR_MAPS = [{
+	Federal: COLORS.YELLOWS,
+	State: COLORS.BLUEGREENS,
+	Local: COLORS.ORANGES,
+	Kids: COLORS.PURPLES,
+	Military: COLORS.DARKRED,
+	'Indian County jails': COLORS.RED,
+	'Territorial prisons': COLORS.GREEN,
+	'Immigration Detention': COLORS.GREY,
+	'Civil Commitment': COLORS.PERIWINKLE,
+}, {
+	drugs: COLORS.YELLOWS,
+	violent: COLORS.BLUEGREENS,
+	other: COLORS.ORANGES,
+	property: COLORS.PURPLES,
+	'public order': COLORS.DARKRED,
+	'sexual': COLORS.RED,
+	'status offense': COLORS.GREEN,
+	'technical': COLORS.GREY,
+	'person': COLORS.PERIWINKLE,
+}];
 
+function findColor(name) {
+	for (var i = 0; i < COLOR_MAPS.length; i++) {
+		if (COLOR_MAPS[i][name]) {
+			return COLOR_MAPS[i][name];
+		}
+	}
+}
+
+var ORIENTATIONS = [{
+		text: 'Prison Type',
+		order: ['prison_type', 'convicted_status', 'offense_category']
+	},
+	{
+		text: 'Offense Type',
+		order: ['offense_category', 'prison_type', 'specific_offense'],
+	}];
 /**
  * Does something maybe.
  *
  * @param {Object} options
  */
 var Pie = function(options) {
-  if (!options || !options.el) {
-    throw new Error('Must pass a selector when initializing a Pie.');
-  }
-  this.el = d3.select(options.el);
+	if (!options || !options.el) {
+		throw new Error('Must pass a selector when initializing a Pie.');
+	}
+	this.el = d3.select(options.el);
 
-  this.partition = d3.layout.partition()
-    .sort(function(a, b) { return d3.ascending(a.name, b.name); });
+	this.partition = d3.layout.partition()
+		.sort(function(a, b) { return d3.ascending(a.name, b.name); });
 
-  // TODO: replace this with a custom scheme
-  this.hue = d3.scale.category10();
+	// TODO: replace this with a custom scheme
+	this.hue = d3.scale.category10();
 
-  this.luminance = d3.scale.sqrt()
-    .domain([0, 1e6])
-    .clamp(true)
-    .range([90, 20]);
+	this.luminance = d3.scale.sqrt()
+		.domain([0, 1e6])
+		.clamp(true)
+		.range([90, 20]);
 
-  d3.select(window).on('resize', _.bind(this.handleResize, this));
-  this.handleResize();
+	d3.select(window).on('resize', _.bind(this.handleResize, this));
+	this.handleResize();
 
-  this.renderFrame();
-  this.data = parseData(data);
-  this.renderData();
+	this.currentOrientation = ORIENTATIONS[0];
 
-  _.bindAll(this, 'filterArcText', 'arcTween');
+	this.renderFrame();
+	this.data = parseData(data);
+	this.renderData();
+
+	_.bindAll(this, 'filterArcText', 'arcTween');
 };
 
 
@@ -772,103 +1514,136 @@ var Pie = function(options) {
  *
  */
 Pie.prototype.handleResize = function() {
-  var boundingRect = this.el.node().getBoundingClientRect();
-  this.width = boundingRect.width;
-  this.height = boundingRect.height;
-  this.radius = Math.min(this.width / 2, this.height / 2);
+	var boundingRect = this.el.node().getBoundingClientRect();
+	this.width = boundingRect.width;
+	this.height = boundingRect.height;
+	this.radius = Math.min(this.width / 3, this.height / 3);
 
-  this.partition.size([tau, this.radius]);
+	this.partition.size([tau, this.radius]);
 
-  // NOTE: this accounts for the inner circle used to zoom out
-  var self = this;
-  this.arc = d3.svg.arc()
-    .startAngle(function(d) { return d.x; })
-    // Leave a small gap between segments.
-    .endAngle(function(d) { return d.x + d.dx - 0.01 / (d.depth + .5); })
-    .innerRadius(function(d) { return RADII(d.depth) * self.radius })
-    .outerRadius(function(d) { return RADII(d.depth + 1) * self.radius - 1; });
+	// NOTE: this accounts for the inner circle used to zoom out
+	var self = this;
+	this.arc = d3.svg.arc()
+		.startAngle(function(d) { return d.x; })
+		// Leave a small gap between segments.
+		.endAngle(function(d) { return d.x + d.dx - 0.01 / (d.depth + .5); })
+		.innerRadius(function(d) { return RADII(d.depth) * self.radius })
+		.outerRadius(function(d) { return RADII(d.depth + 1) * self.radius - 1; });
 };
 
 
 Pie.prototype.renderFrame = function() {
-  this.svg = this.el.append("svg")
-    .attr("width", this.width)
-    .attr("height", this.height)
-    .append("g")
-      .attr("transform",
-          "translate(" + (this.width / 2) + "," + (this.height / 2) + ")");
+	this.svg = this.el.append("svg")
+		.attr("width", this.width)
+		.attr("height", this.height)
+		.append("g")
+			.attr("transform",
+					"translate(" + (this.width / 2) + "," + (this.height / 2) + ")");
 
-  //Tooltip description
-  this.tooltip = this.el
-    .append("div")
-    .attr("id", "tooltip")
-    .style("position", "absolute")
-    .style("z-index", "10")
-    .style("opacity", 0);
+	//Tooltip description
+	this.tooltip = this.el
+		.append("div")
+		.attr("id", "tooltip")
+		.style("position", "absolute")
+		.style("z-index", "10")
+		.style("opacity", 0);
+
+	this.tabGroups = this.svg.selectAll('.tab')
+		.data(ORIENTATIONS);
+	this.tabs = this.tabGroups.enter()
+		.append('g')
+			.append('text')
+			.attr('y', function(d, i) { return 40 + 30 * i; })
+			.attr('x', 20)
+			.text(function(d) { return d.text; });
+	this.tabGroups
+		.attr('transform', 'translate(-' + (this.width / 2) + ',-' + (this.height / 2) + ')')
+		.on('click', getHandler(this.handleTabClicked, this));
+	this.updateTabHighlight();;
 };
 
 
+Pie.prototype.handleTabClicked = function(target, data) {
+	this.currentOrientation = data;
+	this.updateTabHighlight();
+	// TODO: cool transition of data out and back in
+	// TODO: for now just blow it away and get working like that
+
+	this.renderData();
+}
+
+
+Pie.prototype.updateTabHighlight = function() {
+	var self = this;
+	this.tabGroups.attr('class', function(d) {
+		return 'tab clickable' + (d === self.currentOrientation ? ' current' : '');
+	});
+}
+
+
 Pie.prototype.renderData = function() {
-  var data = flareData(this.data, ['prison_type', 'convicted_status', 'offense_category', 'specific_offense']);
-  var self = this;
-  // Compute the initial layout on the entire tree to sum sizes.
-  // Also compute the full name and fill color for each node,
-  // and stash the children so they can be restored as we descend.
+	var data = flareData(this.data, this.currentOrientation.order);
+	debugger;
+	var self = this;
+	// Compute the initial layout on the entire tree to sum sizes.
+	// Also compute the full name and fill color for each node,
+	// and stash the children so they can be restored as we descend.
 
-  this.partition
-    .value(function(d) { return d.size; })
-    .nodes(data)
-    .forEach(function(d) {
-      d.key = key(d);
-      d.fill = self.fill(d);
-    });
+	this.partition
+		.value(function(d) { return d.size; })
+		.nodes(data)
+		.forEach(function(d) {
+			d.key = key(d);
+			d.fill = self.fill(d);
+		});
 
-  this.center = this.svg.append("circle")
-    .attr("r", this.radius / 5)
-    .on("click", getHandler(this.zoomOut, this));
+	this.center = this.svg.append("circle")
+		.attr("r", this.radius / 5)
+		.on("click", getHandler(this.zoomOut, this));
 
-  this.center.append("title")
-      .text("zoom out");
+	this.center.append("title")
+			.text("zoom out");
 
-  this.partitioned_data = this.partition.nodes(data).slice(1);
+	this.partitioned_data = this.partition.nodes(data).slice(1);
 
-  this.path = this.svg.selectAll("path")
-    .data(this.partitioned_data)
-    .enter().append("path")
-      .attr("d", this.arc)
-      .style("fill", function(d) { return d.fill; })
-      .style("opacity", 0.9)
-      .each(function(d) { d.currentPosition = selectTweenableAttrs(d); })
-      .attr("class", function(d) { return d.depth > 1 ? '' : 'clickable'; })
-      .on("click", getHandler(this.zoomIn, this))
-      .on("mouseover", getHandler(this.mouseOverArc, this))
-      .on("mousemove", getHandler(this.mouseMoveArc, this))
-      .on("mouseout", getHandler(this.mouseOutArc, this));
+	this.path = this.svg.selectAll("path")
+		.data(this.partitioned_data)
+		.enter().append("path")
+			.attr("d", this.arc)
+			.style("fill", function(d) { return d.fill; })
+			.style("opacity", 0.9)
+			.each(function(d) { d.currentPosition = selectTweenableAttrs(d); })
+			.attr("class", function(d) { return d.depth > 1 ? '' : 'clickable'; })
+			.on("click", getHandler(this.zoomIn, this))
+			.on("mouseover", getHandler(this.mouseOverArc, this))
+			.on("mousemove", getHandler(this.mouseMoveArc, this))
+			.on("mouseout", getHandler(this.mouseOutArc, this));
 
-    this.texts = this.svg.selectAll("text")
-      .data(this.partitioned_data)
-      .enter().append("text")
-      .filter(this.filterArcText)
-      .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
-      .attr("x", function(d) { return d.depth > 1 ? RADII(d.depth + 1) * self.radius : RADII(d.depth) * self.radius })
-      .attr("dx", "6") // margin
-      .attr("dy", ".35em") // vertical-align
-      .text(function(d,i) { return d.name; });
+		this.texts = this.svg.selectAll("text")
+			.data(this.partitioned_data)
+			.enter().append("text")
+			.filter(this.filterArcText)
+			.attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
+			.attr("x", function(d) { return d.depth > 1 ? RADII(d.depth + 1) * self.radius : RADII(d.depth) * self.radius })
+			.attr("dx", "6") // margin
+			.attr("dy", ".35em") // vertical-align
+			.text(function(d,i) { return d.name; });
 };
 
 
 Pie.prototype.fill = function(d) {
-  var parent = d;
-  while (parent.depth > 1) {
-    parent = parent.parent;
-  }
-  var colorString;
-  if (!COLOR_MAP[parent.name] || !(colorString = COLOR_MAP[parent.name][d.depth - 1])) {
-    console.log("Color not found for ", parent.name, d.depth);
-  }
+	var parent = d;
+	while (parent.depth > 1) {
+		parent = parent.parent;
+	}
+	var colorString;
+	var colorArray = findColor(parent.name);
+	if (!colorArray || !(colorString = colorArray[d.depth - 1])) {
+		console.log("Color not found for ", parent.name, d.depth);
+	}
 
-  var color = d3.rgb(colorString);
-  return color;
+	var color = d3.rgb(colorString);
+	return color;
 }
 
 
@@ -876,204 +1651,203 @@ Pie.prototype.fill = function(d) {
  * Filter out the text on arcs that are too small.
  */
 Pie.prototype.filterArcText = function(d, i) {
-  return (d.dx * d.depth * this.radius / 3 ) > 14;
+	return (d.dx * d.depth * this.radius / 3 ) > 14;
 };
 
 
 Pie.prototype.mouseOverArc = function(target, d) {
-  d3.select(target).style("opacity", 1);
+	d3.select(target).style("opacity", 1);
 
-  this.tooltip.html(formatDescription(d));
-  return this.tooltip.transition()
-    .duration(50)
-    .style("opacity", 0.9);
+	this.tooltip.html(formatDescription(d));
+	return this.tooltip.transition()
+		.duration(50)
+		.style("opacity", 0.9);
 }
 
 
 Pie.prototype.mouseOutArc = function(target, d) {
-  d3.select(target).style("opacity", 0.9);
-  return this.tooltip.style("opacity", 0);
+	d3.select(target).style("opacity", 0.9);
+	return this.tooltip.style("opacity", 0);
 }
 
 
 Pie.prototype.mouseMoveArc = function(target, d) {
-  return this.tooltip
-    .style("top", (d3.event.pageY - 10) + "px")
-    .style("left", (d3.event.pageX + 10) + "px");
+	return this.tooltip
+		.style("top", (d3.event.pageY - 10) + "px")
+		.style("left", (d3.event.pageX + 10) + "px");
 }
 
 
 Pie.prototype.zoomIn = function(target, node) {
-  if (node.depth > 1) {
-    return;
-  }
-  if (!node.children) {
-    return;
-  }
-  this.zoom(node, node);
+	if (node.depth > 1) {
+		return;
+	}
+	if (!node.children) {
+		return;
+	}
+	this.zoom(node, node);
 }
 
 
 Pie.prototype.zoomOut = function(target, node) {
-  if (!node.parent) {
-    return;
-  }
-  this.zoom(node.parent, node);
+	if (!node.parent) {
+		return;
+	}
+	this.zoom(node.parent, node);
 }
 
 
 // Zoom to the specified new root.
 Pie.prototype.zoom = function(root, p) {
-  if (document.documentElement.__transition__) return;
+	if (document.documentElement.__transition__) return;
 
-  // Rescale outside angles to match the new layout.
-  var outsideAngle = d3.scale.linear()
-      .domain([0, tau]);
+	// Rescale outside angles to match the new layout.
+	var outsideAngle = d3.scale.linear()
+			.domain([0, tau])
+			.range([p.x, p.x + p.dx]);
 
-  function insideTarget(d) {
+	function insideTarget(d) {
 		console.log(p.key, d.key);
-    if (p.key > d.key) {
-      return { depth: d.depth - 1, x: 0, dx: 0 };
-    } else if (p.key < d.key) {
-      return { depth: d.depth - 1, x: tau, dx: 0 };
-    } else {
-      return { depth: 0, x: 0, dx: tau };
-    }
-  }
+		if (p.key > d.key) {
+			return { depth: d.depth - 1, x: 0, dx: 0 };
+		} else if (p.key < d.key) {
+			return { depth: d.depth - 1, x: tau, dx: 0 };
+		} else {
+			return { depth: 0, x: 0, dx: tau };
+		}
+	}
 
-  function outsideTarget(d) {
-    return {
-      depth: d.depth + 1,
-      x: outsideAngle(d.x),
-      dx: outsideAngle(d.x + d.dx) - outsideAngle(d.x)
-    };
-  }
+	function outsideTarget(d) {
+		return {
+			depth: d.depth + 1,
+			x: outsideAngle(d.x),
+			dx: outsideAngle(d.x + d.dx) - outsideAngle(d.x)
+		};
+	}
 
-  this.center.datum(root);
+	this.center.datum(root);
 
-  var zoomingIn = root === p;
-  var enterTarget;
-  var exitTarget;
+	var zoomingIn = root === p;
+	var enterTarget;
+	var exitTarget;
 
-  // When zooming in, arcs enter from the outside and exit to the inside.
-  // Entering outside arcs start from the old layout.
-  if (zoomingIn) {
-    enterTarget = outsideTarget;
-    exitTarget = insideTarget;
-    outsideAngle.range([p.x, p.x + p.dx]);
-  } else {
-    // When zooming out, arcs enter from the inside and exit to the outside.
-    // Exiting outside arcs transition to the new layout.
-    enterTarget = insideTarget;
-    exitTarget = outsideTarget;
-    outsideAngle.range([p.x, p.x + p.dx]);
-  }
+	// When zooming in, arcs enter from the outside and exit to the inside.
+	// Entering outside arcs start from the old layout.
+	if (zoomingIn) {
+		enterTarget = outsideTarget;
+		exitTarget = insideTarget;
+	} else {
+		// When zooming out, arcs enter from the inside and exit to the outside.
+		// Exiting outside arcs transition to the new layout.
+		enterTarget = insideTarget;
+		exitTarget = outsideTarget;
+	}
 
-  // TODO: figure this out, why does this need to be assigned?
-  var new_data = this.partition.nodes(root).slice(1);
-  this.path = this.path.data(new_data, function(d) { return d.key; });
+	// TODO: figure this out, why does this need to be assigned?
+	var new_data = this.partition.nodes(root).slice(1);
+	this.path = this.path.data(new_data, function(d) { return d.key; });
 
-  var self = this;
-  d3.transition().duration(d3.event.altKey ? 7500 : 750)
-    .each(function() {
-      self.path.exit().transition()
-        .style("fill-opacity", function(d) {
-          return d.depth === 1 + (zoomingIn ? 1 : 0);
-        })
-        .attrTween("d", function(d) { return self.arcTween(d, exitTarget(d)); })
-        .remove();
+	var self = this;
+	d3.transition().duration(d3.event.altKey ? 7500 : 750)
+		.each(function() {
+			self.path.exit().transition()
+				.style("fill-opacity", function(d) {
+					return d.depth === 1 + (zoomingIn ? 1 : 0);
+				})
+				.attrTween("d", function(d) { return self.arcTween(d, exitTarget(d)); })
+				.remove();
 
-      // TODO: this is redundant with renderData
-      self.path.enter().append("path")
-        .style("fill-opacity", function(d) {
-          return d.depth === 2 - (zoomingIn ? 1 : 0);
-        })
-        .style("fill", function(d) { return d.fill; })
-        .on("click", getHandler(self.zoomIn, self))
-        .on("mouseover", getHandler(self.mouseOverArc, self))
-        .on("mousemove", getHandler(self.mouseMoveArc, self))
-        .on("mouseout", getHandler(self.mouseOutArc, self))
-        .each(function(d) { d.currentPosition = enterTarget(d); });
+			// TODO: this is redundant with renderData
+			self.path.enter().append("path")
+				.style("fill-opacity", function(d) {
+					return d.depth === 2 - (zoomingIn ? 1 : 0);
+				})
+				.style("fill", function(d) { return d.fill; })
+				.on("click", getHandler(self.zoomIn, self))
+				.on("mouseover", getHandler(self.mouseOverArc, self))
+				.on("mousemove", getHandler(self.mouseMoveArc, self))
+				.on("mouseout", getHandler(self.mouseOutArc, self))
+				.each(function(d) { d.currentPosition = enterTarget(d); });
 
 
-      self.path.transition()
-        .style("fill-opacity", 1)
-        .attr("class", function(d) { return d.depth > 1 || !d.children ? '' : 'clickable'; })
-        .attrTween("d", function(d) {
-          return self.arcTween(d, selectTweenableAttrs(d));
-        });
-    });
+			self.path.transition()
+				.style("fill-opacity", 1)
+				.attr("class", function(d) { return d.depth > 1 || !d.children ? '' : 'clickable'; })
+				.attrTween("d", function(d) {
+					return self.arcTween(d, selectTweenableAttrs(d));
+				});
+		});
 
 
-  // TODO: this should be abstracted.
-  this.texts = this.texts.data(new_data, function(d) { return d.key; });
+	// TODO: this should be abstracted.
+	this.texts = this.texts.data(new_data, function(d) { return d.key; });
 
-  this.texts.exit()
-    .remove()
-  this.texts.enter()
-    .append("text")
+	this.texts.exit()
+		.remove()
+	this.texts.enter()
+		.append("text")
 
-  this.texts.style("opacity", 0)
-    .attr("transform", function(d) {
-      return "rotate(" + computeTextRotation(d) + ")";
-    })
-    .attr("x", function(d) { return d.depth > 1 ? RADII(d.depth + 1) * self.radius : RADII(d.depth) * self.radius })
-    .attr("dx", "6") // margin
-    .attr("dy", ".35em") // vertical-align
-    .filter(this.filterArcText)
-    .text(function(d,i) {return d.name})
-    .transition().delay(750).style("opacity", 1);
+	this.texts.style("opacity", 0)
+		.attr("transform", function(d) {
+			return "rotate(" + computeTextRotation(d) + ")";
+		})
+		.attr("x", function(d) { return d.depth > 1 ? RADII(d.depth + 1) * self.radius : RADII(d.depth) * self.radius })
+		.attr("dx", "6") // margin
+		.attr("dy", ".35em") // vertical-align
+		.filter(this.filterArcText)
+		.text(function(d,i) {return d.name})
+		.transition().delay(750).style("opacity", 1);
 }
 
 
 /**
  * Returns a function that smoothly tweens an arc between the nodes current position and the given
  * target.
- * @param   {Object} node The data node being animated. Must have 'currentPosition' set to an object
- *   with d, dx, and depth attributes.
- * @param   {Object} targetPosition The final position. This is an object with d, dx, and depth
-*    attributes.
+ * @param	 {Object} node The data node being animated. Must have 'currentPosition' set to an object
+ *	 with d, dx, and depth attributes.
+ * @param	 {Object} targetPosition The final position. This is an object with d, dx, and depth
+*		attributes.
  * @returns {Function} A function that takes a float between 0 and 1 and returns the interpolated
- *   arc.
+ *	 arc.
  */
 Pie.prototype.arcTween = function(node, targetPosition) {
-  var interpolator = d3.interpolate(node.currentPosition, targetPosition);
+	var interpolator = d3.interpolate(node.currentPosition, targetPosition);
 	var self = this;
-  return function(t) {
+	return function(t) {
 		node.currentPosition = interpolator(t);
-    return self.arc(node.currentPosition);
-  };
+		return self.arc(node.currentPosition);
+	};
 }
 
 
 function formatNumber(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 
 function formatDescription(d) {
-  return  '<b>' + d.name + '</b></br>'+ d.description + '<br> (' + formatNumber(d.value) + ')';
+	return	'<b>' + d.name + '</b></br>'+ d.description + '<br> (' + formatNumber(d.value) + ')';
 }
 
 function computeTextRotation(d) {
-  var angle = (d.x + d.dx / 2) * 180 / Math.PI - 90;
-  if (angle > 180) {
-    angle = angle - 360;
-  }
-  return angle;
+	var angle = (d.x + d.dx / 2) * 180 / Math.PI - 90;
+	if (angle > 180) {
+		angle = angle - 360;
+	}
+	return angle;
 }
 
 function key(d) {
-  var k = [];
-  while (d.depth) {
-    k.push(d.name);
-    d = d.parent;
-  }
-  return k.reverse().join(".");
+	var k = [];
+	while (d.depth) {
+		k.push(d.name);
+		d = d.parent;
+	}
+	return k.reverse().join(".");
 }
 
 function selectTweenableAttrs(d) {
-  return { depth: d.depth, x: d.x, dx: d.dx };
+	return { depth: d.depth, x: d.x, dx: d.dx };
 }
 
 
@@ -1082,83 +1856,83 @@ function selectTweenableAttrs(d) {
  * handler to a d3 event. The original handler will be called with the datum and
  * the node, while its context will be the context specified here.
  *
- * @param  {Function} handler The event handler (typically an object method)
- * @param  {Object} ctx The object the method belongs to
+ * @param	{Function} handler The event handler (typically an object method)
+ * @param	{Object} ctx The object the method belongs to
  */
 function getHandler(handler, ctx) {
-  handler = _.bind(handler, ctx);
-  return function(d) {
-    // 'this' here will be the d3 event target.
-    return handler(this, d);
-  }
+	handler = _.bind(handler, ctx);
+	return function(d) {
+		// 'this' here will be the d3 event target.
+		return handler(this, d);
+	}
 };
 
 var COMMAS = /,/g;
 
 /**
  * Parses the numbers into javascript Numbers.
- * @param   {Array<Object>} data The csvified data.
+ * @param	 {Array<Object>} data The csvified data.
  * @returns {Array<Object>} The parsed data.
  */
 function parseData(data) {
-  return _.map(data, function(line) {
-    line = _.mapObject(line, function(value) {
-      if (typeof value === 'string') {
-        return value.trim();
-      }
-      return value;
-    });
+	return _.map(data, function(line) {
+		line = _.mapObject(line, function(value) {
+			if (typeof value === 'string') {
+				return value.trim();
+			}
+			return value;
+		});
 
-    if (typeof line.number === 'string') {
-      _.extend(line, { number: parseInt(line.number.replace(COMMAS, '')) });
-    }
+		if (typeof line.number === 'string') {
+			_.extend(line, { number: parseInt(line.number.replace(COMMAS, '')) });
+		}
 
-    return line;
-  });
+		return line;
+	});
 }
 
 
 function flareData(data, groupSequence) {
-  return {
-    name: 'Flare',
-    description: '',
-    children: flareDataRecursive(data, groupSequence)
-  };
-  return parent;
+	return {
+		name: 'Flare',
+		description: '',
+		children: flareDataRecursive(data, groupSequence)
+	};
+	return parent;
 }
 
 function flareDataRecursive(data, groupSequence) {
-  if (groupSequence.length === 0) {
-    return [];
-  }
-  var currentGroup = groupSequence[0];
-  var remainingSequence = groupSequence.slice(1);
-  var groupedData = _.groupBy(data, currentGroup);
+	if (groupSequence.length === 0) {
+		return [];
+	}
+	var currentGroup = groupSequence[0];
+	var remainingSequence = groupSequence.slice(1);
+	var groupedData = _.groupBy(data, currentGroup);
 
-  // If this group has no differentiation on this key then skip it
-  if (_.keys(groupedData).length === 1) {
-    return flareDataRecursive(data, remainingSequence);
-  }
+	// If this group has no differentiation on this key then skip it
+	if (_.keys(groupedData).length === 1) {
+		return flareDataRecursive(data, remainingSequence);
+	}
 
-  return _.map(groupedData, function(value, key) {
-    var child = {
-      name: key,
-      description: '' // Need to figure this out
-    };
-    child.size = _.reduce(value, function(memo, item) {
-      return memo + item.number;
-    }, 0);
-    if (remainingSequence.length > 0) {
-      child.children = flareDataRecursive(value, remainingSequence);
-    }
-    return child;
-  });
+	return _.map(groupedData, function(value, key) {
+		var child = {
+			name: key,
+			description: '' // Need to figure this out
+		};
+		child.size = _.reduce(value, function(memo, item) {
+			return memo + item.number;
+		}, 0);
+		if (remainingSequence.length > 0) {
+			child.children = flareDataRecursive(value, remainingSequence);
+		}
+		return child;
+	});
 }
 
 
 module.exports = Pie;
 
-},{"../data/sample.csv":2,"../lib/colors/colorbrewer":3,"underscore":6}],5:[function(require,module,exports){
+},{"../data/cleaned.csv":2,"../lib/colors/colorbrewer":3,"underscore":6}],5:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.6"
