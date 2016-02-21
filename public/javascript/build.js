@@ -1502,6 +1502,7 @@ var Pie = function(options) {
 	this.handleResize();
 
 	this.currentOrientation = ORIENTATIONS[0];
+	this.currentDepth = 1;
 
 	this.renderFrame();
 	this.data = parseData(data);
@@ -1654,7 +1655,6 @@ Pie.prototype.zoom = function(root, p) {
 			.range([p.x, p.x + p.dx]);
 
 	function insideTarget(d) {
-		console.log(p.key, d.key);
 		if (p.key > d.key) {
 			return { depth: d.depth - 1, x: 0, dx: 0 };
 		} else if (p.key < d.key) {
@@ -1683,16 +1683,16 @@ Pie.prototype.zoom = function(root, p) {
 	if (zoomingIn) {
 		enterTarget = outsideTarget;
 		exitTarget = insideTarget;
+		this.currentDepth++;
 	} else {
 		// When zooming out, arcs enter from the inside and exit to the outside.
 		// Exiting outside arcs transition to the new layout.
 		enterTarget = insideTarget;
 		exitTarget = outsideTarget;
+		this.currentDepth--;
 	}
 
 	this.partitioned_data = this.partition.nodes(root).slice(1);
-
-	// TODO: figure this out, why does this need to be assigned?
 	this.path = this.path.data(this.partitioned_data, function(d) { return d.key; });
 
 	var self = this;
@@ -1751,6 +1751,10 @@ Pie.prototype.fill = function(d) {
  * Filter out the text on arcs that are too small.
  */
 Pie.prototype.filterArcText = function(d, i) {
+	// Filter out labels for the middle layers
+	if (d.depth != 1 && d.children) {
+		return false;
+	}
 	return (d.dx * d.depth * this.radius / 3 ) > 14;
 };
 
