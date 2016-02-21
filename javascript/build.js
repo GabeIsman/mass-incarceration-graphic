@@ -1615,16 +1615,120 @@ Pie.prototype.renderData = function() {
 			.on("mousemove", getHandler(this.mouseMoveArc, this))
 			.on("mouseout", getHandler(this.mouseOutArc, this));
 
-		this.texts = this.svg.selectAll("text")
-			.data(this.partitioned_data, function(d) { return d.key; })
-			.enter().append("text")
-			.filter(this.filterArcText)
-			.attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
-			.attr("x", function(d) { return d.depth > 1 ? RADII(d.depth + 1) * self.radius : RADII(d.depth) * self.radius })
-			.attr("dx", "6") // margin
-			.attr("dy", ".35em") // vertical-align
-			.text(function(d,i) { return d.name; });
+	this.renderLabels();
 };
+
+
+Pie.prototype.renderLabels = function(delay) {
+	this.texts = this.svg.selectAll("text")
+		.data(this.partitioned_data, function(d) { return d.key; });
+
+	this.texts.exit()
+		.remove();
+
+	this.texts.enter()
+		.append("text");
+
+	var self = this;
+	this.texts.filter(this.filterArcText)
+		.attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
+		.attr("x", function(d) { return d.depth > 1 ? RADII(d.depth + 1) * self.radius : RADII(d.depth) * self.radius })
+		.attr("dx", "6") // margin
+		.attr("dy", ".35em") // vertical-align
+		.text(function(d,i) { return d.name; });
+
+	if (delay) {
+		this.texts.style("opacity", 0)
+			.transition().delay(750).style("opacity", 1);
+	}
+};
+
+
+// Zoom to the specified new root.
+Pie.prototype.zoom = function(root, p) {
+	if (document.documentElement.__transition__) return;
+
+	// Rescale outside angles to match the new layout.
+	var outsideAngle = d3.scale.linear()
+			.domain([0, tau])
+			.range([p.x, p.x + p.dx]);
+
+	function insideTarget(d) {
+		console.log(p.key, d.key);
+		if (p.key > d.key) {
+			return { depth: d.depth - 1, x: 0, dx: 0 };
+		} else if (p.key < d.key) {
+			return { depth: d.depth - 1, x: tau, dx: 0 };
+		} else {
+			return { depth: 0, x: 0, dx: tau };
+		}
+	}
+
+	function outsideTarget(d) {
+		return {
+			depth: d.depth + 1,
+			x: outsideAngle(d.x),
+			dx: outsideAngle(d.x + d.dx) - outsideAngle(d.x)
+		};
+	}
+
+	this.center.datum(root);
+
+	var zoomingIn = root === p;
+	var enterTarget;
+	var exitTarget;
+
+	// When zooming in, arcs enter from the outside and exit to the inside.
+	// Entering outside arcs start from the old layout.
+	if (zoomingIn) {
+		enterTarget = outsideTarget;
+		exitTarget = insideTarget;
+	} else {
+		// When zooming out, arcs enter from the inside and exit to the outside.
+		// Exiting outside arcs transition to the new layout.
+		enterTarget = insideTarget;
+		exitTarget = outsideTarget;
+	}
+
+	this.partitioned_data = this.partition.nodes(root).slice(1);
+
+	// TODO: figure this out, why does this need to be assigned?
+	this.path = this.path.data(this.partitioned_data, function(d) { return d.key; });
+
+	var self = this;
+	var duration = d3.event.altKey ? 7500 : 750;
+	d3.transition().duration(duration)
+		.each(function() {
+			self.path.exit().transition()
+				.style("fill-opacity", function(d) {
+					return d.depth === 1 + (zoomingIn ? 1 : 0);
+				})
+				.attrTween("d", function(d) { return self.arcTween(d, exitTarget(d)); })
+				.remove();
+
+			// TODO: this is redundant with renderData
+			self.path.enter().append("path")
+				.style("fill-opacity", function(d) {
+					return d.depth === 2 - (zoomingIn ? 1 : 0);
+				})
+				.style("fill", function(d) { return d.fill; })
+				.on("click", getHandler(self.zoomIn, self))
+				.on("mouseover", getHandler(self.mouseOverArc, self))
+				.on("mousemove", getHandler(self.mouseMoveArc, self))
+				.on("mouseout", getHandler(self.mouseOutArc, self))
+				.each(function(d) { d.currentPosition = enterTarget(d); });
+
+
+			self.path.transition()
+				.style("fill-opacity", 1)
+				.attr("class", function(d) { return d.depth > 1 || !d.children ? '' : 'clickable'; })
+				.attrTween("d", function(d) {
+					return self.arcTween(d, selectTweenableAttrs(d));
+				});
+		});
+
+	this.renderLabels(duration /* delay */);
+}
 
 
 Pie.prototype.fill = function(d) {
@@ -1690,109 +1794,6 @@ Pie.prototype.zoomOut = function(target, node) {
 		return;
 	}
 	this.zoom(node.parent, node);
-}
-
-
-// Zoom to the specified new root.
-Pie.prototype.zoom = function(root, p) {
-	if (document.documentElement.__transition__) return;
-
-	// Rescale outside angles to match the new layout.
-	var outsideAngle = d3.scale.linear()
-			.domain([0, tau])
-			.range([p.x, p.x + p.dx]);
-
-	function insideTarget(d) {
-		console.log(p.key, d.key);
-		if (p.key > d.key) {
-			return { depth: d.depth - 1, x: 0, dx: 0 };
-		} else if (p.key < d.key) {
-			return { depth: d.depth - 1, x: tau, dx: 0 };
-		} else {
-			return { depth: 0, x: 0, dx: tau };
-		}
-	}
-
-	function outsideTarget(d) {
-		return {
-			depth: d.depth + 1,
-			x: outsideAngle(d.x),
-			dx: outsideAngle(d.x + d.dx) - outsideAngle(d.x)
-		};
-	}
-
-	this.center.datum(root);
-
-	var zoomingIn = root === p;
-	var enterTarget;
-	var exitTarget;
-
-	// When zooming in, arcs enter from the outside and exit to the inside.
-	// Entering outside arcs start from the old layout.
-	if (zoomingIn) {
-		enterTarget = outsideTarget;
-		exitTarget = insideTarget;
-	} else {
-		// When zooming out, arcs enter from the inside and exit to the outside.
-		// Exiting outside arcs transition to the new layout.
-		enterTarget = insideTarget;
-		exitTarget = outsideTarget;
-	}
-
-	// TODO: figure this out, why does this need to be assigned?
-	var new_data = this.partition.nodes(root).slice(1);
-	this.path = this.path.data(new_data, function(d) { return d.key; });
-
-	var self = this;
-	d3.transition().duration(d3.event.altKey ? 7500 : 750)
-		.each(function() {
-			self.path.exit().transition()
-				.style("fill-opacity", function(d) {
-					return d.depth === 1 + (zoomingIn ? 1 : 0);
-				})
-				.attrTween("d", function(d) { return self.arcTween(d, exitTarget(d)); })
-				.remove();
-
-			// TODO: this is redundant with renderData
-			self.path.enter().append("path")
-				.style("fill-opacity", function(d) {
-					return d.depth === 2 - (zoomingIn ? 1 : 0);
-				})
-				.style("fill", function(d) { return d.fill; })
-				.on("click", getHandler(self.zoomIn, self))
-				.on("mouseover", getHandler(self.mouseOverArc, self))
-				.on("mousemove", getHandler(self.mouseMoveArc, self))
-				.on("mouseout", getHandler(self.mouseOutArc, self))
-				.each(function(d) { d.currentPosition = enterTarget(d); });
-
-
-			self.path.transition()
-				.style("fill-opacity", 1)
-				.attr("class", function(d) { return d.depth > 1 || !d.children ? '' : 'clickable'; })
-				.attrTween("d", function(d) {
-					return self.arcTween(d, selectTweenableAttrs(d));
-				});
-		});
-
-
-	// TODO: this should be abstracted.
-	this.texts = this.texts.data(new_data, function(d) { return d.key; });
-
-	this.texts.exit()
-		.remove()
-	this.texts.enter()
-		.append("text")
-
-	this.texts.style("opacity", 0)
-		.attr("transform", function(d) {
-			return "rotate(" + computeTextRotation(d) + ")";
-		})
-		.attr("x", function(d) { return d.depth > 1 ? RADII(d.depth + 1) * self.radius : RADII(d.depth) * self.radius })
-		.attr("dx", "6") // margin
-		.attr("dy", ".35em") // vertical-align
-		.filter(this.filterArcText)
-		.text(function(d,i) {return d.name})
-		.transition().delay(750).style("opacity", 1);
 }
 
 
