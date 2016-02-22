@@ -83,11 +83,21 @@ var Pie = function(options) {
 	d3.select(window).on('resize', this.handleResize);
 	this.handleResize();
 
+	var rawData = parseData(data);
 	this.currentOrientation = ORIENTATIONS[0];
-	this.currentDepth = 1;
+	this.data = flareData(rawData, this.currentOrientation.order);
+	var self = this;
+	this.partition
+		.value(function(d) { return d.size; })
+		.nodes(this.data)
+		.forEach(function(d) {
+			d.key = key(d);
+			d.fill = self.fill(d);
+			d.height = computeHeight(d);
+		});
+	this.chrootData(this.data);
 
 	this.renderFrame();
-	this.data = parseData(data);
 	this.renderData();
 };
 
@@ -141,48 +151,26 @@ Pie.prototype.renderFrame = function() {
 	this.tabGroups
 		.attr('transform', 'translate(-' + (this.width / 2) + ',-' + (this.height / 2) + ')')
 		.on('click', getHandler(this.handleTabClicked, this));
-	this.updateTabHighlight();;
+	this.updateTabHighlight();
+
+	this.center = this.svg
+		.append("circle")
+		.attr("r", this.radius / 5)
+		.on("click", getHandler(this.zoomOut, this));
 };
 
 
 Pie.prototype.renderData = function() {
-	this.root = flareData(this.data, this.currentOrientation.order);
 
 	var self = this;
-	// Compute the initial layout on the entire tree to sum sizes.
-	// Also compute the full name and fill color for each node,
-	// and stash the children so they can be restored as we descend.
 
-	this.partition
-		.value(function(d) { return d.size; })
-		.nodes(this.root)
-		.forEach(function(d) {
-			d.key = key(d);
-			d.fill = self.fill(d);
-			d.height = computeHeight(d);
-		});
-
-
-	this.center = this.svg.append("circle")
-		.attr("r", this.radius / 5)
-		.on("click", getHandler(this.zoomOut, this));
-
-	this.center.append("title")
-			.text("zoom out");
-
-	this.partitioned_data = this.partition.nodes(this.root).slice(1);
-	this.maxHeight = computeHeight(this.partitioned_data);
-
-	// This is a little strange, but because the outer radius depends on max height in order to have
-	// smooth transitions of that radius we need to tween the max height during animations, and the
-	// simplest way to do that is just with the rest of attributes on each node. So we store it here.
-	this.partition.nodes(this.root).forEach(function(d) {
-		d.maxHeight = self.maxHeight;
-	});
+	this.center.datum(this.root);
 
 	this.path = this.svg.selectAll("path")
-		.data(this.partitioned_data);
-	this.path.enter().append("path")
+		.data(this.partitionedData);
+	this.path.enter().append("path");
+	this.path.exit().remove();
+	this.path
 			.attr("d", this.arc)
 			.style("fill", function(d) { return d.fill; })
 			.style("opacity", 0.9)
@@ -199,7 +187,7 @@ Pie.prototype.renderData = function() {
 
 Pie.prototype.renderLabels = function(delay) {
 	this.texts = this.svg.selectAll("text")
-		.data(this.partitioned_data, function(d) { return d.key; });
+		.data(this.partitionedData, function(d) { return d.key; });
 
 	this.texts.exit()
 		.remove();
@@ -222,121 +210,24 @@ Pie.prototype.renderLabels = function(delay) {
 
 // Zoom to the specified new root.
 Pie.prototype.zoom = function(root, p) {
-	if (document.documentElement.__transition__) return;
-	var self = this;
-
-	// Rescale outside angles to match the new layout.
-	var outsideAngle = d3.scale.linear()
-		.domain([0, tau])
-		.range([p.x, p.x + p.dx]);
-
-	this.center.datum(root);
-
-	this.partitioned_data = this.partition.nodes(root).slice(1);
-	this.path = this.path.data(this.partitioned_data, function(d) { return d.key; });
-	this.maxHeight = computeHeight(this.partitioned_data);
-	this.partitioned_data.forEach(function(d) {
-		d.maxHeight = self.maxHeight;
-	});
-
-	function insideTarget(d) {
-		if (root === d) {
-			return {
-				depth: 0,
-				height: 0,
-				x: 0,
-				dx: tau,
-				maxHeight: 0
-			};
-		}
-
-		var target = {
-			depth: d.depth - 1,
-			height: d.height,
-			dx: 0,
-			x: tau,
-			maxHeight: self.maxHeight
-		};
-
-		if (p.key > d.key) {
-			target.x = 0;
-		} else if (p.key < d.key) {
-			target.x = tau;
-		}
-
-		return target;
-	}
-
-	// This is only used if there are hidden layers of depth that appear on zoom in or disapper on
-	// zoom out.
-	function outsideTarget(d) {
-		return {
-			depth: d.depth + 1,
-			height: d.height,
-			x: outsideAngle(d.x),
-			dx: outsideAngle(d.x + d.dx) - outsideAngle(d.x),
-			maxHeight: self.maxHeight
-		};
-	}
-
-
-	var zoomingIn = root === p;
-	var enterTarget;
-	var exitTarget;
-
-	if (zoomingIn) {
-		// When zooming in, arcs enter from the outside and exit to the inside.
-		// Entering outside arcs start from the old layout.
-		enterTarget = outsideTarget;
-		exitTarget = insideTarget;
-		this.currentDepth++;
-	} else {
-		// When zooming out, arcs enter from the inside and exit to the outside.
-		// Exiting outside arcs transition to the new layout.
-		enterTarget = insideTarget;
-		exitTarget = outsideTarget;
-		this.currentDepth--;
-	}
-
-	var duration = d3.event.altKey ? 7500 : 750;
-	d3.transition().duration(duration)
-		.each(function() {
-			self.path.exit().transition()
-				.style("fill-opacity", function(d) {
-					return d.depth === 1 + (zoomingIn ? 1 : 0);
-				})
-				.attrTween("d", function(d) { return self.arcTween(d, exitTarget(d)); })
-				.remove();
-
-			// TODO: this is redundant with renderData
-			self.path.enter().append("path")
-				.style("fill-opacity", function(d) {
-					return d.	depth === 2 - (zoomingIn ? 1 : 0);
-				})
-				.style("fill", function(d) { return d.fill; })
-				.on("click", getHandler(self.zoomIn, self))
-				.on("mouseover", getHandler(self.mouseOverArc, self))
-				.on("mousemove", getHandler(self.mouseMoveArc, self))
-				.on("mouseout", getHandler(self.mouseOutArc, self))
-				.each(function(d) { d.currentPosition = enterTarget(d); });
-
-
-			self.path.transition()
-				.style("fill-opacity", 1)
-				.attr("class", function(d) { return d.depth > 1 || !d.children ? '' : 'clickable'; })
-				.attrTween("d", function(d) {
-					return self.arcTween(d, selectTweenableAttrs(d));
-				});
-		});
-
-	this.renderLabels(duration /* delay */);
+	this.chrootData(root);
+	this.renderData();
+	this.renderLabels();
 };
 
 
 Pie.prototype.chrootData = function(root) {
-	this.partitioned_data = this.partition.nodes(root).slice(1);
-	var allNodes = this.partition.nodes(this.root).slice(1);
-	this.computeRadii(allNodes);
+	var self = this;
+	this.root = root;
+	this.partitionedData = this.partition.nodes(this.root).slice(1);
+	this.maxHeight = computeHeight(this.root);
+
+	// This is a little strange, but because the outer radius depends on max height in order to have
+	// smooth transitions of that radius we need to tween the max height during animations, and the
+	// simplest way to do that is just with the rest of attributes on each node. So we store it here.
+	this.partition.nodes(this.root).forEach(function(d) {
+		d.maxHeight = self.maxHeight;
+	});
 }
 
 
