@@ -5,7 +5,7 @@ var tau = 2 * Math.PI;
 
 var RADII = d3.scale.linear()
 		.domain([0, 1, 2, 3])
-		.range([0, 0.2, 0.8, 1]);
+		.range([0, 0.25, 0.75, 1]);
 
 var COLORS = {
 	BLUEGREENS: ['#18816A', '#21B290', '#23CB8D'],
@@ -79,7 +79,7 @@ var Pie = function(options) {
 		.clamp(true)
 		.range([90, 20]);
 
-	_.bindAll(this, 'filterArcText', 'arcTween', 'handleResize');
+	_.bindAll(this, 'filterArcText', 'arcTween', 'handleResize', 'innerRadius', 'outerRadius');
 	d3.select(window).on('resize', this.handleResize);
 	this.handleResize();
 
@@ -109,8 +109,8 @@ Pie.prototype.handleResize = function() {
 		.startAngle(function(d) { return d.x; })
 		// Leave a small gap between segments.
 		.endAngle(function(d) { return d.x + d.dx - 0.01 / (d.depth + .5); })
-		.innerRadius(function(d) { return RADII(d.depth) * self.radius })
-		.outerRadius(function(d) { return RADII(d.depth + 1) * self.radius - 1; });
+		.innerRadius(this.innerRadius)
+		.outerRadius(this.outerRadius);
 };
 
 
@@ -123,7 +123,7 @@ Pie.prototype.renderFrame = function() {
 					"translate(" + (this.width / 2) + "," + (this.height / 2) + ")");
 
 	//Tooltip description
-	this.tooltip = this.el
+	this.tooltip = d3.select('body')
 		.append("div")
 		.attr("id", "tooltip")
 		.style("position", "absolute")
@@ -145,24 +145,9 @@ Pie.prototype.renderFrame = function() {
 };
 
 
-Pie.prototype.handleTabClicked = function(target, data) {
-	this.currentOrientation = data;
-	this.updateTabHighlight();
-	this.transitionOut();
-	this.renderData();
-}
-
-
-Pie.prototype.updateTabHighlight = function() {
-	var self = this;
-	this.tabGroups.attr('class', function(d) {
-		return 'tab clickable' + (d === self.currentOrientation ? ' current' : '');
-	});
-}
-
-
 Pie.prototype.renderData = function() {
-	var data = flareData(this.data, this.currentOrientation.order);
+	this.root = flareData(this.data, this.currentOrientation.order);
+
 	var self = this;
 	// Compute the initial layout on the entire tree to sum sizes.
 	// Also compute the full name and fill color for each node,
@@ -170,11 +155,13 @@ Pie.prototype.renderData = function() {
 
 	this.partition
 		.value(function(d) { return d.size; })
-		.nodes(data)
+		.nodes(this.root)
 		.forEach(function(d) {
 			d.key = key(d);
 			d.fill = self.fill(d);
+			d.height = computeHeight(d);
 		});
+
 
 	this.center = this.svg.append("circle")
 		.attr("r", this.radius / 5)
@@ -183,7 +170,15 @@ Pie.prototype.renderData = function() {
 	this.center.append("title")
 			.text("zoom out");
 
-	this.partitioned_data = this.partition.nodes(data).slice(1);
+	this.partitioned_data = this.partition.nodes(this.root).slice(1);
+	this.maxHeight = computeHeight(this.partitioned_data);
+
+	// This is a little strange, but because the outer radius depends on max height in order to have
+	// smooth transitions of that radius we need to tween the max height during animations, and the
+	// simplest way to do that is just with the rest of attributes on each node. So we store it here.
+	this.partition.nodes(this.root).forEach(function(d) {
+		d.maxHeight = self.maxHeight;
+	});
 
 	this.path = this.svg.selectAll("path")
 		.data(this.partitioned_data);
@@ -215,11 +210,9 @@ Pie.prototype.renderLabels = function(delay) {
 	var self = this;
 	this.texts.filter(this.filterArcText)
 		.attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
-		.attr("x", function(d) { return d.depth > 1 ? RADII(d.depth + 1) * self.radius : RADII(d.depth) * self.radius })
+		.attr("x", function(d) { return d.depth > 1 ? self.outerRadius(d) : self.innerRadius(d) })
 		.attr("dx", "6") // margin
-		.attr("dy", ".35em") // vertical-align
-		.text(function(d,i) { return d.name; });
-
+		.attr("dy", ".35em") // vertical-align;
 	if (delay) {
 		this.texts.style("opacity", 0)
 			.transition().delay(750).style("opacity", 1);
@@ -230,27 +223,47 @@ Pie.prototype.renderLabels = function(delay) {
 // Zoom to the specified new root.
 Pie.prototype.zoom = function(root, p) {
 	if (document.documentElement.__transition__) return;
+	var self = this;
 
 	// Rescale outside angles to match the new layout.
 	var outsideAngle = d3.scale.linear()
-			.domain([0, tau])
-			.range([p.x, p.x + p.dx]);
+		.domain([0, tau])
+		.range([p.x, p.x + p.dx]);
 
 	function insideTarget(d) {
-		if (p.key > d.key) {
-			return { depth: d.depth - 1, x: 0, dx: 0 };
-		} else if (p.key < d.key) {
-			return { depth: d.depth - 1, x: tau, dx: 0 };
-		} else {
-			return { depth: 0, x: 0, dx: tau };
+		if (root === d) {
+			return {
+				depth: 0,
+				height: 0,
+				x: 0,
+				dx: tau,
+			};
 		}
+
+		var target = {
+			depth: d.depth - 1,
+			height: d.height,
+			dx: 0,
+			x: tau,
+		};
+
+		if (p.key > d.key) {
+			target.x = 0;
+		} else if (p.key < d.key) {
+			target.x = tau;
+		}
+
+		return target;
 	}
 
+	// This is only used if there are hidden layers of depth that appear on zoom in or disapper on
+	// zoom out.
 	function outsideTarget(d) {
 		return {
 			depth: d.depth + 1,
+			height: d.height,
 			x: outsideAngle(d.x),
-			dx: outsideAngle(d.x + d.dx) - outsideAngle(d.x)
+			dx: outsideAngle(d.x + d.dx) - outsideAngle(d.x),
 		};
 	}
 
@@ -260,9 +273,9 @@ Pie.prototype.zoom = function(root, p) {
 	var enterTarget;
 	var exitTarget;
 
-	// When zooming in, arcs enter from the outside and exit to the inside.
-	// Entering outside arcs start from the old layout.
 	if (zoomingIn) {
+		// When zooming in, arcs enter from the outside and exit to the inside.
+		// Entering outside arcs start from the old layout.
 		enterTarget = outsideTarget;
 		exitTarget = insideTarget;
 		this.currentDepth++;
@@ -277,7 +290,8 @@ Pie.prototype.zoom = function(root, p) {
 	this.partitioned_data = this.partition.nodes(root).slice(1);
 	this.path = this.path.data(this.partitioned_data, function(d) { return d.key; });
 
-	var self = this;
+	this.maxHeight = computeHeight(this.partitioned_data);
+
 	var duration = d3.event.altKey ? 7500 : 750;
 	d3.transition().duration(duration)
 		.each(function() {
@@ -291,7 +305,7 @@ Pie.prototype.zoom = function(root, p) {
 			// TODO: this is redundant with renderData
 			self.path.enter().append("path")
 				.style("fill-opacity", function(d) {
-					return d.depth === 2 - (zoomingIn ? 1 : 0);
+					return d.	depth === 2 - (zoomingIn ? 1 : 0);
 				})
 				.style("fill", function(d) { return d.fill; })
 				.on("click", getHandler(self.zoomIn, self))
@@ -310,6 +324,13 @@ Pie.prototype.zoom = function(root, p) {
 		});
 
 	this.renderLabels(duration /* delay */);
+};
+
+
+Pie.prototype.chrootData = function(root) {
+	this.partitioned_data = this.partition.nodes(root).slice(1);
+	var allNodes = this.partition.nodes(this.root).slice(1);
+	this.computeRadii(allNodes);
 }
 
 
@@ -359,8 +380,23 @@ Pie.prototype.mouseOutArc = function(target, d) {
 
 Pie.prototype.mouseMoveArc = function(target, d) {
 	return this.tooltip
-		.style("top", (d3.event.pageY - 10) + "px")
-		.style("left", (d3.event.pageX + 10) + "px");
+		.style("transform", "translate(" + (d3.event.pageX + 10) + ", " + (d3.event.pageY - 10) + ")");
+}
+
+
+Pie.prototype.handleTabClicked = function(target, data) {
+	this.currentOrientation = data;
+	this.updateTabHighlight();
+	this.transitionOut();
+	this.renderData();
+}
+
+
+Pie.prototype.updateTabHighlight = function() {
+	var self = this;
+	this.tabGroups.attr('class', function(d) {
+		return 'tab clickable' + (d === self.currentOrientation ? ' current' : '');
+	});
 }
 
 
@@ -382,6 +418,25 @@ Pie.prototype.zoomOut = function(target, node) {
 	this.zoom(node.parent, node);
 }
 
+
+Pie.prototype.getMaxRadius = function() {
+	return RADII(this.maxHeight + 1) * this.radius - 1;;
+};
+
+
+Pie.prototype.outerRadius = function(d) {
+	if (d.outerRadius) return d.outerRadius;
+	return RADII(d.maxHeight - d.height + 2) * this.radius - 1;
+}
+
+
+Pie.prototype.innerRadius = function(d) {
+	// If we're in the innermost ring.
+ 	if (d.depth < 2) {
+		return RADII(1) * this.radius + 1;
+	}
+	return RADII(d.maxHeight - d.height + 1) * this.radius + 1;
+}
 
 /**
  * Returns a function that smoothly tweens an arc between the nodes current position and the given
@@ -438,7 +493,12 @@ function key(d) {
 }
 
 function selectTweenableAttrs(d) {
-	return { depth: d.depth, x: d.x, dx: d.dx };
+	return {
+		depth: d.depth,
+		height: d.height,
+		x: d.x,
+		dx: d.dx,
+	};
 }
 
 
@@ -520,5 +580,14 @@ function flareDataRecursive(data, groupSequence) {
 	});
 }
 
+function computeHeight(data) {
+	if (data.children) {
+		return 1 + computeHeight(data.children);
+	} else if (_.isArray(data)) {
+		return _.max(_.map(data, computeHeight));
+	}
+
+	return 1;
+}
 
 module.exports = Pie;
