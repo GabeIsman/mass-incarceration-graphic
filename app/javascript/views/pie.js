@@ -186,12 +186,12 @@ Pie.prototype.renderData = function() {
 			.attr("d", this.arc)
 			.style("fill", function(d) { return d.fill; })
 			.style("opacity", 0.9)
-			.each(function(d) { d.currentPosition = selectTweenableAttrs(d); })
 			.attr("class", function(d) { return d.depth > 1 ? '' : 'clickable'; })
 			.on("click", getHandler(this.zoomIn, this))
 			.on("mouseover", getHandler(this.mouseOverArc, this))
 			.on("mousemove", getHandler(this.mouseMoveArc, this))
-			.on("mouseout", getHandler(this.mouseOutArc, this));
+			.on("mouseout", getHandler(this.mouseOutArc, this))
+			.each(function(d) { d.currentPosition = selectTweenableAttrs(d); });
 
 	this.renderLabels();
 };
@@ -230,6 +230,15 @@ Pie.prototype.zoom = function(root, p) {
 		.domain([0, tau])
 		.range([p.x, p.x + p.dx]);
 
+	this.center.datum(root);
+
+	this.partitioned_data = this.partition.nodes(root).slice(1);
+	this.path = this.path.data(this.partitioned_data, function(d) { return d.key; });
+	this.maxHeight = computeHeight(this.partitioned_data);
+	this.partitioned_data.forEach(function(d) {
+		d.maxHeight = self.maxHeight;
+	});
+
 	function insideTarget(d) {
 		if (root === d) {
 			return {
@@ -237,6 +246,7 @@ Pie.prototype.zoom = function(root, p) {
 				height: 0,
 				x: 0,
 				dx: tau,
+				maxHeight: 0
 			};
 		}
 
@@ -245,6 +255,7 @@ Pie.prototype.zoom = function(root, p) {
 			height: d.height,
 			dx: 0,
 			x: tau,
+			maxHeight: self.maxHeight
 		};
 
 		if (p.key > d.key) {
@@ -264,10 +275,10 @@ Pie.prototype.zoom = function(root, p) {
 			height: d.height,
 			x: outsideAngle(d.x),
 			dx: outsideAngle(d.x + d.dx) - outsideAngle(d.x),
+			maxHeight: self.maxHeight
 		};
 	}
 
-	this.center.datum(root);
 
 	var zoomingIn = root === p;
 	var enterTarget;
@@ -286,11 +297,6 @@ Pie.prototype.zoom = function(root, p) {
 		exitTarget = outsideTarget;
 		this.currentDepth--;
 	}
-
-	this.partitioned_data = this.partition.nodes(root).slice(1);
-	this.path = this.path.data(this.partitioned_data, function(d) { return d.key; });
-
-	this.maxHeight = computeHeight(this.partitioned_data);
 
 	var duration = d3.event.altKey ? 7500 : 750;
 	d3.transition().duration(duration)
@@ -433,7 +439,7 @@ Pie.prototype.outerRadius = function(d) {
 Pie.prototype.innerRadius = function(d) {
 	// If we're in the innermost ring.
  	if (d.depth < 2) {
-		return RADII(1) * this.radius + 1;
+		return RADII(d.depth) * this.radius + 1;
 	}
 	return RADII(d.maxHeight - d.height + 1) * this.radius + 1;
 }
@@ -498,6 +504,7 @@ function selectTweenableAttrs(d) {
 		height: d.height,
 		x: d.x,
 		dx: d.dx,
+		maxHeight: d.maxHeight
 	};
 }
 
