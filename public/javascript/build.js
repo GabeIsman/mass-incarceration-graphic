@@ -1501,20 +1501,8 @@ var Pie = function(options) {
 	d3.select(window).on('resize', this.handleResize);
 	this.handleResize();
 
-	var rawData = parseData(data);
-	this.currentOrientation = ORIENTATIONS[0];
-	this.data = flareData(rawData, this.currentOrientation.order);
-	var self = this;
-	this.partition
-		.value(function(d) { return d.size; })
-		.nodes(this.data)
-		.forEach(function(d) {
-			d.key = key(d);
-			d.fill = self.fill(d);
-			d.height = computeHeight(d);
-		});
-	this.chrootData(this.data);
-
+	this.rawData = parseData(data);
+	this.setOrientation(ORIENTATIONS[0]);
 	this.renderFrame();
 	this.renderData();
 };
@@ -1604,14 +1592,15 @@ Pie.prototype.renderData = function() {
 
 
 Pie.prototype.renderLabels = function(delay) {
-	this.texts = this.svg.selectAll("text")
+	this.texts = this.svg.selectAll(".label")
 		.data(this.partitionedData, function(d) { return d.key; });
 
 	this.texts.exit()
 		.remove();
 
 	this.texts.enter()
-		.append("text");
+		.append("text")
+		.attr("class", "label");
 
 	var self = this;
 	this.texts.filter(this.filterArcText)
@@ -1699,11 +1688,27 @@ Pie.prototype.mouseMoveArc = function(target, d) {
 }
 
 
-Pie.prototype.handleTabClicked = function(target, data) {
-	this.currentOrientation = data;
+Pie.prototype.handleTabClicked = function(target, d) {
+	this.setOrientation(d);
 	this.updateTabHighlight();
 	this.transitionOut();
 	this.renderData();
+}
+
+
+Pie.prototype.setOrientation = function(d) {
+	this.currentOrientation = d;
+	this.data = flareData(this.rawData, this.currentOrientation.order);
+	var self = this;
+	this.partition
+		.value(function(d) { return d.size; })
+		.nodes(this.data)
+		.forEach(function(d) {
+			d.key = key(d);
+			d.fill = self.fill(d);
+			d.height = computeHeight(d);
+		});
+	this.chrootData(this.data);
 }
 
 
