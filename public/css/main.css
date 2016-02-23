@@ -51,3 +51,23 @@ circle {
   stroke: #df8611;
   fill: #657a10;
 }
+
+.breadcrumb-container {
+  padding: 0 10px;
+  height: 20px;
+  text-align: center;
+}
+
+.breadcrumb {
+  color: #2d1f9e;
+  cursor: pointer;
+}
+
+.breadcrumb::after {
+  content: ' > ';
+  color: #000;
+}
+
+.breadcrumb:last-child::after {
+  content: '';
+}

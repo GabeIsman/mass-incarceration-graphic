@@ -33,6 +33,7 @@ var Pie = function(options) {
 	_.bindAll(this, 'filterArcText', 'arcTween', 'handleResize', 'innerRadius', 'outerRadius');
 	d3.select(window).on('resize', this.handleResize);
 	this.handleResize();
+	this.breadcrumb = [];
 
 	this.rawData = dataUtils.parseData(data);
 	this.setOrientation(orientations[0]);
@@ -64,6 +65,9 @@ Pie.prototype.handleResize = function() {
 
 
 Pie.prototype.renderFrame = function() {
+	this.breadcrumbEl = this.el.append("div")
+		.attr("class", "breadcrumb-container");
+
 	this.svg = this.el.append("svg")
 		.attr("width", this.width)
 		.attr("height", this.height)
@@ -153,6 +157,7 @@ Pie.prototype.renderLabels = function(delay) {
 
 // Zoom to the specified new root.
 Pie.prototype.zoom = function(root, p) {
+	this.renderBreadcrumb();
 	this.chrootData(root);
 	this.renderData();
 	this.renderLabels();
@@ -229,6 +234,8 @@ Pie.prototype.handleTabClicked = function(target, d) {
 	this.updateTabHighlight();
 	this.transitionOut();
 	this.renderData();
+	this.breadcrumb = [];
+	this.renderBreadcrumb();
 }
 
 
@@ -256,6 +263,16 @@ Pie.prototype.updateTabHighlight = function() {
 }
 
 
+Pie.prototype.renderBreadcrumb = function() {
+	var breadcrumbs = this.breadcrumbEl.selectAll(".breadcrumb")
+		.data(this.breadcrumb, function(d) { return d.key; });
+	breadcrumbs.exit().remove();
+	breadcrumbs.enter().append("a")
+		.attr("class", "breadcrumb");
+	breadcrumbs.text(function(d) { return d.name });
+}
+
+
 Pie.prototype.zoomIn = function(target, node) {
 	if (node.depth > 1) {
 		return;
@@ -263,6 +280,8 @@ Pie.prototype.zoomIn = function(target, node) {
 	if (!node.children) {
 		return;
 	}
+
+	this.breadcrumb.push(node);
 	this.zoom(node, node);
 }
 
@@ -271,6 +290,8 @@ Pie.prototype.zoomOut = function(target, node) {
 	if (!node.parent) {
 		return;
 	}
+
+	this.breadcrumb.pop();
 	this.zoom(node.parent, node);
 }
 

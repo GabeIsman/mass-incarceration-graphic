@@ -47,3 +47,23 @@ circle {
 	stroke: rgb(223, 134, 17);
 	fill: rgb(101, 122, 16)
 }
+
+.breadcrumb-container {
+	padding: 0 10px;
+	height: 20px;
+	text-align: center;
+}
+
+.breadcrumb {
+	color: rgb(45, 31, 158);
+	cursor: pointer;
+}
+
+.breadcrumb::after {
+	content: ' > ';
+	color: #000;
+}
+
+.breadcrumb:last-child::after {
+	content: '';
+}
