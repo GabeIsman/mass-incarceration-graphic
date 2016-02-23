@@ -128,7 +128,7 @@ Pie.prototype.renderData = function() {
 
 Pie.prototype.renderLabels = function(delay) {
 	this.texts = this.svg.selectAll(".label")
-		.data(this.partitionedData, function(d) { return d.key; });
+		.data(_.filter(this.partitionedData, this.filterArcText), function(d) { return d.key; });
 
 	this.texts.exit()
 		.remove();
@@ -138,7 +138,7 @@ Pie.prototype.renderLabels = function(delay) {
 		.attr("class", "label");
 
 	var self = this;
-	this.texts.filter(this.filterArcText)
+	this.texts
 		.attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
 		.attr("x", function(d) { return d.depth > 1 ? self.outerRadius(d) : self.innerRadius(d) })
 		.attr("dx", "6") // margin
