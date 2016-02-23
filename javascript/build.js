@@ -1608,6 +1608,7 @@ Pie.prototype.renderLabels = function(delay) {
 		.attr("x", function(d) { return d.depth > 1 ? self.outerRadius(d) : self.innerRadius(d) })
 		.attr("dx", "6") // margin
 		.attr("dy", ".35em") // vertical-align;
+		.text(function(d) { return d.name; });
 	if (delay) {
 		this.texts.style("opacity", 0)
 			.transition().delay(750).style("opacity", 1);
