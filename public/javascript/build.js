@@ -1540,7 +1540,7 @@ Pie.prototype.innerRadius = function(d) {
  	if (d.depth < 2) {
 		return RADII(d.depth) * this.radius + 1;
 	}
-	return RADII(d.maxHeight - d.height + 1) * this.radius + 1;
+	return this.outerRadius(d.parent) + 1;
 }
 
 /**
