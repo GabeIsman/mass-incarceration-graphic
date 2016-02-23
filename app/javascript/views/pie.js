@@ -214,7 +214,7 @@ Pie.prototype.mouseOverArc = function(target, d) {
 
 Pie.prototype.mouseOutArc = function(target, d) {
 	d3.select(target).style("opacity", 0.9);
-	return this.tooltip.style("opacity", 0);
+	return this.tooltip.style("opacity", 0).style("transform", "translate(0, 0)");
 }
 
 
