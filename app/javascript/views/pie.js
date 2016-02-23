@@ -1,62 +1,13 @@
-var colorbrewer = require('../lib/colors/colorbrewer');
 var _ = require('underscore');
 var data = require('../data/cleaned.csv');
 var tau = 2 * Math.PI;
+var findColor = require('./colors');
+var dataUtils = require('./dataManipulation');
+var orientations = require('./config').orientations;
 
 var RADII = d3.scale.linear()
 		.domain([0, 1, 2, 3])
 		.range([0, 0.25, 0.75, 1]);
-
-var COLORS = {
-	BLUEGREENS: ['#18816A', '#21B290', '#23CB8D'],
-	ORANGES: ['#DB6000', '#FF7000', '#F98500', '#F98500'],
-	PURPLES: ['#7070B1', '#8A82E1', '#A9A1FF', '#A9A1FF'],
-	GREY: ['#676564'],
-	GREEN: ['#64A612'],
-	YELLOWS: ['#A67611', '#D09515', '#FEB211'],
-	PERIWINKLE: ['#5964FF'],
-	RED: ['#FF2C5D'],
-	DARKRED: ['#631C1D', '#631C1D', '#631C1D', '#631C1D'],
-};
-
-var COLOR_MAPS = [{
-	Federal: COLORS.YELLOWS,
-	State: COLORS.BLUEGREENS,
-	Local: COLORS.ORANGES,
-	Kids: COLORS.PURPLES,
-	Military: COLORS.DARKRED,
-	'Indian County jails': COLORS.RED,
-	'Territorial prisons': COLORS.GREEN,
-	'Immigration Detention': COLORS.GREY,
-	'Civil Commitment': COLORS.PERIWINKLE,
-}, {
-	drugs: COLORS.YELLOWS,
-	violent: COLORS.BLUEGREENS,
-	other: COLORS.ORANGES,
-	property: COLORS.PURPLES,
-	'public order': COLORS.DARKRED,
-	'sexual': COLORS.RED,
-	'status offense': COLORS.GREEN,
-	'technical': COLORS.GREY,
-	'person': COLORS.PERIWINKLE,
-}];
-
-function findColor(name) {
-	for (var i = 0; i < COLOR_MAPS.length; i++) {
-		if (COLOR_MAPS[i][name]) {
-			return COLOR_MAPS[i][name];
-		}
-	}
-}
-
-var ORIENTATIONS = [{
-		text: 'Prison Type',
-		order: ['prison_type', 'convicted_status', 'offense_category']
-	},
-	{
-		text: 'Offense Type',
-		order: ['offense_category', 'prison_type', 'specific_offense'],
-	}];
 /**
  * Does something maybe.
  *
@@ -83,8 +34,8 @@ var Pie = function(options) {
 	d3.select(window).on('resize', this.handleResize);
 	this.handleResize();
 
-	this.rawData = parseData(data);
-	this.setOrientation(ORIENTATIONS[0]);
+	this.rawData = dataUtils.parseData(data);
+	this.setOrientation(orientations[0]);
 	this.renderFrame();
 	this.renderData();
 };
@@ -131,7 +82,7 @@ Pie.prototype.renderFrame = function() {
 		.style("opacity", 0);
 
 	this.tabGroups = this.svg.selectAll('.tab')
-		.data(ORIENTATIONS);
+		.data(orientations);
 	this.tabs = this.tabGroups.enter()
 		.append('g')
 			.append('text')
@@ -212,7 +163,7 @@ Pie.prototype.chrootData = function(root) {
 	var self = this;
 	this.root = root;
 	this.partitionedData = this.partition.nodes(this.root).slice(1);
-	this.maxHeight = computeHeight(this.root);
+	this.maxHeight = dataUtils.computeHeight(this.root);
 
 	// This is a little strange, but because the outer radius depends on max height in order to have
 	// smooth transitions of that radius we need to tween the max height during animations, and the
@@ -283,7 +234,7 @@ Pie.prototype.handleTabClicked = function(target, d) {
 
 Pie.prototype.setOrientation = function(d) {
 	this.currentOrientation = d;
-	this.data = flareData(this.rawData, this.currentOrientation.order);
+	this.data = dataUtils.flareData(this.rawData, this.currentOrientation.order);
 	var self = this;
 	this.partition
 		.value(function(d) { return d.size; })
@@ -291,7 +242,7 @@ Pie.prototype.setOrientation = function(d) {
 		.forEach(function(d) {
 			d.key = key(d);
 			d.fill = self.fill(d);
-			d.height = computeHeight(d);
+			d.height = dataUtils.computeHeight(d);
 		});
 	this.chrootData(this.data);
 }
@@ -322,11 +273,6 @@ Pie.prototype.zoomOut = function(target, node) {
 	}
 	this.zoom(node.parent, node);
 }
-
-
-Pie.prototype.getMaxRadius = function() {
-	return RADII(this.maxHeight + 1) * this.radius - 1;;
-};
 
 
 Pie.prototype.outerRadius = function(d) {
@@ -424,76 +370,5 @@ function getHandler(handler, ctx) {
 	}
 };
 
-var COMMAS = /,/g;
-
-/**
- * Parses the numbers into javascript Numbers.
- * @param	 {Array<Object>} data The csvified data.
- * @returns {Array<Object>} The parsed data.
- */
-function parseData(data) {
-	return _.map(data, function(line) {
-		line = _.mapObject(line, function(value) {
-			if (typeof value === 'string') {
-				return value.trim();
-			}
-			return value;
-		});
-
-		if (typeof line.number === 'string') {
-			_.extend(line, { number: parseInt(line.number.replace(COMMAS, '')) });
-		}
-
-		return line;
-	});
-}
-
-
-function flareData(data, groupSequence) {
-	return {
-		name: 'Flare',
-		description: '',
-		children: flareDataRecursive(data, groupSequence)
-	};
-	return parent;
-}
-
-function flareDataRecursive(data, groupSequence) {
-	if (groupSequence.length === 0) {
-		return [];
-	}
-	var currentGroup = groupSequence[0];
-	var remainingSequence = groupSequence.slice(1);
-	var groupedData = _.groupBy(data, currentGroup);
-
-	// If this group has no differentiation on this key then skip it
-	if (_.keys(groupedData).length === 1) {
-		return flareDataRecursive(data, remainingSequence);
-	}
-
-	return _.map(groupedData, function(value, key) {
-		var child = {
-			name: key,
-			description: '' // Need to figure this out
-		};
-		child.size = _.reduce(value, function(memo, item) {
-			return memo + item.number;
-		}, 0);
-		if (remainingSequence.length > 0) {
-			child.children = flareDataRecursive(value, remainingSequence);
-		}
-		return child;
-	});
-}
-
-function computeHeight(data) {
-	if (data.children) {
-		return 1 + computeHeight(data.children);
-	} else if (_.isArray(data)) {
-		return _.max(_.map(data, computeHeight));
-	}
-
-	return 1;
-}
 
 module.exports = Pie;
