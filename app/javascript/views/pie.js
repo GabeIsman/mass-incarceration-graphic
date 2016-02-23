@@ -125,6 +125,8 @@ Pie.prototype.renderFrame = function() {
 		.append("div")
 		.attr("id", "tooltip")
 		.style("position", "absolute")
+		.style("top", 0)
+		.style("left", 0)
 		.style("z-index", "10")
 		.style("opacity", 0);
 
@@ -267,7 +269,7 @@ Pie.prototype.mouseOutArc = function(target, d) {
 
 Pie.prototype.mouseMoveArc = function(target, d) {
 	return this.tooltip
-		.style("transform", "translate(" + (d3.event.pageX + 10) + ", " + (d3.event.pageY - 10) + ")");
+		.style("transform", "translate(" + (d3.event.pageX + 10) + "px, " + (d3.event.pageY + 20) + "px)");
 }
 
 
