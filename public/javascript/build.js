@@ -1278,14 +1278,6 @@ var Pie = function(options) {
 	this.partition = d3.layout.partition()
 		.sort(function(a, b) { return d3.ascending(a.name, b.name); });
 
-	// TODO: replace this with a custom scheme
-	this.hue = d3.scale.category10();
-
-	this.luminance = d3.scale.sqrt()
-		.domain([0, 1e6])
-		.clamp(true)
-		.range([90, 20]);
-
 	_.bindAll(this, 'filterArcText', 'arcTween', 'handleResize', 'innerRadius', 'outerRadius');
 	d3.select(window).on('resize', this.handleResize);
 	this.handleResize();
@@ -1307,16 +1299,18 @@ Pie.prototype.handleResize = function() {
 	this.height = boundingRect.height;
 	this.radius = Math.min(this.width / 3, this.height / 3);
 
-	this.partition.size([tau, this.radius]);
+	this.x = d3.scale.linear()
+    .range([0, tau]);
 
-	// NOTE: this accounts for the inner circle used to zoom out
+	this.y = d3.scale.linear()
+    .range([0, this.radius]);
+
 	var self = this;
 	this.arc = d3.svg.arc()
-		.startAngle(function(d) { return d.x; })
-		// Leave a small gap between segments.
-		.endAngle(function(d) { return d.x + d.dx - 0.01 / (d.depth + .5); })
-		.innerRadius(this.innerRadius)
-		.outerRadius(this.outerRadius);
+		.startAngle(function(d) { return Math.max(0, Math.min(tau, self.x(d.x))); })
+		.endAngle(function(d) { return Math.max(0, Math.min(tau, self.x(d.x + d.dx))); })
+		.innerRadius(function(d) { return Math.max(0, self.y(self.innerRadius(d))); })
+		.outerRadius(function(d) { return Math.max(0, self.y(self.outerRadius(d))); });
 };
 
 
@@ -1364,7 +1358,7 @@ Pie.prototype.renderData = function() {
 	}
 
 	this.path = this.svg.selectAll("path")
-		.data(this.partitionedData);
+		.data(this.partitionedData, function(d) { return d.key; });
 	this.path.enter().append("path");
 	this.path.exit().remove();
 	this.path
@@ -1455,7 +1449,7 @@ Pie.prototype.filterArcText = function(d, i) {
 	if (d.depth != 1) {
 		return false;
 	}
-	return (d.dx * d.depth * this.radius / 3 ) > 14;
+	return (this.x(d.dx) * d.depth * this.radius / 3 ) > 14;
 };
 
 
@@ -1554,20 +1548,19 @@ Pie.prototype.zoomOut = function(target, node) {
 
 
 Pie.prototype.outerRadius = function(d) {
-	if (d.outerRadius) return d.outerRadius;
-	return RADII(d.maxHeight - d.height + 2) * this.radius - 1;
+	return RADII(d.maxHeight - d.height + 2);
 }
 
 
 Pie.prototype.innerRadius = function(d) {
 	if (d.parent.name === 'Correctional Facilities') {
-		return RADII(1) * this.radius + 1;
+		return RADII(1);
 	}
 	// If we're in the innermost ring.
  	if (d.depth < 2) {
-		return RADII(d.depth) * this.radius + 1;
+		return RADII(d.depth);
 	}
-	return this.outerRadius(d.parent) + 1;
+	return this.outerRadius(d.parent);
 }
 
 /**
