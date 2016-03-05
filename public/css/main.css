@@ -26,10 +26,6 @@ svg {
   position: absolute;
 }
 
-path {
-	stroke: #fff;
-}
-
 .clickable,
 circle {
   cursor: pointer;
@@ -78,7 +74,10 @@ circle {
 }
 
 .label {
-	stroke: #fff;
-	fill: #fff;
-	text-shadow: 1px 1px 1px #333;
+  fill: #fff;
+  text-shadow: 1px 1px 1px #333;
+}
+
+path {
+  stroke: #fff;
 }

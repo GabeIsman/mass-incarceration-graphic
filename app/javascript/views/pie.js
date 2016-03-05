@@ -22,10 +22,11 @@ var Pie = function(options) {
 	this.partition = d3.layout.partition()
 		.sort(function(a, b) { return d3.ascending(a.name, b.name); });
 
-	_.bindAll(this, 'filterArcText', 'arcTween', 'handleResize', 'innerRadius', 'outerRadius');
+	_.bindAll(this, 'filterArcText', 'handleResize', 'innerRadius', 'outerRadius', 'zoom');
 	d3.select(window).on('resize', this.handleResize);
 	this.handleResize();
 	this.breadcrumb = [];
+	this.currentDepth = 0;
 
 	this.rawData = dataUtils.parseData(data);
 	this.setOrientation(orientations[0]);
@@ -54,7 +55,12 @@ Pie.prototype.handleResize = function() {
 		.startAngle(function(d) { return Math.max(0, Math.min(tau, self.x(d.x))); })
 		.endAngle(function(d) { return Math.max(0, Math.min(tau, self.x(d.x + d.dx))); })
 		.innerRadius(function(d) { return Math.max(0, self.y(self.innerRadius(d))); })
-		.outerRadius(function(d) { return Math.max(0, self.y(self.outerRadius(d))); });
+		.outerRadius(function(d) {
+			if (d.name == 'Correctional Facilities') {
+				console.log(Math.max(0, self.y(self.outerRadius(d))));
+			}
+			return Math.max(0, self.y(self.outerRadius(d)));
+		});
 };
 
 
@@ -89,7 +95,6 @@ Pie.prototype.renderFrame = function() {
 Pie.prototype.renderData = function() {
 
 	var self = this;
-
 	this.center.datum(this.root);
 
 	// Move correctionalFacilities to the end of the array so it lies on top of the other elements
@@ -121,6 +126,7 @@ Pie.prototype.renderData = function() {
 
 
 Pie.prototype.renderLabels = function(delay) {
+	delay = delay || 0;
 	this.texts = this.svg.selectAll(".label")
 		.data(_.filter(this.partitionedData, this.filterArcText), function(d) { return d.key; });
 
@@ -132,24 +138,41 @@ Pie.prototype.renderLabels = function(delay) {
 		.attr("class", "label");
 
 	var self = this;
-	this.texts
+	var texts;
+	// if (transition) {
+	// 	var texts = this.texts.transition().delay(delay)
+	// }
+	this.texts.transition().delay(delay)
 		.attr("transform", function(d) { return "translate(" + self.arc.centroid(d) + ")"; })
 		.attr("dy", ".35em") // vertical-align;
 		.attr('text-anchor', 'middle')
 		.text(function(d) { return d.name; });
-	if (delay) {
-		this.texts.style("opacity", 0)
-			.transition().delay(750).style("opacity", 1);
-	}
 };
 
 
 // Zoom to the specified new root.
-Pie.prototype.zoom = function(root, p) {
+Pie.prototype.zoom = function(d) {
+	var self = this;
+	this.center.datum(d);
+  this.svg.transition()
+      .duration(750)
+      .tween("scale", function() {
+        var xd = d3.interpolate(self.x.domain(), [d.x, d.x + d.dx]);
+				var cdd = d3.interpolate(self.currentDepth, d.depth);
+            // yd = d3.interpolate(self.y.domain(), [d.y, 1]),
+            // yr = d3.interpolate(self.y.range(), [d.y ? RADII(1) * self.radius : 0, self.radius]),
+
+        return function(t) {
+					self.x.domain(xd(t));
+					self.currentDepth = cdd(t);
+					// self.y.domain(yd(t)).range(yr(t));
+				};
+      })
+    .selectAll("path")
+      .attrTween("d", function(d) { return function() { return self.arc(d); }; })
+			.attr("class", function(d) { return d.depth === self.currentDepth + 1 ? '' : 'clickable'; })
+			.call(endall, function() { self.renderLabels(); });
 	this.renderBreadcrumb();
-	this.chrootData(root);
-	this.renderData();
-	this.renderLabels();
 };
 
 
@@ -190,7 +213,7 @@ Pie.prototype.fill = function(d) {
  */
 Pie.prototype.filterArcText = function(d, i) {
 	// Filter out labels for the outer layers
-	if (d.depth != 1) {
+	if (d.depth != this.currentDepth + 1) {
 		return false;
 	}
 	return (this.x(d.dx) * d.depth * this.radius / 3 ) > 14;
@@ -269,7 +292,7 @@ Pie.prototype.renderBreadcrumb = function() {
 
 
 Pie.prototype.zoomIn = function(target, node) {
-	if (node.depth > 1) {
+	if (node.depth > this.currentDepth + 1) {
 		return;
 	}
 	if (!node.children) {
@@ -277,7 +300,7 @@ Pie.prototype.zoomIn = function(target, node) {
 	}
 
 	this.breadcrumb.push(node);
-	this.zoom(node, node);
+	this.zoom(node);
 }
 
 
@@ -287,43 +310,32 @@ Pie.prototype.zoomOut = function(target, node) {
 	}
 
 	this.breadcrumb.pop();
-	this.zoom(node.parent, node);
+	this.zoom(node.parent);
 }
 
 
 Pie.prototype.outerRadius = function(d) {
+	var realDepth = d.depth - this.currentDepth;
+	if (realDepth < 1) {
+		return RADII(realDepth);
+	}
 	return RADII(d.maxHeight - d.height + 2);
 }
 
 
 Pie.prototype.innerRadius = function(d) {
-	if (d.parent.name === 'Correctional Facilities') {
+	var realDepth = d.depth - this.currentDepth;
+	// Render correctional facilities children all the way to the root, since it is transparent.
+	if (this.currentDepth < 2 && d.parent.name === 'Correctional Facilities') {
 		return RADII(1);
 	}
-	// If we're in the innermost ring.
- 	if (d.depth < 2) {
-		return RADII(d.depth);
-	}
-	return this.outerRadius(d.parent);
-}
 
-/**
- * Returns a function that smoothly tweens an arc between the nodes current position and the given
- * target.
- * @param	 {Object} node The data node being animated. Must have 'currentPosition' set to an object
- *	 with d, dx, and depth attributes.
- * @param	 {Object} targetPosition The final position. This is an object with d, dx, and depth
-*		attributes.
- * @returns {Function} A function that takes a float between 0 and 1 and returns the interpolated
- *	 arc.
- */
-Pie.prototype.arcTween = function(node, targetPosition) {
-	var interpolator = d3.interpolate(node.currentPosition, targetPosition);
-	var self = this;
-	return function(t) {
-		node.currentPosition = interpolator(t);
-		return self.arc(node.currentPosition);
-	};
+	// If we're in the innermost ring.
+ 	if (realDepth < 2) {
+		return RADII(realDepth);
+	}
+
+	return this.outerRadius(d.parent);
 }
 
 
@@ -387,6 +399,18 @@ function getHandler(handler, ctx) {
 		return handler(this, d);
 	}
 };
+
+
+/**
+ * Run code when a transition is completely done.
+ */
+function endall(transition, callback) {
+  if (transition.size() === 0) { callback(); }
+  var n = 0;
+  transition
+      .each(function() { ++n; })
+      .each("end", function() { if (!--n) callback.apply(this, arguments); });
+}
 
 
 module.exports = Pie;
