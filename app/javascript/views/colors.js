@@ -21,6 +21,9 @@ var COLOR_MAPS = [{
 	'Territorial prisons': COLORS.GREEN,
 	'Immigration Detention': COLORS.GREY,
 	'Civil Commitment': COLORS.PERIWINKLE,
+	'Probation': COLORS.RED,
+	'Parole': COLORS.GREY,
+	'Correctional Facilities': ['#FFFFFF']
 }, {
 	drugs: COLORS.YELLOWS,
 	violent: COLORS.BLUEGREENS,
@@ -33,10 +36,9 @@ var COLOR_MAPS = [{
 	'person': COLORS.PERIWINKLE,
 }];
 
-module.exports = function findColor(name) {
-	for (var i = 0; i < COLOR_MAPS.length; i++) {
-		if (COLOR_MAPS[i][name]) {
-			return COLOR_MAPS[i][name];
-		}
+module.exports = function findColor(name, mapNum) {
+	mapNum = mapNum || 0;
+	if (COLOR_MAPS[mapNum][name]) {
+		return COLOR_MAPS[mapNum][name];
 	}
 }

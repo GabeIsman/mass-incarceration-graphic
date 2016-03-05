@@ -1133,6 +1133,9 @@ var COLOR_MAPS = [{
 	'Territorial prisons': COLORS.GREEN,
 	'Immigration Detention': COLORS.GREY,
 	'Civil Commitment': COLORS.PERIWINKLE,
+	'Probation': COLORS.RED,
+	'Parole': COLORS.GREY,
+	'Correctional Facilities': ['#FFFFFF']
 }, {
 	drugs: COLORS.YELLOWS,
 	violent: COLORS.BLUEGREENS,
@@ -1145,11 +1148,10 @@ var COLOR_MAPS = [{
 	'person': COLORS.PERIWINKLE,
 }];
 
-module.exports = function findColor(name) {
-	for (var i = 0; i < COLOR_MAPS.length; i++) {
-		if (COLOR_MAPS[i][name]) {
-			return COLOR_MAPS[i][name];
-		}
+module.exports = function findColor(name, mapNum) {
+	mapNum = mapNum || 0;
+	if (COLOR_MAPS[mapNum][name]) {
+		return COLOR_MAPS[mapNum][name];
 	}
 }
 
@@ -1261,7 +1263,7 @@ var orientations = require('./config').orientations;
 
 var RADII = d3.scale.linear()
 		.domain([0, 1, 2, 3])
-		.range([0, 0.25, 0.75, 1]);
+		.range([0, 0.2, 0.6, 0.8, 1]);
 /**
  * Does something maybe.
  *
@@ -1339,19 +1341,6 @@ Pie.prototype.renderFrame = function() {
 		.style("z-index", "10")
 		.style("opacity", 0);
 
-	this.tabGroups = this.svg.selectAll('.tab')
-		.data(orientations);
-	this.tabs = this.tabGroups.enter()
-		.append('g')
-			.append('text')
-			.attr('y', function(d, i) { return 40 + 30 * i; })
-			.attr('x', 20)
-			.text(function(d) { return d.text; });
-	this.tabGroups
-		.attr('transform', 'translate(-' + (this.width / 2) + ',-' + (this.height / 2) + ')')
-		.on('click', getHandler(this.handleTabClicked, this));
-	this.updateTabHighlight();
-
 	this.center = this.svg
 		.append("circle")
 		.attr("r", this.radius / 5)
@@ -1365,6 +1354,15 @@ Pie.prototype.renderData = function() {
 
 	this.center.datum(this.root);
 
+	// Move correctionalFacilities to the end of the array so it lies on top of the other elements
+	var correctionalFacilitiesIndex = this.partitionedData.findIndex(function(item) {
+		return item.name === 'Correctional Facilities';
+	});
+	if (correctionalFacilitiesIndex !== -1) {
+		var correctionalFacilities = this.partitionedData.splice(correctionalFacilitiesIndex, 1);
+		this.partitionedData = this.partitionedData.concat(correctionalFacilities);
+	}
+
 	this.path = this.svg.selectAll("path")
 		.data(this.partitionedData);
 	this.path.enter().append("path");
@@ -1372,7 +1370,7 @@ Pie.prototype.renderData = function() {
 	this.path
 			.attr("d", this.arc)
 			.style("fill", function(d) { return d.fill; })
-			.style("opacity", 0.9)
+			.style("opacity", function(d) { return d.name === 'Correctional Facilities' ? 0.1 : 0.9; })
 			.attr("class", function(d) { return d.depth > 1 ? '' : 'clickable'; })
 			.on("click", getHandler(this.zoomIn, this))
 			.on("mouseover", getHandler(this.mouseOverArc, this))
@@ -1397,10 +1395,9 @@ Pie.prototype.renderLabels = function(delay) {
 
 	var self = this;
 	this.texts
-		.attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
-		.attr("x", function(d) { return d.depth > 1 ? self.outerRadius(d) : self.innerRadius(d) })
-		.attr("dx", "6") // margin
+		.attr("transform", function(d) { return "translate(" + self.arc.centroid(d) + ")"; })
 		.attr("dy", ".35em") // vertical-align;
+		.attr('text-anchor', 'middle')
 		.text(function(d) { return d.name; });
 	if (delay) {
 		this.texts.style("opacity", 0)
@@ -1435,16 +1432,17 @@ Pie.prototype.chrootData = function(root) {
 
 Pie.prototype.fill = function(d) {
 	var parent = d;
-	while (parent.depth > 1) {
+	var colorArray = findColor(parent.name);
+	while (!colorArray && parent.depth > 1) {
 		parent = parent.parent;
+		colorArray = findColor(parent.name);
 	}
 	var colorString;
-	var colorArray = findColor(parent.name);
-	if (!colorArray || !(colorString = colorArray[d.depth - 1])) {
+	if (!colorArray || !(colorString = colorArray[d.depth - 1] || colorArray[0])) {
 		console.log("Color not found for ", parent.name, d.depth);
 	}
 
-	var color = d3.rgb(colorString);
+	var color = typeof colorString === 'string' ? d3.rgb(colorString) : colorString;
 	return color;
 }
 
@@ -1453,8 +1451,8 @@ Pie.prototype.fill = function(d) {
  * Filter out the text on arcs that are too small.
  */
 Pie.prototype.filterArcText = function(d, i) {
-	// Filter out labels for the middle layers
-	if (d.depth != 1 && d.children) {
+	// Filter out labels for the outer layers
+	if (d.depth != 1) {
 		return false;
 	}
 	return (d.dx * d.depth * this.radius / 3 ) > 14;
@@ -1462,7 +1460,9 @@ Pie.prototype.filterArcText = function(d, i) {
 
 
 Pie.prototype.mouseOverArc = function(target, d) {
-	d3.select(target).style("opacity", 1);
+	if (d.name !== 'Correctional Facilities') {
+		d3.select(target).style("opacity", 1);
+	}
 
 	this.tooltip.html(formatDescription(d));
 	return this.tooltip.transition()
@@ -1472,7 +1472,9 @@ Pie.prototype.mouseOverArc = function(target, d) {
 
 
 Pie.prototype.mouseOutArc = function(target, d) {
-	d3.select(target).style("opacity", 0.9);
+	if (d.name !== 'Correctional Facilities') {
+		d3.select(target).style("opacity", 0.9);
+	}
 	return this.tooltip.style("opacity", 0).style("transform", "translate(0, 0)");
 }
 
@@ -1483,19 +1485,28 @@ Pie.prototype.mouseMoveArc = function(target, d) {
 }
 
 
-Pie.prototype.handleTabClicked = function(target, d) {
-	this.setOrientation(d);
-	this.updateTabHighlight();
-	this.transitionOut();
-	this.renderData();
-	this.breadcrumb = [];
-	this.renderBreadcrumb();
-}
-
-
 Pie.prototype.setOrientation = function(d) {
 	this.currentOrientation = d;
-	this.data = dataUtils.flareData(this.rawData, this.currentOrientation.order);
+	var confinement = dataUtils.flareData(this.rawData, this.currentOrientation.order);
+
+	this.data = {
+		name: 'root',
+		children: [{
+			name: 'Probation',
+			description: 'People on probation',
+			size: 3900000
+		}, {
+			name: 'Parole',
+			description: 'People on parole',
+			size: 807000
+		}, {
+			name: 'Correctional Facilities',
+			description: 'People locked up',
+			children: confinement.children
+		}]
+	};
+
+
 	var self = this;
 	this.partition
 		.value(function(d) { return d.size; })
@@ -1506,14 +1517,6 @@ Pie.prototype.setOrientation = function(d) {
 			d.height = dataUtils.computeHeight(d);
 		});
 	this.chrootData(this.data);
-}
-
-
-Pie.prototype.updateTabHighlight = function() {
-	var self = this;
-	this.tabGroups.attr('class', function(d) {
-		return 'tab clickable' + (d === self.currentOrientation ? ' current' : '');
-	});
 }
 
 
@@ -1557,6 +1560,9 @@ Pie.prototype.outerRadius = function(d) {
 
 
 Pie.prototype.innerRadius = function(d) {
+	if (d.parent.name === 'Correctional Facilities') {
+		return RADII(1) * this.radius + 1;
+	}
 	// If we're in the innermost ring.
  	if (d.depth < 2) {
 		return RADII(d.depth) * this.radius + 1;

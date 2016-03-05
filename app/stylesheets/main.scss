@@ -25,6 +25,7 @@ svg {
 .clickable,
 circle {
   cursor: pointer;
+	pointer-events: all;
 }
 
 circle {
@@ -60,7 +61,7 @@ circle {
 }
 
 .breadcrumb::after {
-	content: ' > ';
+	content: '  >  ';
 	color: #000;
 }
 
