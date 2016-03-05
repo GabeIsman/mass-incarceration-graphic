@@ -76,6 +76,7 @@ circle {
 .label {
   fill: #fff;
   text-shadow: 1px 1px 1px #333;
+  cursor: pointer;
 }
 
 path {

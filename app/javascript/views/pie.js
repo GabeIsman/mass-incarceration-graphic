@@ -55,12 +55,7 @@ Pie.prototype.handleResize = function() {
 		.startAngle(function(d) { return Math.max(0, Math.min(tau, self.x(d.x))); })
 		.endAngle(function(d) { return Math.max(0, Math.min(tau, self.x(d.x + d.dx))); })
 		.innerRadius(function(d) { return Math.max(0, self.y(self.innerRadius(d))); })
-		.outerRadius(function(d) {
-			if (d.name == 'Correctional Facilities') {
-				console.log(Math.max(0, self.y(self.outerRadius(d))));
-			}
-			return Math.max(0, self.y(self.outerRadius(d)));
-		});
+		.outerRadius(function(d) { return Math.max(0, self.y(self.outerRadius(d))); });
 };
 
 
@@ -135,6 +130,9 @@ Pie.prototype.renderLabels = function(delay) {
 
 	this.texts.enter()
 		.append("text")
+		.on('click', getHandler(this.zoomIn, this))
+		.on("mouseover", getHandler(this.mouseOverArc, this))
+		.on("mousemove", getHandler(this.mouseMoveArc, this))
 		.attr("class", "label");
 
 	var self = this;
@@ -153,6 +151,7 @@ Pie.prototype.renderLabels = function(delay) {
 // Zoom to the specified new root.
 Pie.prototype.zoom = function(d) {
 	var self = this;
+	this.root = d;
 	this.center.datum(d);
   this.svg.transition()
       .duration(750)
@@ -216,7 +215,20 @@ Pie.prototype.filterArcText = function(d, i) {
 	if (d.depth != this.currentDepth + 1) {
 		return false;
 	}
-	return (this.x(d.dx) * d.depth * this.radius / 3 ) > 14;
+
+	// Filter out labels that aren't in the currently displayed tree
+	var root = d;
+	var x = 0;
+	while (x < 5 && root.parent && root !== this.root) {
+		x++;
+		root = root.parent;
+	}
+
+	if (root !== this.root) {
+		return false;
+	}
+console.log(this.x(d.dx) * this.radius, d.name, d);
+	return (Math.abs(this.x(d.dx)) * this.radius) > 100;
 };
 
 
@@ -282,12 +294,18 @@ Pie.prototype.setOrientation = function(d) {
 
 
 Pie.prototype.renderBreadcrumb = function() {
-	var breadcrumbs = this.breadcrumbEl.selectAll(".breadcrumb")
-		.data(this.breadcrumb, function(d) { return d.key; });
-	breadcrumbs.exit().remove();
-	breadcrumbs.enter().append("a")
+	var breadcrumbs = [];
+	var crumb = this.root;
+	while (crumb.parent) {
+		breadcrumbs.unshift(crumb);
+		crumb = crumb.parent;
+	}
+	var crumbs = this.breadcrumbEl.selectAll(".breadcrumb")
+		.data(breadcrumbs, function(d) { return d.key; });
+	crumbs.exit().remove();
+	crumbs.enter().append("a")
 		.attr("class", "breadcrumb");
-	breadcrumbs.text(function(d) { return d.name });
+	crumbs.text(function(d) { return d.name });
 }
 
 
@@ -315,9 +333,13 @@ Pie.prototype.zoomOut = function(target, node) {
 
 
 Pie.prototype.outerRadius = function(d) {
+	if (d.depth <= 0) {
+		return RADII(1)
+	}
+	var levelsToCover = d.maxHeight - d.height;
 	var realDepth = d.depth - this.currentDepth;
 	if (realDepth < 1) {
-		return RADII(realDepth);
+		return RADII((levelsToCover + 1) * realDepth + 1);
 	}
 	return RADII(d.maxHeight - d.height + 2);
 }
@@ -332,7 +354,7 @@ Pie.prototype.innerRadius = function(d) {
 
 	// If we're in the innermost ring.
  	if (realDepth < 2) {
-		return RADII(realDepth);
+		return RADII(Math.max(realDepth, 1));
 	}
 
 	return this.outerRadius(d.parent);
