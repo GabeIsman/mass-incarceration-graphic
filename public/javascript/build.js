@@ -1133,7 +1133,7 @@ var COLOR_MAPS = [{
 	'Territorial prisons': COLORS.GREEN,
 	'Immigration Detention': COLORS.GREY,
 	'Civil Commitment': COLORS.PERIWINKLE,
-	'Probation': COLORS.RED,
+	'Probation': COLORS.DARKRED,
 	'Parole': COLORS.GREY,
 	'Correctional Facilities': ['#FFFFFF']
 }, {
