@@ -29,6 +29,7 @@ svg {
 .clickable,
 circle {
   cursor: pointer;
+  pointer-events: all;
 }
 
 circle {
@@ -64,10 +65,16 @@ circle {
 }
 
 .breadcrumb::after {
-  content: ' > ';
+  content: '  >  ';
   color: #000;
 }
 
 .breadcrumb:last-child::after {
   content: '';
+}
+
+.label {
+	stroke: #fff;
+	fill: #fff;
+	text-shadow: 1px 1px 1px #333;
 }
