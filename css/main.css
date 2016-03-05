@@ -26,6 +26,10 @@ svg {
   position: absolute;
 }
 
+path {
+	stroke: #fff;
+}
+
 .clickable,
 circle {
   cursor: pointer;
